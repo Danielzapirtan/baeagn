@@ -161,8 +161,8 @@ void analysis(void)
         LEVEL i;
         LVLCTX *ctx;
         TIME elapsed;
-	s4 ix = 0;
-        load(start);
+	      s4 ix = 0;
+        copy_board(*get_init(), start);
         ctxa = (LVLCTX *) malloc (_MAXLEVEL * sizeof(LVLCTX));
         if (!ctxa) {
                 error("Out of memory!");
