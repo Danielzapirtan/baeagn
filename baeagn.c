@@ -181,8 +181,6 @@ void analysis(void)
                 ctx->best = backtrack(ctxa, 0, 1);
                 elapsed = ((double) (clock() - clock0) / CLOCKS_PER_SEC);
                 copy_board(start, aux);
-		fprintf(stderr, "\033[K\r");
-		fflush(stderr);
                 fprintf(stdout, "Depth: %u\n", depth);
                 fprintf(stdout, "Evaluation: %.2lf\n",
                                 ((double) (ctx->best) / (double) _PAWNUNIT));
@@ -257,8 +255,6 @@ VALUE backtrack(LVLCTX *ctxa, LEVEL level, LEVEL depth)
                         if (level == 0 && depth == 1 && gmode == 4) {
                                 elapsed = ((double) (clock() - clock0) / CLOCKS_PER_SEC);
                                 copy_board(ctx->crt_board, aux);
-				fprintf(stderr, "\033[K\r");
-				fflush(stderr);
                                 fprintf(stdout, "Depth: %u*\n", ctx->depth - _OVERDEPTH);
                                 fprintf(stdout, "Evaluation: %.2lf\n",
                                 		((double) ctx->best / (double) _PAWNUNIT));
@@ -371,19 +367,6 @@ VALUE eval(BOARD board, LEVEL level)
 	if ((rand() % 10000) == 0) {
 		double elapsed = ((double) (clock() - clock0) / CLOCKS_PER_SEC);
 		int ielapsed = (int) elapsed;
-		fprintf(stderr, "\r%d:%02d %.2lfMnodes ", ielapsed / 60, ielapsed % 60, 1.0e-6 * nodes);
-		int i;
-		for (i = 0; ctxa[i].depth != 0; i++) {
-			MOVE crt_move;
-			char buf[80];
-			copy_move(ctxa[i].legal_moves[ctxa[i].crt_index], crt_move);
-			show_move(crt_move, ctxa[i].crt_board, (i + stm) % 2, buf);
-			fprintf(stderr, "%d/%d:%4s ", ctxa[i].crt_index, ctxa[i].max_index, buf);
-			if (i > 1)
-				break;
-		}
-		fprintf(stderr, "\033[K\r");
-		fflush(stderr);
 	}
         for (y = 0; y < 8; y++)
         for (x = 0; x < 8; x++) {
