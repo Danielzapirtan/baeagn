@@ -162,7 +162,7 @@ void analysis(void)
         LVLCTX *ctx;
         TIME elapsed;
 	s4 ix = 0;
-        copy_board(*get_init(), start);
+	load(start);
         ctxa = (LVLCTX *) malloc (_MAXLEVEL * sizeof(LVLCTX));
         if (!ctxa) {
                 error("Out of memory!");
@@ -421,13 +421,6 @@ VALUE eval(BOARD board, LEVEL level)
                 default:;
                 }
         }
-	//crow 20230502
-#if 0
-	if (board[5][4] == 1)
-		ivalue += 300;
-	if (board[2][4] == -1)
-		ivalue -= 300;
-#endif
         for (y = 0; y < 8; y++)
         for (x = 0; x < 8; x++) {
                 u5 x1 = x;
@@ -715,15 +708,17 @@ void load(BOARD board)
         s4 pp;
         u5 x;
         u5 y;
+	FILE *f = fopen("start.brd", "r");
         for (x = 8; x > 0; x--)
         for (y = 0; y < 8; y++) {
-                scanf("%d", &pp);
+                fscanf(f, "%d", &pp);
                 board[x - 1][y] = (s3) pp;
         }
         for (y = 0; y < 8; y++)
                 board[8][y] = (y < 4);
-        scanf("%d", &stm);
+        fscanf(f, "%d", &stm);
         show_board(board, stdout);
+	fclose(f);
         if (stm)
                 transpose(board);
 }
