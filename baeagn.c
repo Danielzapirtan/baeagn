@@ -151,7 +151,6 @@ const VALUE _VALUES[6]    = { 0, 100, 315, 325, 500, 980, };
 const LEVEL _MYLEVELS[18] = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 32, 40, 48, 64, 0, };
 
 time_t time0;
-clock_t clock0;
 ELAPSED elapsed;
 LEVEL gdepth;
 LEVEL glevel;
@@ -232,8 +231,8 @@ void analysis(void)
     LVLCTX *ctx;
     s4 ix = 0;
     //system("/system/bin/cp main2 /sdcard/");
-    chdir(_DIR);
-    load(start);
+    //chdir(_DIR);
+    load (start);
     show_board(start, stdout);
     ctxa = (LVLCTX *) malloc (_MAXLEVEL * sizeof(LVLCTX));
     if (!ctxa) {
@@ -241,7 +240,6 @@ void analysis(void)
     }
     init(&elapsed);
     time0 = time(NULL);
-    clock0 = clock();
     nodes = 0;
     for (depth = _MYLEVELS[ix]; ix < 16; depth = _MYLEVELS[++ix]) {
         ctx = &ctxa[0];
@@ -253,7 +251,7 @@ void analysis(void)
         ctx->beta = _BETA;
         ctx->best = backtrack(ctxa, 0, 1);
         update(&elapsed);
-        double delapsed = (double) (clock() - clock0) / CLOCKS_PER_SEC;
+        double delapsed = difftime(time(NULL), time0);
         copy_board(start, aux);
         fprintf(stdout, "Depth: %u\n", depth);
         fprintf(stdout, "Evaluation: %.2lf\n", \
@@ -307,6 +305,7 @@ VALUE backtrack(LVLCTX *ctxa, LEVEL level, LEVEL depth)
     ctx->best = -_MAXVALUE;
     ctx->bl_len = 1;
     for (ctx->curr_index = 0; ctx->curr_index < ctx->max_index; (ctx->curr_index)++) {
+        fflush(stdout);
         nctx = &ctxa[level + 1];
         copy_move(ctx->legal_moves[ctx->curr_index], ctx->curr_move);
         makemove(ctx->curr_board, ctx->curr_move, ctx->next_board);
@@ -343,7 +342,7 @@ VALUE backtrack(LVLCTX *ctxa, LEVEL level, LEVEL depth)
                 if (ctx->bl_len & 1)
                     transpose(aux);
                 fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
-                fprintf(stdout, "Nodes: %d\n", nodes);
+                fprintf(stdout, "kNPS: %.2lf\n", (0.001 * (double) nodes / delapsed));
                 fprintf(stdout, "\n");
                 fflush(stdout);
             }
