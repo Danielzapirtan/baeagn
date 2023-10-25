@@ -1,146 +1,4 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#define _ALLOW_CASTLE (1)
-#define _C_DEPTH (4)
-#define _DEBUG (1)
-#define _GAME_LOST (800)
-#ifndef _MAXINDEX
-#define _MAXINDEX (200)
-#endif
-#define _MAXLEVEL (40)
-#define _FRAMESPERSEC (50)
-#define _NPS (70000)
-#define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
-#define _DIR "/sdcard/Files/projects/baeagn"
-#define _ERRORFILE "baeagn.err"
-#define _BRDFILE "start.brd"
-
-#define _CUSTOM (0)
-
-#if (_CUSTOM == 0)
-#define _FACTORY (1)
-#define _ALPHA (-20000)
-#define _BETA (20000)
-#define _OVERDEPTH (1)
-#define _S_DEPTH (3)
-#define _SORT
-#undef _CAND7
-#undef _CAND250
-#undef _CANDCUT (450)
-#undef _Q0BLK
-#endif
-
-#if (_CUSTOM == 1)
-#define _SAHB (1)
-#endif
-
-#ifdef _SAHB
-#define _ALPHA (-20000)
-#define _BETA (20000)
-#define _OVERDEPTH (1)
-#define _S_DEPTH (3)
-#define _SORT
-#undef _CAND7
-#undef _CAND250
-#undef _CANDCUT (450)
-#undef _Q0BLK
-#endif
-
-#ifndef _PIECE_CODES
-#define _PIECE_CODES (1)
-#define _WP (1)
-#define _WN (2)
-#define _WB (3)
-#define _WR (4)
-#define _WQ (5)
-#define _WK (6)
-#define _BP (-1)
-#define _BN (-2)
-#define _BB (-3)
-#define _BR (-4)
-#define _BQ (-5)
-#define _BK (-6)
-#define _WM (7)
-#define _BM (-7)
-#define _UO (0)
-#define _BS (-8)
-#endif
-
-typedef signed char s3;
-typedef signed short int s4;
-typedef signed int s5;
-typedef signed long long s6;
-typedef unsigned char u3;
-typedef unsigned short int u4;
-typedef unsigned int u5;
-typedef unsigned long long u6;
-
-typedef u5 NODES;
-typedef double TIME;
-typedef s3 MOVE[6];
-typedef MOVE MOVELIST[_MAXINDEX];
-typedef s3 BOARD[9][8];
-typedef s4 VALUE;
-typedef u4 LEVEL;
-typedef u4 MOVEINDEX;
-
-typedef struct {
-    int seconds;
-    int cseconds;
-    clock_t clock0;
-    clock_t clock1;
-    int diffclock;
-} ELAPSED;
-
-void init(ELAPSED *elapsed)
-{
-    elapsed->seconds = 0;
-    elapsed->cseconds = 0;
-    elapsed->clock0 = clock();
-    elapsed->clock1 = clock();
-    elapsed->diffclock = 0;
-}
-
-void update(ELAPSED *elapsed)
-{
-    elapsed->clock1 = clock();
-    elapsed->diffclock = (int) (elapsed->clock1 - elapsed->clock0) / 10000;
-    if (elapsed->diffclock < 0)
-        elapsed->diffclock =0;
-    if (elapsed->diffclock > 65536)
-        elapsed->diffclock = 0;
-    elapsed->cseconds += elapsed->diffclock;
-    elapsed->seconds += (elapsed->cseconds / 100);
-    elapsed->cseconds = elapsed->cseconds % 100;
-    elapsed->clock0 = clock();
-}
-
-double dclock(ELAPSED *elapsed)
-{
-    return (double) (elapsed->seconds) + (double) \
-        (elapsed->cseconds) / 100.0;
-}
-
-typedef struct {
-    BOARD curr_board;
-    BOARD next_board;
-    LEVEL bl_len;
-    LEVEL depth;
-    LEVEL level;
-    MOVE best_line[_MAXLEVEL];
-    MOVE curr_move;
-    MOVEINDEX curr_index;
-    MOVEINDEX max_index;
-    MOVELIST legal_moves;
-    VALUE alpha;
-    VALUE best;
-    VALUE beta;
-    VALUE value;
-} LVLCTX;
+#include "config.h"
 
 const VALUE _ALPHA_DFL    = (-20000);
 const VALUE _BETA_DFL     = (+20000);
@@ -148,54 +6,18 @@ const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
 const VALUE _VALUES[6]    = { 0, 100, 315, 325, 500, 980, };
-const LEVEL _MYLEVELS[18] = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 32, 40, 48, 64, 0, };
 
-time_t time0;
 ELAPSED elapsed;
 LEVEL gdepth;
 LEVEL glevel;
-LVLCTX *ctxa;
+TREE *treea;
+TREE *treeb;
+MOVE best_move;
 NODES nodes;
+int newpv;
+int pvsready;
 s4 gmode;
 s4 stm;
-
-void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist);
-void addprom(s5 y, s5 x, s5 y1, s5 x1, s5 to, MOVEINDEX *curr_index, MOVELIST movelist);
-void analysis(void);
-VALUE backtrack(LVLCTX *ctxa, LEVEL level, LEVEL depth);
-int board_cmp(BOARD src, BOARD dest);
-void copy_board(BOARD src, BOARD dest);
-void copy_move(MOVE src, MOVE dest);
-void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void error(const char *msg);
-VALUE eval(BOARD board, LEVEL level);
-void game_hh(void);
-void game_ch(void);
-void game_hc(void);
-void game_cc(void);
-void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void genN(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void genB(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void genR(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth);
-MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth);
-MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL level);
-BOARD *get_init(void);
-void load(BOARD start);
-s4 in_check(BOARD board);
-s4 is_pv(LEVEL level);
-void makemove(BOARD src, MOVE move, BOARD dest);
-s4 move_cmp(MOVE src, MOVE dest);
-void nonslider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
-void play_hw(BOARD board, s4 ply);
-void play_hb(BOARD board, s4 ply);
-void play_cw(BOARD board, s4 ply);
-void play_cb(BOARD board, s4 ply);
-void show_move(MOVE move, BOARD board, u5 stm, char *buf);
-void slider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
-void show_board(BOARD board, FILE *f);
-void transpose(BOARD board);
 
 void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist)
 {
@@ -228,131 +50,152 @@ void analysis(void)
     char buf[80];
     LEVEL depth;
     LEVEL i;
-    LVLCTX *ctx;
+    TREE *tree;
     s4 ix = 0;
-    //system("/system/bin/cp main2 /sdcard/");
-    //chdir(_DIR);
-    load (start);
+    load(start);
     show_board(start, stdout);
-    ctxa = (LVLCTX *) malloc (_MAXLEVEL * sizeof(LVLCTX));
-    if (!ctxa) {
+    treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
+    if (!treea) {
         error("Out of memory!");
     }
+    treeb = (TREE *) malloc(_MAXLEVEL * sizeof(TREE));
+    if (!treeb)
+        error("Out of memory");
     init(&elapsed);
-    time0 = time(NULL);
     nodes = 0;
-    for (depth = _MYLEVELS[ix]; ix < 16; depth = _MYLEVELS[++ix]) {
-        ctx = &ctxa[0];
-        copy_board(start, ctx->curr_board);
-        ctx->level = 0;
-        ctx->depth = depth + _OVERDEPTH;
-        gdepth = ctx->depth;
-        ctx->alpha = _ALPHA;
-        ctx->beta = _BETA;
-        ctx->best = backtrack(ctxa, 0, 1);
+    pvsready = 0;
+    for (depth = 1; depth < _MAXLEVEL; depth++) {
+        tree = &treea[0];
+        copy_board(start, tree->curr_board);
+        tree->level = 0;
+        tree->depth = depth + _OVERDEPTH;
+        gdepth = tree->depth;
+        tree->alpha = _ALPHA;
+        tree->beta = _BETA;
+        newpv = 0;
+        tree->best = search(treea, 0, 1);
+        pvsready = 1;
         update(&elapsed);
-        double delapsed = difftime(time(NULL), time0);
+        double delapsed = dclock(&elapsed);
         copy_board(start, aux);
-        fprintf(stdout, "Depth: %u\n", depth);
+        fprintf(stdout, "\nDepth: %u\n", depth);
         fprintf(stdout, "Evaluation: %.2lf\n", \
-            ((double) (ctx->best) / (double) _PAWNUNIT));
-        fprintf(stdout, "Branch factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
+            ((double) (tree->best) / (double) _PAWNUNIT));
+        fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
         fprintf(stdout, "Best variation: ");
-        for (i = 0; i < ctx->bl_len; i++) {
-            show_move(ctx->best_line[i], aux, (i + stm) % 2, buf);
-            makemove(aux, ctx->best_line[i], aux2);
+        for (i = 0; i < tree->bl_len; i++) {
+            show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
+            makemove(aux, tree->best_line[i], aux2);
             copy_board(aux2, aux);
             fprintf(stdout, "%s ", buf);
         }
         fprintf(stdout, "\n");
-        if (ctx->bl_len & 1)
+        if (tree->bl_len & 1)
             transpose(aux);
         fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
         fprintf(stdout, "kNPS: %.2lf\n", (0.001 * (double) nodes / delapsed));
         fprintf(stdout, "\n");
         fflush(stdout);
     }
-    free(ctxa);
+    free(treea);
+    free(treeb);
 }
 
-VALUE backtrack(LVLCTX *ctxa, LEVEL level, LEVEL depth)
+VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
 // level means distance from root
-// depth means 1 if ctxa, 0 if ctxb
+// depth means 1 if treea, 0 if treeb
 {
     BOARD aux;
     BOARD aux2;
     char buf[80];
     LEVEL bl_lev;
     LEVEL i;
-    LVLCTX *ctx;
-    LVLCTX *nctx;
+    TREE *tree;
+    TREE *ntree;
     VALUE value;
-    ctx = &ctxa[level];
-    ctx->bl_len = 0;
-    value = eval(ctx->curr_board, level);
-    if (value < -_THRESHOLD)
+    tree = &tree_[level];
+    value = eval(tree->curr_board, level);
+    if (value < -_THRESHOLD) {
         return (value);
-    if (ctx->depth == 0)
+    }
+    if (tree->depth == 0) {
         return (value);
-    if (ctx->depth <= _OVERDEPTH)
-    if (value > -(_PAWNUNIT >> 1))
+    }
+    if (tree->depth <= _OVERDEPTH)
+    if (value > -(_PAWNUNIT >> 1)) {
         return (value);
+    }
     if (depth)
         glevel = level;
-    ctx->max_index = gen(ctx->curr_board, ctx->legal_moves, depth);
-    if (ctx->max_index == 0)
+    tree->max_index = gen(tree->curr_board, tree->legal_moves, depth);
+    if (tree->max_index == 0) {
         return (-_MAXVALUE + level);
-    ctx->best = -_MAXVALUE;
-    ctx->bl_len = 1;
-    for (ctx->curr_index = 0; ctx->curr_index < ctx->max_index; (ctx->curr_index)++) {
-        fflush(stdout);
-        nctx = &ctxa[level + 1];
-        copy_move(ctx->legal_moves[ctx->curr_index], ctx->curr_move);
-        makemove(ctx->curr_board, ctx->curr_move, ctx->next_board);
-        copy_board(ctx->next_board, nctx->curr_board);
-        nctx->level = ctx->level + 1;
-        nctx->depth = ctx->depth - 1;
-        nctx->alpha = -(ctx->beta);
-        nctx->beta = -(ctx->alpha);
-        ctx->value = -backtrack(ctxa, level + 1, depth);
-        if (ctx->value > ctx->best) {
-            ctx->best = ctx->value;
-            ctx->bl_len = nctx->bl_len + 1;
-            copy_move(ctx->curr_move, ctx->best_line[0]);
-            if (nctx->bl_len > 0)
-            for (bl_lev = 0; bl_lev < nctx->bl_len; bl_lev++)
-                copy_move(nctx->best_line[bl_lev], \
-                    ctx->best_line[bl_lev + 1]);
+    }
+    tree->best = -_MAXVALUE;
+    for (tree->curr_index = 0; tree->curr_index < tree->max_index; (tree->curr_index)++) {
+        ntree = &tree_[level + 1];
+        copy_move(tree->legal_moves[tree->curr_index], tree->curr_move);
+        makemove(tree->curr_board, tree->curr_move, tree->next_board);
+        copy_board(tree->next_board, ntree->curr_board);
+#ifdef _SVP
+        if (depth)
+        if (level < 1)
+        if (tree->curr_index) {
+            ntree->level = tree->level + 1;
+            ntree->depth = tree->depth - 1;
+            ntree->alpha = -(tree->alpha) - 1;
+            ntree->beta = -(tree->alpha);
+            tree->value = -search(tree_, level + 1, depth);
+            if (tree->value <= tree->alpha)
+                continue;
+        }
+#endif
+        ntree->level = tree->level + 1;
+        ntree->depth = tree->depth - 1;
+        ntree->alpha = -(tree->beta);
+        ntree->beta = -(tree->alpha);
+        tree->value = -search(tree_, level + 1, depth);
+        if (!newpv)
+            ntree->bl_len = 0;
+        newpv = 1;
+        if (tree->value > tree->best) {
+            tree->best = tree->value;
+            tree->bl_len = ntree->bl_len + 1;
+            copy_move(tree->curr_move, tree->best_line[0]);
+            if (ntree->bl_len > 0)
+            for (bl_lev = 0; bl_lev < ntree->bl_len; bl_lev++)
+                copy_move(ntree->best_line[bl_lev], \
+                    tree->best_line[bl_lev + 1]);
             if (level == 0 && depth == 1 && gmode == 4) {
                 update(&elapsed);
-                double delapsed = difftime(time(NULL), time0);
-                copy_board(ctx->curr_board, aux);
-                fprintf(stdout, "Depth: %u*\n", ctx->depth - _OVERDEPTH);
+                double delapsed = dclock(&elapsed);
+                copy_board(treea->curr_board, aux);
+                fprintf(stdout, "\nDepth: %u*\n", treea->depth - _OVERDEPTH);
                 fprintf(stdout, "Evaluation: %.2lf\n", \
-                    ((double) ctx->best / (double) _PAWNUNIT));
-                fprintf(stdout, "Branch factor: %.2lf\n", pow((double) nodes, (double) 1 / (ctx->depth - _OVERDEPTH)));
+                    ((double) treea->best / (double) _PAWNUNIT));
+                fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
                 fprintf(stdout, "Best variation: ");
-                for (i = 0; i < ctx->bl_len; i++) {
-                    show_move(ctx->best_line[i], aux, (i + stm) % 2, buf);
-                    makemove(aux, ctx->best_line[i], aux2);
+                for (i = 0; i < treea->bl_len; i++) {
+                    show_move(treea->best_line[i], aux, (i + stm) % 2, buf);
+                    makemove(aux, treea->best_line[i], aux2);
                     copy_board(aux2, aux);
                     fprintf(stdout, "%s ", buf);
                 }
                 fprintf(stdout, "\n");
-                if (ctx->bl_len & 1)
+                if (treea->bl_len & 1)
                     transpose(aux);
                 fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
                 fprintf(stdout, "kNPS: %.2lf\n", (0.001 * (double) nodes / delapsed));
                 fprintf(stdout, "\n");
                 fflush(stdout);
             }
-            if (ctx->best > ctx->alpha)
-                ctx->alpha = ctx->best;
-            if (ctx->alpha >= ctx->beta)
-                return (ctx->beta);
+            if (tree->best > tree->alpha)
+                tree->alpha = tree->best;
+            if (tree->alpha >= tree->beta)
+                return (tree->beta);
         }
     }
-    return (ctx->best);
+    return (tree->best);
 }
 
 int board_cmp(BOARD src, BOARD dest)
@@ -435,10 +278,18 @@ VALUE eval(BOARD board, LEVEL level)
     u5 x;
     u5 y;
     VALUE pvalue = 0;
-    VALUE value = 0;
+    VALUE value;
     nodes++;
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
+        char buf[80];
+        MOVE move;
+        copy_move(treea->curr_move, move);
+        show_move(move, treea->curr_board, stm, buf);
+        MOVEINDEX curr_index = treea->curr_index;
+        MOVEINDEX max_index = treea->max_index;
+        fprintf(stderr, "\r%d %d/%d %s\033[K\r", elapsed.seconds, curr_index + 1, max_index, buf);
+        fflush(stderr);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
@@ -493,32 +344,6 @@ VALUE eval(BOARD board, LEVEL level)
         default:;
         }
     }
-#ifdef _SAHB
-    if (board[2][3] == _WP)
-        ivalue -= 434;
-    if (board[5][3] == _BP)
-        ivalue += 434;
-    if (board[3][3] == _WP)
-    if (board[4][4] != _BP)
-        ivalue += 12;
-    if (board[4][3] == _BP)
-    if (board[3][4] != _WP)
-        ivalue -= 12;
-#if 1
-    for (y = 0; y < 8; y++) {
-        if (board[y][3] == _WP)
-            break;
-        if (board[y][3] == _BP)
-            break;
-        if (y == 7) {
-        if ((level ^ stm) % 2)
-            ivalue += 230;
-        else
-            ivalue -= 230;
-        }
-    }
-#endif
-#endif
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
         u5 x1 = x;
@@ -537,18 +362,27 @@ VALUE eval(BOARD board, LEVEL level)
         return (-_MAXVALUE + level);
     }
     value = ivalue + pvalue;
-    if (ctxa[level].depth == 1) {
+#if 1
+    if (treea[level].depth == 1) {
         copy_board(board, aux);
         transpose(aux);
         if (in_check(aux))
             return (_MAXVALUE - (level + 1));
     }
-    if (ctxa[level].depth / 2 == 1)
+    if (treea[level].depth / 2 == 1) {
     if (in_check(board))
         return (-2000 + value + level);
+    if (value > treea[level].alpha) {
+        value = value * 10;
+        if (value > 1500)
+            value = 2000 - level;
+        return (value);
+        }
+    }
+#endif
     value += ((rand() % 19) - 9);
     if (level > 1)
-        return (value + (ctxa[level - 2].max_index - ctxa[level - 1].max_index));
+        return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
     return (value);
 }
 
@@ -715,45 +549,66 @@ MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL depth)
 // FIXME
 {
     MOVEINDEX max_index = gendeep(board, movelist, 1);
-#ifdef _SORT
-    if (depth == 1 && glevel < gdepth - _S_DEPTH -1) {
-    LVLCTX *ctxb;
-    MOVEINDEX curr_index;
-    MOVEINDEX ncurr_index;
-    VALUE valuelist[_MAXINDEX];
-    ctxb = (LVLCTX *) malloc(_MAXLEVEL * sizeof(LVLCTX));
-    if (!ctxb)
-        error("Out of memory");
-    for (curr_index = 0; curr_index < max_index; curr_index++) {
-        BOARD aux;
+#ifdef _PVSEARCH
+    if (pvsready)
+    if (depth)
+    if (!newpv)
+    if (glevel < treea->bl_len) {
+        for (LEVEL level = 0; level < glevel; level++)
+        if (treea[level].curr_index) {
+            printf("Skip level %d\n", level);
+            fflush(stdout);
+            goto skippvs;
+        }
         MOVE move;
-        copy_move(movelist[curr_index], move);
-        makemove(board, move, aux);
-        copy_board(aux, ctxb[0].curr_board);
-        ctxb[0].level = 0;
-        ctxb[0].depth = _S_DEPTH;
-        ctxb[0].alpha = _ALPHA_DFL;
-        ctxb[0].best = _BETA_DFL;
-        valuelist[curr_index] = -backtrack(ctxb, 0, 0);
+        MOVEINDEX curr_index;
+        copy_move(treea->best_line[glevel], move);
+        for (curr_index = 0; curr_index < max_index; curr_index++)
+        if (!move_cmp(move, movelist[curr_index]))
+            break;
+        copy_move(movelist[0], movelist[curr_index]);
+        copy_move(move, movelist[0]);
+        return max_index;
     }
-    for (curr_index = 0; curr_index < max_index; curr_index++)
-    for (ncurr_index = curr_index + 1; ncurr_index < max_index; ncurr_index++) {
-        if (valuelist[ncurr_index] > valuelist[curr_index]) {
-        MOVE move;
-        VALUE value;
-        copy_move(movelist[ncurr_index], move);
-        copy_move(movelist[curr_index], movelist[ncurr_index]);
-        copy_move(move, movelist[curr_index]);
-        value = valuelist[ncurr_index];
-        valuelist[ncurr_index] = valuelist[curr_index];
-        valuelist[curr_index] = value;
+skippvs:
+#endif
+    if (!depth)
+        return max_index;
+#ifdef _SORT
+    if (glevel < gdepth - _S_DEPTH - 1) {
+        MOVEINDEX curr_index;
+        MOVEINDEX ncurr_index;
+        VALUE valuelist[_MAXINDEX];
+        for (curr_index = 0; curr_index < max_index; curr_index++) {
+            BOARD aux;
+            MOVE move;
+            copy_move(movelist[curr_index], move);
+            makemove(board, move, aux);
+            copy_board(aux, treeb[0].curr_board);
+            treeb[0].level = 0;
+            LEVEL _s_depth = _S_DEPTH;
+            treeb[0].depth = _s_depth;
+            treeb[0].alpha = _ALPHA_DFL;
+            treeb[0].beta = _BETA_DFL;
+            valuelist[curr_index] = -search(treeb, 0, 0);
+        }
+        for (curr_index = 0; curr_index < max_index; curr_index++)
+        for (ncurr_index = curr_index + 1; ncurr_index < max_index; ncurr_index++) {
+            if (valuelist[ncurr_index] > valuelist[curr_index]) {
+            MOVE move;
+            VALUE value;
+            copy_move(movelist[ncurr_index], move);
+            copy_move(movelist[curr_index], movelist[ncurr_index]);
+            copy_move(move, movelist[curr_index]);
+            value = valuelist[ncurr_index];
+            valuelist[ncurr_index] = valuelist[curr_index];
+            valuelist[curr_index] = value;
         }
     }
-    free(ctxb);
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 7;
+        newmax_index = 2;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
@@ -788,17 +643,22 @@ BOARD *get_init(void)
 
 void load(BOARD board)
 {
+    FILE *f;
     s5 pp;
     u5 x;
     u5 y;
+    f = fopen(_BRDFILE, "r");
+    if (!f)
+        error("Cannot open .brd file for read");
     for (y = 8; y > 0; y--)
     for (x = 0; x < 8; x++) {
-        fscanf(stdin, "%d", &pp);
+        fscanf(f, "%d", &pp);
         board[y - 1][x] = (s3) pp;
     }
     for (x = 0; x < 8; x++)
         board[8][x] = (x < 4);
-    fscanf(stdin, "%d", &stm);
+    fscanf(f, "%d", &stm);
+    fclose(f);
     show_board(board, stdout);
     if (stm)
         transpose(board);
@@ -1048,22 +908,22 @@ void play_cw(BOARD start, s4 ply)
     LEVEL depth;
     MOVE move;
     depth = _C_DEPTH;
-    ctxa = (LVLCTX *) malloc ((depth + _OVERDEPTH + 1) * sizeof(LVLCTX));
+    treea = (TREE *) malloc ((depth + _OVERDEPTH + 1) * sizeof(TREE));
     nodes = 0;
-    copy_board(start, ctxa[0].curr_board);
-    ctxa[0].level = 0;
-    ctxa[0].depth = depth +_OVERDEPTH;
-    ctxa[0].alpha = -_MAXVALUE;
-    ctxa[0].beta = _MAXVALUE;
-    ctxa[0].best = backtrack(ctxa, 0, 0);
-    if (ctxa[0].best < -_GAME_LOST) {
+    copy_board(start, treea[0].curr_board);
+    treea[0].level = 0;
+    treea[0].depth = depth +_OVERDEPTH;
+    treea[0].alpha = -_MAXVALUE;
+    treea[0].beta = _MAXVALUE;
+    treea[0].best = search(treea, 0, 0);
+    if (treea[0].best < -_GAME_LOST) {
         printf("White resigns.\n");
         printf("Black wins.\n");
         fflush(stdout);
         exit(0);
     }
-    copy_move(ctxa[0].best_line[0], move);
-    free(ctxa);
+    copy_move(treea[0].best_line[0], move);
+    free(treea);
     show_move(move, start, 0, buf);
     printf("My move: %d . %s\n", ply, buf);
     fflush(stdout);
@@ -1081,22 +941,22 @@ void play_cb(BOARD start, s4 ply)
     LEVEL depth;
     MOVE move;
     depth = _C_DEPTH;
-    ctxa = (LVLCTX *) malloc ((depth + _OVERDEPTH + 1) * sizeof(LVLCTX));
+    treea = (TREE *) malloc ((depth + _OVERDEPTH + 1) * sizeof(TREE));
     nodes = 0;
-    copy_board(start, ctxa[0].curr_board);
-    ctxa[0].level = 0;
-    ctxa[0].depth = depth +_OVERDEPTH;
-    ctxa[0].alpha = -_MAXVALUE;
-    ctxa[0].beta = _MAXVALUE;
-    ctxa[0].best = backtrack(ctxa, 0, 0);
-    if (ctxa[0].best < -_GAME_LOST) {
+    copy_board(start, treea[0].curr_board);
+    treea[0].level = 0;
+    treea[0].depth = depth +_OVERDEPTH;
+    treea[0].alpha = -_MAXVALUE;
+    treea[0].beta = _MAXVALUE;
+    treea[0].best = search(treea, 0, 0);
+    if (treea[0].best < -_GAME_LOST) {
         printf("Black resigns.\n");
         printf("White wins.\n");
         fflush(stdout);
         exit(0);
     }
-    copy_move(ctxa[0].best_line[0], move);
-    free(ctxa);
+    copy_move(treea[0].best_line[0], move);
+    free(treea);
     show_move(move, start, 1, buf);
     printf("My move: %d ... %s\n", ply, buf);
     fflush(stdout);
@@ -1215,9 +1075,3 @@ void transpose(BOARD board)
     board[8][3] = t;
 }
 
-int main(int argc, char *argv[])
-{
-    gmode = 4;
-    analysis();
-    return (0);
-}
