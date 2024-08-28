@@ -18,7 +18,7 @@
 #endif
 #define _MAXLEVEL (253)
 #define _FRAMESPERSEC (32)
-#define _NPS (5 << 18)
+#define _NPS (12 << 18)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
@@ -253,8 +253,8 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     VALUE value;
     tree = &tree_[level];
     value = eval(tree->curr_board, level);
-	if (newpv)
-		tree->bl_len = 0;
+    if (newpv)
+	tree->bl_len = 0;
     if (value < -_THRESHOLD) {
         return (value);
     }
@@ -271,8 +271,8 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     if (tree->max_index == 0) {
         return (-_MAXVALUE + level);
     }
-	if (newpv)
-		tree->bl_len = 1;
+    if (newpv)
+	tree->bl_len = 1;
     tree->best = -_MAXVALUE;
     for (tree->curr_index = 0; tree->curr_index < tree->max_index; (tree->curr_index)++) {
         ntree = &tree_[level + 1];
@@ -352,11 +352,10 @@ VALUE eval(BOARD board, LEVEL level)
     VALUE pvalue = 0;
     VALUE value;
     nodes++;
-    if (nodes > (1 << 28))
+    if (nodes > 1.0e12)
 	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
-	usleep(20000);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
