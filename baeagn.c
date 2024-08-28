@@ -11,7 +11,7 @@
 #define _NOEDIT (0)
 #define _ALLOW_CASTLE (1)
 #define _C_DEPTH (3)
-#define _DEBUG (1)
+#define _DEBUG (0)
 #define _GAME_LOST (800)
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
@@ -23,7 +23,7 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-100)
+#define _ALPHA (-50)
 #define _BETA (50)
 #define _OVERDEPTH (1)
 #define _S_DEPTH (3)
@@ -186,8 +186,10 @@ void analysis(void)
     parse_pgn();
     load(start);
 #else
-//    load(start);
-    setup_board(start);
+    load(start);
+//    setup_board(start);
+//    copy_board(*get_init(), start);
+//    save(start);
 #endif
     show_board(start, stdout);
     treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
@@ -350,6 +352,8 @@ VALUE eval(BOARD board, LEVEL level)
     VALUE pvalue = 0;
     VALUE value;
     nodes++;
+    if (nodes > (1 << 28))
+	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
 	usleep(20000);
