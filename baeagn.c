@@ -23,9 +23,9 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-50)
-#define _BETA (50)
-#define _OVERDEPTH (1)
+#define _ALPHA (-150)
+#define _BETA (150)
+#define _OVERDEPTH (2)
 #define _S_DEPTH (3)
 #define _SORT
 #define _PVSEARCH
