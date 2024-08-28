@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
-#define _NOEDIT (2)
+#define _NOEDIT (0)
 #define _ALLOW_CASTLE (1)
 #define _C_DEPTH (3)
 #define _DEBUG (1)
@@ -185,8 +186,8 @@ void analysis(void)
     parse_pgn();
     load(start);
 #else
-    load(start);
-//    setup_board(start);
+//    load(start);
+    setup_board(start);
 #endif
     show_board(start, stdout);
     treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
