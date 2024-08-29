@@ -1,1 +1,1 @@
-(./baeagn |tee robw.anl &)
+(./robw robw.anl &)

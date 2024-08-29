@@ -1,5 +1,5 @@
 while true; do
 	cat robw.anl
-	ps -C baeagn
+	ps -C robw
 	sleep 15
 done
