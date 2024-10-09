@@ -23,9 +23,9 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-20000)
-#define _BETA (20000)
-#define _OVERDEPTH (0)
+#define _ALPHA (-50) // Adjusted as needed
+#define _BETA (50)
+#define _OVERDEPTH (1)
 #define _S_DEPTH (3)
 #define _SORT
 #define _PVSEARCH
@@ -356,6 +356,7 @@ VALUE eval(BOARD board, LEVEL level)
 	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
+	usleep(20000);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {

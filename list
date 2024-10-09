@@ -1,5 +1,6 @@
+game=ini
 while true; do
-	cat robw.anl
-	ps -C robw
+	cat $game.anl
+	ps -C $game
 	sleep 15
 done
