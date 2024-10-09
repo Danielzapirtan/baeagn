@@ -33,7 +33,7 @@
 #define _CAND7
 #undef _CAND250
 #define _CANDCUT (7500)
-#undef _Q0BLK
+#define _Q0BLK
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
