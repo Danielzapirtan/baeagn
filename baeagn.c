@@ -356,7 +356,7 @@ VALUE eval(BOARD board, LEVEL level)
 	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
-	usleep(20000);
+	usleep(30000);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
