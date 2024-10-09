@@ -1,6 +1,6 @@
 game=ini
 while true; do
-	cat $game.anl
+	cat /usr/local/share/baeagn/$game.anl
 	ps -C $game
 	sleep 15
 done

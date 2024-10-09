@@ -1,1 +1,1 @@
-(./ini >ini.anl &)
+(./ini >/usr/local/share/baeagn/ini.anl &)
