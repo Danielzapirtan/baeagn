@@ -10,7 +10,6 @@
 
 #define _NOEDIT (0)
 #define _ALLOW_CASTLE (1)
-#define _C_DEPTH (3)
 #define _DEBUG (0)
 #define _GAME_LOST (800)
 #ifndef _MAXINDEX
@@ -18,7 +17,7 @@
 #endif
 #define _MAXLEVEL (253)
 #define _FRAMESPERSEC (32)
-#define _NPS (12 << 18)
+#define _NPS (3 << 18)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
