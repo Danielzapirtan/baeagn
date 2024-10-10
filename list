@@ -1,4 +1,4 @@
-game=ini
+game=$1
 while true; do
 	cat /usr/local/share/baeagn/$game.anl
 	ps -C $game
