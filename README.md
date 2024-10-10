@@ -14,4 +14,15 @@ then put the engine's log in
 .
 You can view the engine's log with
     sh list
+The executable is compiled and installed by
+    sh build.sh
+as
+    /usr/local/bin/baeagn
+.
+It is handy to put symlinks in
+    /usr/local/bin
+to baeagn, for example
+    cd /usr/local/bin
+    ln -sf baeagn ini
+if we analyze the initial position (ini.brd).
 
