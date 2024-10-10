@@ -32,7 +32,7 @@
 #define _CAND7
 #undef _CAND250
 #define _CANDCUT (7500)
-#define _Q0BLK
+#define _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
