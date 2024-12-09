@@ -1,2 +1,2 @@
 export GAME=$1
-($GAME >/usr/local/share/baeagn/$GAME.anl &)
+(./baeagn >$GAME.anl &)
