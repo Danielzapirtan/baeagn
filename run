@@ -1,2 +1,2 @@
 export GAME=$1
-(./baeagn >$GAME.anl &)
+(./baeagn >/tmp/$GAME.anl &)

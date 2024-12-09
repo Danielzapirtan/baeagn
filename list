@@ -1,6 +1,6 @@
 game=$1
 while true; do
-	cat $game.anl
+	cat /tmp/$game.anl
 	ps -C baeagn
 	sleep 15
 done
