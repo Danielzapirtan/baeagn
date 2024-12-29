@@ -22,8 +22,8 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-150) // Adjusted as needed
-#define _BETA (150)
+#define _ALPHA (-20000) // Adjusted as needed
+#define _BETA (20000)
 #define _OVERDEPTH (0)
 #define _S_DEPTH (3)
 #define _SORT
@@ -32,7 +32,7 @@
 #define _CAND7
 #undef _CAND250
 #define _CANDCUT (7500)
-#define _Q0BLK // For opening phase, block Queen's moves at node root
+#undef _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
