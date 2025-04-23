@@ -1121,10 +1121,8 @@ void setup_board(BOARD board)
 
 int main(int argc, char *argv[])
 {
-    gmode = 4;
     char buf[4096];
     maxdepth = atoi(argv[1]);
-    system(buf);
     analysis();
     return (0);
 }
