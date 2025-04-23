@@ -15,7 +15,7 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (253)
+#define _MAXLEVEL (4000)
 #define _FRAMESPERSEC (32)
 #define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
@@ -276,7 +276,6 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     if (newpv)
 	tree->bl_len = 1;
     tree->best = -_MAXVALUE;
-#pragma omp parallel for
     for (tree->curr_index = 0; tree->curr_index < tree->max_index; (tree->curr_index)++) {
         ntree = &tree_[level + 1];
         copy_move(tree->legal_moves[tree->curr_index], tree->curr_move);
