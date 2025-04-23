@@ -2,13 +2,14 @@
 
 #include <assert.h>
 #include <math.h>
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
 
-#define _NOEDIT (0)
+#define _NOEDIT (1)
 #define _ALLOW_CASTLE (1)
 #define _DEBUG (0)
 #define _GAME_LOST (800)
@@ -17,22 +18,22 @@
 #endif
 #define _MAXLEVEL (253)
 #define _FRAMESPERSEC (32)
-#define _NPS (3 << 18)
+#define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-150) // Adjusted as needed
-#define _BETA (150)
-#define _OVERDEPTH (0)
-#define _S_DEPTH (3)
+#define _ALPHA (-20000) // Adjusted as needed
+#define _BETA (20000)
+#define _OVERDEPTH (2)
+#define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
 #define _CAND7
 #undef _CAND250
 #define _CANDCUT (7500)
-#define _Q0BLK // For opening phase, block Queen's moves at node root
+#undef _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
@@ -144,6 +145,7 @@ extern void show_board(BOARD board, FILE *f);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
+extern void parse_pgn(void);
 extern void save(BOARD board);
 
 const VALUE _ALPHA_DFL    = (-20000);
@@ -160,6 +162,7 @@ MOVE best_move;
 NODES nodes;
 TREE *treea;
 TREE *treeb;
+int maxdepth;
 int newpv;
 int pvsready;
 s4 gmode;
@@ -175,10 +178,7 @@ void analysis(void)
     LEVEL i;
     TREE *tree;
     s4 ix = 0;
-#if _NOEDIT == 3
-    parse_pgn();
-    exit(0);
-#elif _NOEDIT == 2
+#if _NOEDIT == 2
     parse_fen(start);
     save(start);
 #elif _NOEDIT == 1
@@ -201,7 +201,8 @@ void analysis(void)
     init(&elapsed);
     nodes = 0LL;
     pvsready = 0;
-    for (depth = _S_DEPTH + 1; depth < _MAXLEVEL; depth++) {
+    int best;
+    for (depth = _S_DEPTH + 2; depth < maxdepth + 1; depth++) {
         tree = &treea[0];
         copy_board(start, tree->curr_board);
         tree->level = 0;
@@ -233,9 +234,12 @@ void analysis(void)
         fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
         fprintf(stdout, "\n");
         fflush(stdout);
+	best = tree->best;
     }
     free(treea);
     free(treeb);
+    fflush(stdout);
+    exit(0);
 }
 
 VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
@@ -273,6 +277,7 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     if (newpv)
 	tree->bl_len = 1;
     tree->best = -_MAXVALUE;
+#pragma omp parallel for
     for (tree->curr_index = 0; tree->curr_index < tree->max_index; (tree->curr_index)++) {
         ntree = &tree_[level + 1];
         copy_move(tree->legal_moves[tree->curr_index], tree->curr_move);
@@ -339,6 +344,12 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     return (tree->best);
 }
 
+#ifndef PCSQ
+#define PCSQ pcsq
+#endif
+
+#include "pcsq.c"
+
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 VALUE eval(BOARD board, LEVEL level)
@@ -351,8 +362,6 @@ VALUE eval(BOARD board, LEVEL level)
     VALUE pvalue = 0;
     VALUE value;
     nodes++;
-    if (nodes > 1.0e12)
-	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
     }
@@ -411,14 +420,10 @@ VALUE eval(BOARD board, LEVEL level)
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
-        u5 x1 = x;
-        u5 y1 = y;
-        if (x1 > 3) x1 = 7 - x1;
-        if (y1 > 3) y1 = 7 - y1;
-        if (board[y][x] < 0)
-            pvalue -= (1 + min(x1, y1));
-        else if (board[y][x] > 0)
-            pvalue += (1 + min(x1, y1));
+	if (board[y][x] > 0)
+	    ivalue += PCSQ[board[y][x] - 1][7 - y][x];
+	else if (board[y][x] < 0)
+	    ivalue -= PCSQ[-board[y][x] - 1][y][x];
     }
     if (kings) {
     if (kings > 0)
@@ -449,6 +454,73 @@ VALUE eval(BOARD board, LEVEL level)
     if (level > 1)
         return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
     return (value);
+}
+
+void best5_static_lookahead(BOARD board, MOVELIST best5) {
+    MOVELIST moves1, moves2, moves3, moves4;
+    int count1 = gen(board, moves1, 0);
+    MOVELIST candidates_moves;
+    VALUE candidates_values[_MAXINDEX]; 
+    int ccount = 0;
+    for (int i = 0; i < count1; i++) {
+        BOARD b1, b12;
+        copy_board(board, b1);
+        makemove(b1, moves1[i], b12);
+	copy_board(b12, b1);
+        int count2 = gen(b1, moves2, 0);
+        double total_score = 0;
+        int score_count = 0;
+        for (int j = 0; j < count2; j++) {
+            BOARD b2, b23;
+            copy_board(b1, b2);
+            makemove(b2, moves2[j], b23);
+	    copy_board(b23, b2);
+            int count3 = gen(b2, moves3, 0);
+            for (int k = 0; k < count3; k++) {
+                BOARD b3, b34;
+                copy_board(b2, b3);
+                makemove(b3, moves3[k], b34);
+                copy_board(b34, b3);
+                int count4 = gen(b3, moves4, 0);
+                for (int l = 0; l < count4; l++) {
+                    BOARD b4, b44;
+                    copy_board(b3, b4);
+                    makemove(b4, moves4[l], b44);
+                    copy_board(b44, b4);
+                    VALUE evalquick = eval(b4, 3);
+                    total_score += evalquick;
+                    score_count++;
+                }
+            }
+        }
+
+        if (score_count == 0) continue;
+        VALUE avg_score = total_score / score_count;
+
+        copy_move(moves1[i], candidates_moves[ccount]);
+        candidates_values[ccount] = avg_score;
+        ccount++;
+    }
+
+    // sortare descrescătoare după scor
+    for (int i = 0; i < ccount - 1; i++) {
+        for (int j = i + 1; j < ccount; j++) {
+            if (candidates_values[j] > candidates_values[i]) {
+                MOVE temp;
+		copy_move(candidates_moves[i], temp);
+		copy_move(candidates_moves[j], candidates_moves[i]);
+		copy_move(temp, candidates_moves[j]);
+                VALUE vtemp = candidates_values[i];
+		candidates_values[i] = candidates_values[j];
+		candidates_values[j] = vtemp;
+            }
+        }
+    }
+
+    // copiem primele 5
+    for (int i = 0; i < 5 && i < ccount; i++) {
+	copy_move(candidates_moves[i], best5[i]);
+    }
 }
 
 MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL depth)
@@ -515,7 +587,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 6;
+        newmax_index = 5;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
@@ -992,7 +1064,7 @@ void show_board(BOARD board, FILE *f)
     }
         fprintf(f, "\n");
     }
-    fprintf(f, "  a  b  c  d  e  f  g  h\n");
+    fprintf(f, "@ a  b  c  d  e  f  g  h\n");
     fprintf(f, "\n");
     fflush(f);
 }
@@ -1106,6 +1178,9 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     gmode = 4;
+    char buf[4096];
+    maxdepth = atoi(argv[1]);
+    system(buf);
     analysis();
     return (0);
 }
@@ -1180,13 +1255,13 @@ end:
   else if (ch == 'b')
     stm = 1;
   else {
-      warn("Cannot set `stm' variable");
+	  stm = 0;
   }
 }
 
 void parse_pgn(void)
 {
-    if (system("pgn-extract -F start.pgn > pf") != 0) {
+    if (system("pgn-extract -w200 -F start.pgn > pf") != 0) {
         // Handle error when pgn-extract fails
         fprintf(stderr, "Error running pgn-extract\n");
         return;
