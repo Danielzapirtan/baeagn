@@ -138,7 +138,7 @@ extern void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST moveli
 extern void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth);
 extern MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth);
 extern MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL level);
-//extern BOARD *get_init(void);
+extern BOARD *get_init(void);
 extern void load(BOARD start);
 extern s4 in_check(BOARD board);
 extern s4 is_pv(LEVEL level);
@@ -789,21 +789,29 @@ void copy_move(MOVE src, MOVE dest)
         dest[u] = src[u];
 }
 
-/*BOARD *get_init(void)
+BOARD *get_init(void)
 {
-    static BOARD init = {
-        {_WR, _WN, _WB, _WQ, _WK, _WB, _WN, _WR, },
-        {_WP, _WP, _WP, _WP, _WP, _WP, _WP, _WP, },
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_BP, _BP, _BP, _BP, _BP, _BP, _BP, _BP, },
-        {_BR, _BN, _BB, _BQ, _BK, _BB, _BN, _BR, },
-        { 1, 1, 1, 1, 0, 0, 0, 0, },
-    };
-    return (&init);
-}*/
+    BOARD board;
+    FILE *f;
+    s5 pp;
+    u5 x;
+    u5 y;
+    f = fopen("ini.brd", "r");
+    if (!f)
+        warn("Cannot open .brd file for read");
+    for (y = 8; y > 0; y--)
+    for (x = 0; x < 8; x++) {
+        fscanf(f, "%d", &pp);
+        board[y - 1][x] = (s3) pp;
+    }
+    for (x = 0; x < 8; x++)
+        board[8][x] = (x < 4);
+    fscanf(f, "%d", &stm);
+    fclose(f);
+    show_board(board, stdout);
+    if (stm)
+        transpose(board);
+}
 
 void load(BOARD board)
 {
@@ -1084,8 +1092,8 @@ void setup_board(BOARD board)
 			case 68:
 				y = symbol - 61;
 				break;
-			/*case 70:
-				copy_board(*get_init(), board);*/
+			case 70:
+				copy_board(*get_init(), board);
 				break;
 			case 71:
 				load(board);
@@ -1212,7 +1220,7 @@ void parse_pgn(void)
     }
     int ch;
     BOARD board;
-    //copy_board(*get_init(), board);
+    copy_board(*get_init(), board);
     while ((ch = fgetc(f)) != '{') {}
     while ((ch = fgetc(f)) != '"') {}
     while ((ch = fgetc(f)) != '"') fputc(ch, g);
