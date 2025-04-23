@@ -67,10 +67,18 @@ typedef u6 NODES;
 typedef double TIME;
 typedef s3 MOVE[6];
 typedef MOVE MOVELIST[_MAXINDEX];
-typedef s3 BOARD[9][8];
 typedef s4 VALUE;
 typedef u4 LEVEL;
 typedef u4 MOVEINDEX;
+
+class BOARD {
+public:
+	s3 info[9][8];
+	s3 *operator [](int y) {
+		return info[y];
+	}
+	VALUE eval(LEVEL level);
+};
 
 typedef struct {
     int seconds;
@@ -122,7 +130,6 @@ extern void copy_board(BOARD src, BOARD dest);
 extern void copy_move(MOVE src, MOVE dest);
 extern void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void warn(const char *msg);
-extern VALUE eval(BOARD board, LEVEL level);
 extern void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void genN(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void genB(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
@@ -131,7 +138,7 @@ extern void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST moveli
 extern void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth);
 extern MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth);
 extern MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL level);
-extern BOARD *get_init(void);
+//extern BOARD *get_init(void);
 extern void load(BOARD start);
 extern s4 in_check(BOARD board);
 extern s4 is_pv(LEVEL level);
@@ -185,9 +192,6 @@ void analysis(void)
     load(start);
 #else
     load(start);
-//    setup_board(start);
-//    copy_board(*get_init(), start);
-//    save(start);
 #endif
     show_board(start, stdout);
     treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
@@ -254,7 +258,7 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     TREE *ntree;
     VALUE value;
     tree = &tree_[level];
-    value = eval(tree->curr_board, level);
+    value = tree->curr_board.eval(level);
     if (newpv)
 	tree->bl_len = 0;
     if (value < -_THRESHOLD) {
@@ -351,7 +355,7 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
 
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
-VALUE eval(BOARD board, LEVEL level)
+VALUE BOARD::eval(LEVEL level)
 {
     BOARD aux;
     int ivalue = 0;
@@ -366,7 +370,7 @@ VALUE eval(BOARD board, LEVEL level)
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
-        switch (board[y][x]) {
+        switch ((*this)[y][x]) {
         case _WP:
             switch (y) {
             case 1:
@@ -387,7 +391,7 @@ VALUE eval(BOARD board, LEVEL level)
         case _WB:
         case _WR:
         case _WQ:
-            ivalue += _VALUES[(u5) board[y][x]];
+            ivalue += _VALUES[(u5) (*this)[y][x]];
             break;
         case _BP:
             switch (y) {
@@ -410,7 +414,7 @@ VALUE eval(BOARD board, LEVEL level)
         case _BB:
         case _BR:
         case _BQ:
-            ivalue -= _VALUES[(u5) (-board[y][x])];
+            ivalue -= _VALUES[(u5) (-(*this)[y][x])];
             break;
         case _WK: kings++; break;
         case _BK: kings--; break;
@@ -419,10 +423,10 @@ VALUE eval(BOARD board, LEVEL level)
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
-	if (board[y][x] > 0)
-	    ivalue += PCSQ[board[y][x] - 1][7 - y][x];
-	else if (board[y][x] < 0)
-	    ivalue -= PCSQ[-board[y][x] - 1][y][x];
+	if ((*this)[y][x] > 0)
+	    ivalue += PCSQ[(*this)[y][x] - 1][7 - y][x];
+	else if ((*this)[y][x] < 0)
+	    ivalue -= PCSQ[-(*this)[y][x] - 1][y][x];
     }
     if (kings) {
     if (kings > 0)
@@ -433,13 +437,13 @@ VALUE eval(BOARD board, LEVEL level)
     value = ivalue + pvalue;
 #if 1
     if (treea[level].depth == 1) {
-        copy_board(board, aux);
+        copy_board((*this), aux);
         transpose(aux);
         if (in_check(aux))
             return (_MAXVALUE - (level + 1));
     }
     if (treea[level].depth / 2 == 1) {
-    if (in_check(board))
+    if (in_check((*this)))
         return (-2000 + value + level);
     if (value > treea[level].alpha) {
         value = value * 10;
@@ -785,7 +789,7 @@ void copy_move(MOVE src, MOVE dest)
         dest[u] = src[u];
 }
 
-BOARD *get_init(void)
+/*BOARD *get_init(void)
 {
     static BOARD init = {
         {_WR, _WN, _WB, _WQ, _WK, _WB, _WN, _WR, },
@@ -799,7 +803,7 @@ BOARD *get_init(void)
         { 1, 1, 1, 1, 0, 0, 0, 0, },
     };
     return (&init);
-}
+}*/
 
 void load(BOARD board)
 {
@@ -1080,8 +1084,8 @@ void setup_board(BOARD board)
 			case 68:
 				y = symbol - 61;
 				break;
-			case 70:
-				copy_board(*get_init(), board);
+			/*case 70:
+				copy_board(*get_init(), board);*/
 				break;
 			case 71:
 				load(board);
@@ -1208,7 +1212,7 @@ void parse_pgn(void)
     }
     int ch;
     BOARD board;
-    copy_board(*get_init(), board);
+    //copy_board(*get_init(), board);
     while ((ch = fgetc(f)) != '{') {}
     while ((ch = fgetc(f)) != '"') {}
     while ((ch = fgetc(f)) != '"') fputc(ch, g);
