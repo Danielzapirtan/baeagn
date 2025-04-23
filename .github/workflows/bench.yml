@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential pgn-extract
+        sudo apt-get install -y build-essential pgn-extract clang-tools
         
     - name: Build project
       run: |
