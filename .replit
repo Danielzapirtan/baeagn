@@ -1,8 +1,0 @@
-modules = ["c-clang14", "bash"]
-run = "sh run"
-
-[nix]
-channel = "stable-24_05"
-
-[deployment]
-run = ["sh", "-c", "sh run start"]
