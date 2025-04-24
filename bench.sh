@@ -1,9 +1,10 @@
 #! /bin/bash
 
-BOARD=$1
+PGN=$1
 DEPTH=$2
-echo $BOARD $DEPTH
+echo "$PGN" $DEPTH
 ulimit -t 21000
-ln -sf pgn/$BOARD.pgn start.pgn
-baeagn $DEPTH | tee $BOARD.d$DEPTH.anl
+rm -r start.pgn
+echo "$PGN" >start.pgn
+baeagn $DEPTH | tee start.d$DEPTH.anl
 

@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         depths: [6, 10, 12, 13]
-        boards: ["ini"]
+        PGN: ["*"]
       # Ensure all matrix jobs are reported, even if one fails
       fail-fast: false
     
@@ -40,13 +40,14 @@ jobs:
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
 
     - name: Run benchmarks
-      run: ./bench.sh "$BOARD" "$DEPTH"
+      run: ./bench.sh "$PGN" "$DEPTH"
       env:
-        BOARD: ${{ matrix.boards }}
+        PGN: ${{ PGN }}
         DEPTH: ${{ matrix.depths }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-${{ matrix.boards }}-${{ matrix.depths }}
-        path: ${{ matrix.boards }}.d${{ matrix.depths }}.anl
+        name: analysis-ini-${{ matrix.depths }}
+        path: ini.d${{ matrix.depths }}.anl
+

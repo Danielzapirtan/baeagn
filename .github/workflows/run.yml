@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         depths: [6, 10, 12, 13]
-        boards: [ ${{ game_code }} ]
+        boards: [ ${{ start }} ]
       # Ensure all matrix jobs are reported, even if one fails
       fail-fast: false
     
@@ -45,9 +45,9 @@ jobs:
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
 
     - name: Run benchmarks
-      run: ./bench.sh "$BOARD" "$DEPTH"
+      run: ./bench.sh "$PGN" "$DEPTH"
       env:
-        BOARD: ${{ matrix.boards }}
+        PGN: ${{ PGN }}
         DEPTH: ${{ matrix.depths }}
         
     - name: Upload analysis files
