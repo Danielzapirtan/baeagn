@@ -14,8 +14,8 @@ jobs:
     
     strategy:
       matrix:
-        depths: [6, 10, 12, 13, 14, 15, 16, 17]
-        boards: ["artw"]
+        depths: [6, 10, 12, 13]
+        boards: ["ini"]
       # Ensure all matrix jobs are reported, even if one fails
       fail-fast: false
     
