@@ -1,15 +1,11 @@
 name: Analysis
 
 on:
-#  push:
-#    branches: [ "main" ]
-#  pull_request:
-#    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   build-and-test:
-    name: Analysis
+    name: Computing Variations
     runs-on: ubuntu-latest
     
     strategy:
@@ -25,11 +21,12 @@ jobs:
     
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential pgn-extract clang-tools
+        sudo apt update
+        sudo apt install -y build-essential pgn-extract clang-tools
         
     - name: Build project
       run: |
+        test -f build.sh || (echo "File build.sh not found" && exit 1)
         chmod +x build.sh
         ./build.sh || echo "Compilation error"
         
