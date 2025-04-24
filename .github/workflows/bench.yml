@@ -1,18 +1,15 @@
-name: Analysis
+name: Benchmark for Baeagn chess analysis engine
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
-    name: Computing Variations
+  analyze:
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
         depths: [6, 10, 12, 13]
-        PGN: ["*"]
-      # Ensure all matrix jobs are reported, even if one fails
       fail-fast: false
     
     steps:
@@ -40,14 +37,10 @@ jobs:
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
 
     - name: Run benchmarks
-      run: ./bench.sh "$PGN" "$DEPTH"
-      env:
-        PGN: ${{ PGN }}
-        DEPTH: ${{ matrix.depths }}
+      run: ./bench.sh "\*" ${{ matrix.depths }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-ini-${{ matrix.depths }}
+        name: analysis-start-${{ matrix.depths }}
         path: ini.d${{ matrix.depths }}.anl
-
