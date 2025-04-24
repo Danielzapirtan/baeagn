@@ -10,7 +10,7 @@ on:
       PGN:
         description: "Fill PGN text:"
         required: true
-        type: text
+        type: string
 
 jobs:
   build-and-test:
