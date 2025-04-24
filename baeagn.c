@@ -22,8 +22,8 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-30) // Adjust as needed
-#define _BETA (70)
+#define _ALPHA (-50) // Adjust as needed
+#define _BETA (100)
 #define _OVERDEPTH (2)
 #define _S_DEPTH (4)
 #define _SORT
@@ -185,9 +185,6 @@ void analysis(void)
     load(start);
 #else
     load(start);
-//    setup_board(start);
-//    copy_board(*get_init(), start);
-//    save(start);
 #endif
     show_board(start, stdout);
     treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
