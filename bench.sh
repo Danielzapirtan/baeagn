@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PGN=$1
+PGN="$1"
 DEPTH=$2
 echo "$PGN" $DEPTH
 ulimit -t 21000
