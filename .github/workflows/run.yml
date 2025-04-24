@@ -3,14 +3,10 @@ name: Run
 on:
   workflow_dispatch:
     inputs:
-      game_code:
-        description: "Enter Game Code:"
-        required: true
-        type: string
       PGN:
         description: "Fill PGN text:"
-        required: true
-        type: string
+          required: true
+          type: string
 
 jobs:
   build-and-test:
