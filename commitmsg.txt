@@ -1,2 +1,0 @@
-Tune alpha/beta windows.
-Optimize for initial position.
