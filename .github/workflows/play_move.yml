@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       pgn:
-        description: "Fill PGN text"
+        description: "PGN text of the game to analyze"
         required: true
+        type: string
+      initial_position:
+        description: "Optional FEN of initial position (for non-standard positions)"
+        required: false
         type: string
 
 jobs:
@@ -41,8 +45,21 @@ jobs:
     - name: Check for benchmark script
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
 
+    - name: Save PGN to file
+      run: |
+        mkdir -p input
+        echo "${{ inputs.pgn }}" > input/game.pgn
+        if [ -n "${{ inputs.initial_position }}" ]; then
+          echo "${{ inputs.initial_position }}" > input/initial.fen
+        fi
+
     - name: Run benchmarks
-      run: ./bench.sh "${{ inputs.pgn }}" ${{ matrix.depths }}
+      run: |
+        if [ -f input/initial.fen ]; then
+          ./bench.sh input/game.pgn ${{ matrix.depths }} --fen input/initial.fen
+        else
+          ./bench.sh input/game.pgn ${{ matrix.depths }}
+        fi
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
