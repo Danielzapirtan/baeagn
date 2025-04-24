@@ -42,5 +42,5 @@ jobs:
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-start-${{ matrix.depths }}
+        name: analysis-ini-${{ matrix.depths }}
         path: ini.d${{ matrix.depths }}.anl
