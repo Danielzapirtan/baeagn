@@ -42,14 +42,10 @@ jobs:
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
 
     - name: Run benchmarks
-      run: ./bench.sh "$pgn" "$depth"
-      env:
-        pgn: ${{ pgn }}
-        depth: ${{ matrix.depths }}
+      run: ./bench.sh "${{ inputs.pgn }}" ${{ matrix.depths }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
         name: analysis-start-${{ matrix.depths }}
         path: start.d${{ matrix.depths }}.anl
-
