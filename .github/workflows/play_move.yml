@@ -6,7 +6,7 @@ on:
       pgn:
         description: "Fill PGN text"
         required: true
-        type: text
+        type: string
 
 jobs:
   analyze:
