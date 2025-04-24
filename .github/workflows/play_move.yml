@@ -2,12 +2,11 @@ name: Computing Variations for Correspondence
 
 on:
   workflow_dispatch:
-
-inputs:
-  pgn:
-    description: "Fill PGN text"
-    required: true
-    type: string
+    inputs:
+      pgn:
+        description: "Fill PGN text"
+        required: true
+        type: string
 
 jobs:
   build-and-test:
