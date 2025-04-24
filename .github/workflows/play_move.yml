@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  build-and-test:
+  analyze:
     runs-on: ubuntu-latest
     
     strategy:
