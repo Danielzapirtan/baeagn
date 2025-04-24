@@ -9,38 +9,34 @@ jobs:
     
     strategy:
       matrix:
-        depths: [6, 10, 12, 13]
+        depths: [64]
       fail-fast: false
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential pgn-extract clang-tools
-        
+        sudo apt install -y build-essential clang-tools pgn-extract
     - name: Build project
       run: |
         test -f build.sh || (echo "File build.sh not found" && exit 1)
         chmod +x build.sh
         ./build.sh || echo "Compilation error"
-        
     - name: Verify binary exists
       run: test -f baeagn || (echo "Binary not found" && exit 1)
-      
     - name: Install binary
       run: sudo install -m 0755 baeagn /usr/local/bin
-      
     - name: Check for benchmark script
       run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
-
     - name: Run benchmarks
-      run: ./bench.sh "\*" ${{ matrix.depths }}
-        
+      run: |
+        ulimit -t 180
+        ./bench.sh "*" ${{ matrix.depths }}
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
         name: analysis-ini-${{ matrix.depths }}
         path: ini.d${{ matrix.depths }}.anl
+
