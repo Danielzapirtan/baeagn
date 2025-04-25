@@ -7,10 +7,6 @@ on:
         description: "PGN text of the game to analyze"
         required: true
         type: string
-      initial_position:
-        description: "Optional FEN of initial position (for non-standard positions)"
-        required: false
-        type: string
 
 jobs:
   analyze:
@@ -49,17 +45,10 @@ jobs:
       run: |
         mkdir -p input
         echo "${{ inputs.pgn }}" > input/game.pgn
-        if [ -n "${{ inputs.initial_position }}" ]; then
-          echo "${{ inputs.initial_position }}" > input/initial.fen
-        fi
 
     - name: Run benchmarks
       run: |
-        if [ -f input/initial.fen ]; then
-          ./bench.sh input/game.pgn ${{ matrix.depths }} --fen input/initial.fen
-        else
-          ./bench.sh input/game.pgn ${{ matrix.depths }}
-        fi
+        ./bench.sh input/game.pgn ${{ matrix.depths }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
