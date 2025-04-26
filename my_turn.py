@@ -1,6 +1,6 @@
 import requests
 
-username = "YourExactUsername"  # ← Replace with your real username (case-sensitive!)
+username = "AntoniuDanielZapirtan"  # ← Replace with your real username (case-sensitive!)
 url = f"https://api.chess.com/pub/player/{username}/games"
 
 def is_my_turn(game, username):
