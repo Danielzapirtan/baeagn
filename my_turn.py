@@ -1,6 +1,6 @@
 import requests
 
-username = "yourUsername"
+username = "AntoniuDanielZapirtan"
 url = f"https://api.chess.com/pub/player/{username}/games/to-move"
 
 response = requests.get(url)
