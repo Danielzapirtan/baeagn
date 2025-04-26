@@ -1,7 +1,7 @@
 import requests
 import time
 
-username = "AntoniuDanielZapirtan"  # ← Case-sensitive!
+username = "antoniudanielzapirtan"  # ← Case-sensitive!
 url = f"https://api.chess.com/pub/player/{username}/games/to-move"
 
 try:
