@@ -22,8 +22,8 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-50) // Adjust as needed
-#define _BETA (100)
+#define _ALPHA (-20000) // Adjust as needed
+#define _BETA (20000)
 #define _OVERDEPTH (2)
 #define _S_DEPTH (4)
 #define _SORT
@@ -147,8 +147,8 @@ extern void parse_fen(BOARD board);
 extern void parse_pgn(void);
 extern void save(BOARD board);
 
-const VALUE _ALPHA_DFL    = (-150);
-const VALUE _BETA_DFL     = (+150);
+const VALUE _ALPHA_DFL    = (-20000);
+const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
