@@ -44,7 +44,7 @@ jobs:
     - name: Save PGN to file
       run: |
         mkdir -p input
-        cp -a pgn/"${{ inputs.game_symbol }}".pgn > input/game.pgn
+        cp -a pgn/"${{ inputs.game_symbol }}".pgn input/game.pgn
 
     - name: Run benchmarks
       run: |
