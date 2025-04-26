@@ -1,0 +1,28 @@
+name: Consistency Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Consistency Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential clang-tools pgn-extract
+    - name: Build project
+      run: |
+        chmod +x build.sh
+        ./build.sh || (echo "Compilation error" && exit 1)
+    - name: Verify binary exists
+      run: test -f baeagn || (echo "Binary not found" && exit 1)
+    - name: Install binary
+      run: sudo install -m 0755 baeagn /usr/local/bin
+    - name: Check for benchmark script
+      run: test -f bench.sh || (echo "Benchmark script not found" && exit 1)
+
