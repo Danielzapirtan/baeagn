@@ -1,11 +1,10 @@
 #! /bin/bash
 
-PGN="$1"
-DEPTH=$2
-GAMESYMBOL=$3
-echo "$PGN" $DEPTH
+DEPTH=$1
+GAMESYMBOL=$2
+echo $GAMESYMBOL $DEPTH
 ulimit -t 21000
-rm -r start.pgn
-cp input/game.pgn start.pgn
+rm -rf start.pgn
+cp pgn/$GAMESYMBOL.pgn start.pgn
 baeagn $DEPTH | tee $GAMESYMBOL.d$DEPTH.anl
 
