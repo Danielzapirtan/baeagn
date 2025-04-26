@@ -57,5 +57,5 @@ jobs:
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-start-${{ matrix.depths }}
-        path: start.d${{ matrix.depths }}.anl
+        name: analysis-${{ inputs.game_symbol }}-${{ matrix.depths }}
+        path: ${{ inputs.game_symbol }}.d${{ matrix.depths }}.anl
