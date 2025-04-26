@@ -1,4 +1,4 @@
-name: Computing Variations for Correspondence
+name: CalVar
 
 on:
   workflow_dispatch:
