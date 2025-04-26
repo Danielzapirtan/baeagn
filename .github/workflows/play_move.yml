@@ -3,10 +3,6 @@ name: Computing Variations for Correspondence
 on:
   workflow_dispatch:
     inputs:
-      pgn:
-        description: "PGN text of the game to analyze"
-        required: true
-        type: string
       game_symbol:
         description: "Game symbol"
         required: true
@@ -48,7 +44,7 @@ jobs:
     - name: Save PGN to file
       run: |
         mkdir -p input
-        echo "${{ inputs.pgn }}" > input/game.pgn
+        cp -a pgn/"${{ inputs.game_symbol }}".pgn > input/game.pgn
 
     - name: Run benchmarks
       run: |
@@ -57,5 +53,6 @@ jobs:
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-${{ inputs.game_symbol }}-${{ matrix.depths }}
+        name: analysis-${{ inputs.game_symbol }}-${{ matrix.depths }} 
         path: ${{ inputs.game_symbol }}.d${{ matrix.depths }}.anl
+      
