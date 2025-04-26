@@ -7,6 +7,10 @@ on:
         description: "PGN text of the game to analyze"
         required: true
         type: string
+      game_symbol:
+        description: "Game symbol"
+        required: true
+        type: string
 
 jobs:
   analyze:
@@ -48,7 +52,7 @@ jobs:
 
     - name: Run benchmarks
       run: |
-        ./bench.sh input/game.pgn ${{ matrix.depths }}
+        ./bench.sh input/game.pgn ${{ matrix.depths }} ${{ inputs.game_symbol }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
