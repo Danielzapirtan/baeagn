@@ -14,7 +14,7 @@ jobs:
     
     strategy:
       matrix:
-        depths: [6, 10, 12, 13]
+        depths: [6, 12, 13, 14]
       fail-fast: false
     
     steps:
@@ -48,7 +48,7 @@ jobs:
 
     - name: Run benchmarks
       run: |
-        ./bench.sh input/game.pgn ${{ matrix.depths }} ${{ inputs.game_symbol }}
+        ./bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
