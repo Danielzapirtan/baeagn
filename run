@@ -1,2 +1,0 @@
-export GAME=$1
-(./baeagn >$GAME.anl &)

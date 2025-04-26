@@ -1,0 +1,160 @@
+8 r  n  b  q  k  b  n  r 
+7 p  p  p  p  p  p  p  p 
+6 .  .  .  .  .  .  .  . 
+5 .  .  .  .  .  .  .  . 
+4 .  .  .  .  .  .  .  . 
+3 .  .  .  .  .  .  .  . 
+2 P  P  P  P  P  P  P  P 
+1 R  N  B  Q  K  B  N  R 
+  a  b  c  d  e  f  g  h
+
+8 r  n  b  q  k  b  n  r 
+7 p  p  p  p  p  p  p  p 
+6 .  .  .  .  .  .  .  . 
+5 .  .  .  .  .  .  .  . 
+4 .  .  .  .  .  .  .  . 
+3 .  .  .  .  .  .  .  . 
+2 P  P  P  P  P  P  P  P 
+1 R  N  B  Q  K  B  N  R 
+  a  b  c  d  e  f  g  h
+
+Depth: 4*
+Evaluation: -0.24
+Branching factor: 7.15
+Best variation: a2a3 e7e5 a3a4 Bf8c5 
+Elapsed: 0.00
+NPS: 3276035
+
+Depth: 4*
+Evaluation: -0.18
+Branching factor: 8.47
+Best variation: a2a4 e7e5 g2g3 e5e4 
+Elapsed: 0.00
+NPS: 3263659
+
+Depth: 4*
+Evaluation: -0.17
+Branching factor: 9.39
+Best variation: b2b3 e7e5 e2e4 Ke8e7 
+Elapsed: 0.00
+NPS: 3223602
+
+Depth: 4*
+Evaluation: -0.11
+Branching factor: 10.67
+Best variation: d2d3 e7e6 d3d4 g7g5 
+Elapsed: 0.00
+NPS: 3261581
+
+Depth: 4*
+Evaluation: -0.09
+Branching factor: 11.22
+Best variation: d2d4 e7e6 e2e4 Bf8c5 
+Elapsed: 0.00
+NPS: 3261532
+
+Depth: 4*
+Evaluation: -0.06
+Branching factor: 12.21
+Best variation: e2e4 d7d5 e4e5 Bc8d7 
+Elapsed: 0.01
+NPS: 3214099
+
+Depth: 4
+Evaluation: -0.06
+Branching factor: 12.52
+Best variation: e2e4 d7d5 e4e5 Bc8d7 
+Elapsed: 0.01
+NPS: 3166645
+
+Depth: 5*
+Evaluation: 1.09
+Branching factor: 9.17
+Best variation: e2e4 e7e5 Qd1g4 c7c5 Qg4xg7 
+Elapsed: 0.02
+NPS: 3191721
+
+Depth: 5*
+Evaluation: 1.10
+Branching factor: 10.28
+Best variation: e2e3 e7e5 Qd1g4 Bf8d6 Qg4xg7 
+Elapsed: 0.04
+NPS: 3254482
+
+Depth: 5
+Evaluation: 1.10
+Branching factor: 10.38
+Best variation: e2e3 e7e5 Qd1g4 Bf8d6 Qg4xg7 
+Elapsed: 0.04
+NPS: 3258536
+
+Depth: 6*
+Evaluation: -0.88
+Branching factor: 8.23
+Best variation: e2e3 e7e6 Qd1h5 Qd8f6 c2c4 Qf6xf2+ 
+Elapsed: 0.09
+NPS: 3277884
+
+Depth: 6
+Evaluation: -0.88
+Branching factor: 10.65
+Best variation: e2e3 e7e6 Qd1h5 Qd8f6 c2c4 Qf6xf2+ 
+Elapsed: 0.79
+NPS: 1850738
+
+Depth: 7*
+Evaluation: 1.09
+Branching factor: 8.68
+Best variation: e2e3 d7d5 Qd1h5 Qd8d6 Bf1b5+ c7c6 Qh5xh7 
+Elapsed: 1.43
+NPS: 2602325
+
+Depth: 7
+Evaluation: 1.09
+Branching factor: 9.31
+Best variation: e2e3 d7d5 Qd1h5 Qd8d6 Bf1b5+ c7c6 Qh5xh7 
+Elapsed: 2.05
+NPS: 2960761
+
+Depth: 8*
+Evaluation: -0.91
+Branching factor: 8.06
+Best variation: e2e3 e7e6 Qd1f3 Qd8e7 Qf3g4 Qe7c5 Ng1f3 Qc5xc2 
+Elapsed: 5.30
+NPS: 3348556
+
+Depth: 8
+Evaluation: -0.91
+Branching factor: 8.72
+Best variation: e2e3 e7e6 Qd1f3 Qd8e7 Qf3g4 Qe7c5 Ng1f3 Qc5xc2 
+Elapsed: 9.52
+NPS: 3496393
+
+Depth: 9*
+Evaluation: 1.04
+Branching factor: 7.55
+Best variation: e2e3 c7c6 a2a4 Qd8b6 c2c3 Qb6c5 Qd1f3 Qc5e5 Qf3xc6 
+Elapsed: 22.58
+NPS: 3538040
+
+Depth: 9
+Evaluation: 1.04
+Branching factor: 7.97
+Best variation: e2e3 c7c6 a2a4 Qd8b6 c2c3 Qb6c5 Qd1f3 Qc5e5 Qf3xc6 
+Elapsed: 36.83
+NPS: 3508449
+
+Depth: 10*
+Evaluation: -0.96
+Branching factor: 7.00
+Best variation: e2e3 e7e6 Qd1h5 Bf8d6 Qh5g4 Qd8f6 Bf1b5 a7a6 Bb5e2 Bd6xh2 
+Elapsed: 79.53
+NPS: 3531454
+
+Depth: 10
+Evaluation: -0.96
+Branching factor: 7.39
+Best variation: e2e3 e7e6 Qd1h5 Bf8d6 Qh5g4 Qd8f6 Bf1b5 a7a6 Bb5e2 Bd6xh2 
+Elapsed: 136.35
+NPS: 3582384
+
