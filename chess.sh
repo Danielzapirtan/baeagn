@@ -6,7 +6,7 @@ url=https://api.chess.com/pub/player/$username/games
 
 date +%H:%M
 gh run list | grep in_progress >$tempfile
-cat $tempfile | tail -n 6
+cat $tempfile | tail -n 6 | cut -f 1,7-9
 cat $tempfile | wc  -l
 curl "$url" 2>/dev/null | jq -r '.games[].turn' > /tmp/turn.txt
 for n in $(seq 1 $(cat /tmp/turn.txt|wc -l)); do
