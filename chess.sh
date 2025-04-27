@@ -13,5 +13,11 @@ curl $url 2>/dev/null | sed -e "s/daily/\n/g" | wc -l
 # Replace with your Chess.com API URL
 API_URL="https://api.chess.com/pub/player/antoniudanielzapirtan/games"
 
-# Fetch JSON data and extract PGN values
-curl -s "$API_URL" | jq -r '.games[].pgn'
+#curl -s "$API_URL" | jq -r '.games[].pgn'
+
+# Fetch JSON data and process games where it's your turn
+curl -s "$API_URL" | jq -r '
+  .games[] | 
+  select(.turn == "antoniudanielzapirtan") | 
+  "[\(.opponent.username), \(.color)]"
+'
