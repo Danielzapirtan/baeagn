@@ -1,7 +1,7 @@
 import requests
 
 # Replace with your Chess.com API URL
-API_URL = "https://api.chess.com/pub/player/YOUR_USERNAME/games"
+API_URL = "https://api.chess.com/pub/player/antoniudanielzapirtan/games/"
 
 response = requests.get(API_URL)
 if response.status_code == 200:
