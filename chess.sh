@@ -20,7 +20,7 @@ white)
 	;;
 esac
 who=$(echo $who | grep -o "[[:alnum:]]\+$")
-	if echo $who | grep -iq antoniudanielzapirtan; then
+	if echo $who | grep -iq $username; then
 		echo -n "Game $n\t"
 		echo -n "$(curl "$url" 2>/dev/null | jq -r '.games[].white' | head -n $n|tail -n 1 | grep -o "[[:alnum:]]\+$") - "
 		curl "$url" 2>/dev/null | jq -r '.games[].black' | head -n $n|tail -n 1 | grep -o "[[:alnum:]]\+$"
