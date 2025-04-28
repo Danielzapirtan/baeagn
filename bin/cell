@@ -6,4 +6,4 @@ sudo apt install -y git
 rm -rf $PROJECT
 git clone https://github.com/Danielzapirtan/$PROJECT.git
 cd $HOME/$PROJECT
-cp -a $HOME/cell .
+cp -a $HOME/cell bin
