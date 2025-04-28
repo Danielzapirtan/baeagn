@@ -1,0 +1,23 @@
+#! /bin/bash
+
+PROJECT=baeagn
+#export GH_TOKEN=ghp_EcUHYwGb9XHIAL4t8bVxqllSGzZGjM08x5L9
+export GH_TOKEN=ghp_NHa87w7gPPWzuS7loGpA1eer8Kzl1e47xDtr
+git config --global credential.helper store
+git config --global user.email antoniudanielzapirtan@gmail.com
+git config --global user.name Danielzapirtan
+git config --global credential.helper store
+cd $HOME
+sudo apt install -y build-essential clang git pgn-extract
+rm -rf $PROJECT
+git clone https://github.com/Danielzapirtan/$PROJECT.git
+cd $HOME/$PROJECT
+cp -a $HOME/cell .
+git add .
+git commit -mm <<END
+Danielzapirtan
+ghp_NHa87w7gPPWzuS7loGpA1eer8Kzl1e47xDtr
+END
+sh build.sh
+sudo install -m 0755 -s baeagn /usr/local/bin
+limit -t 1000
