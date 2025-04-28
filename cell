@@ -8,15 +8,8 @@ git config --global user.email antoniudanielzapirtan@gmail.com
 git config --global user.name Danielzapirtan
 git config --global credential.helper store
 cd $HOME
-sudo apt install -y build-essential clang git pgn-extract
+sudo apt install -y git
 rm -rf $PROJECT
 git clone https://github.com/Danielzapirtan/$PROJECT.git
 cd $HOME/$PROJECT
 cp -a $HOME/cell .
-git add .
-git commit -mm <<END
-Danielzapirtan
-ghp_NHa87w7gPPWzuS7loGpA1eer8Kzl1e47xDtr
-END
-sh build.sh
-sudo install -m 0755 -s baeagn /usr/local/bin
