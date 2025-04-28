@@ -1,12 +1,6 @@
 #! /bin/bash
 
 PROJECT=baeagn
-#export GH_TOKEN=ghp_EcUHYwGb9XHIAL4t8bVxqllSGzZGjM08x5L9
-#export GH_TOKEN=ghp_NHa87w7gPPWzuS7loGpA1eer8Kzl1e47xDtr
-git config --global credential.helper store
-git config --global user.email antoniudanielzapirtan@gmail.com
-git config --global user.name Danielzapirtan
-git config --global credential.helper store
 cd $HOME
 sudo apt install -y git
 rm -rf $PROJECT
