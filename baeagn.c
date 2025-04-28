@@ -8,7 +8,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define _NOEDIT (2)
+#define _NOEDIT (1)
 #define _ALLOW_CASTLE (1)
 #define _DEBUG (0)
 #define _GAME_LOST (800)
@@ -1190,7 +1190,7 @@ end:
   else if (ch == 'b')
     stm = 1;
   else {
-	  stm = 0;
+    stm = 0;
   }
 }
 
