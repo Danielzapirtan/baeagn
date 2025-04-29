@@ -46,7 +46,7 @@ jobs:
         mkdir -p input
         cp -a pgn/${{ inputs.game_symbol }}.pgn input/game.pgn
 
-    - name: Run benchmarks
+    - name: Run benchmarks ${{ inputs.game_symbol }}
       run: |
         bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
         
