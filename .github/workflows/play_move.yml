@@ -1,4 +1,4 @@
-name: CalVar ${{ inputs.game_symbol }}
+name: CalVar
 
 on:
   workflow_dispatch:
