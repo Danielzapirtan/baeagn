@@ -27,3 +27,9 @@ who=$(echo $who | grep -o "[[:alnum:]]\+$")
 	fi
 done
 
+for id in $(gh run list -L 3 | cut -f 7); do
+	for job in $(gh run view $id | grep -o "\<4[0-9]*\>"|head -n 1); do
+		gh run view --job $job
+	done;
+done | grep "Run benchmarks" | grep -o "....$" | fmt
+
