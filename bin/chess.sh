@@ -7,7 +7,7 @@ url=https://api.chess.com/pub/player/$username/games
 date +%H:%M
 gh run list | grep in_progress >$tempfile
 cat $tempfile | tail -n 6 | cut -f 1,7-9
-cat $tempfile | wc  -l
+k=$(cat $tempfile | wc  -l)
 curl "$url" 2>/dev/null | jq -r '.games[].turn' > /tmp/turn.txt
 for n in $(seq 1 $(cat /tmp/turn.txt|wc -l)); do
 	turn=$(cat /tmp/turn.txt | head -n $n | tail -n 1)
@@ -27,7 +27,7 @@ who=$(echo $who | grep -o "[[:alnum:]]\+$")
 	fi
 done
 
-for id in $(gh run list -L 3 | cut -f 7); do
+for id in $(gh run list -L $k | cut -f 7); do
 	for job in $(gh run view $id | grep -o "\<4[0-9]*\>"|head -n 1); do
 		gh run view --job $job
 	done;
