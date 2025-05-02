@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import subprocess
 import time
 import os
+import sys
 import chess
 import chess.pgn
 from io import StringIO
@@ -34,16 +35,8 @@ def pgn_to_fen(pgn_text):
         print(f"Error converting PGN to FEN: {e}")
         return None
 
-@app.route('/')
-def index():
-    return render_template('index.html', fen=get_current_fen())
-
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    data = request.json
-    depth = int(data.get('depth', 3))
-    fen = data.get('fen', '')
-    pgn = data.get('pgn', '')
+def analyze(pgn):
+    depth = 64
     
     # If PGN is provided, convert it to FEN
     if pgn:
@@ -67,24 +60,13 @@ def analyze():
     # Save the FEN to start.fen
     save_fen(fen)
     
-    # Start the timer
-    start_time = time.time()
-    
-    try:
-        # Call the engine
-        result = subprocess.run(
-            ['./baeagn', str(depth)],
-            input=fen,
-            text=True,
-            capture_output=True,
-        )
-        return result
+    result = subprocess.run(
+        ['./baeagn', str(depth)],
+        input=fen,
+        text=True
+    )
         
-    except Exception as e:
-        return jsonify({
-            'error': str(e),
-            'time': round(time.time() - start_time, 2)
-        }), 500
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    pgn = sys.argv[1]
+    analyze(pgn)
+
