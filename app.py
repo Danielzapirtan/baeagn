@@ -12,12 +12,12 @@ HTML = """
     <title>Baeagn Chess Engine</title>
 </head>
 <body>
-    <h1>Analyze PGN with Baeagn</h1>
+    <h1>Analyze FEN with Baeagn</h1>
     <form method="POST">
         <label for="depth">Depth:</label>
-        <input type="number" name="depth" value="3" min="1" required><br><br>
-        <label for="pgn">PGN (or leave empty to use ./start.pgn):</label><br>
-        <textarea name="pgn" rows="10" cols="50"></textarea><br>
+        <input type="number" name="depth" value="10" min="6" required><br><br>
+        <label for="fen">FEN (or leave empty to use ./start.fen):</label><br>
+        <textarea name="fen" rows="10" cols="50"></textarea><br>
         <button type="submit">Analyze</button>
     </form>
     {% if result %}
@@ -33,12 +33,12 @@ def analyze():
     result = None
     if request.method == 'POST':
         depth = request.form['depth']
-        pgn = request.form['pgn'].strip()
+        fen = request.form['fen'].strip()
         
-        # Write PGN to ./start.pgn if provided
-        if pgn:
-            with open('start.pgn', 'w') as f:
-                f.write(pgn)
+        # Write FEN to ./start.fen if provided
+        if fen:
+            with open('start.fen', 'w') as f:
+                f.write(fen)
         
         # Run Baeagn engine
         cmd = ['./baeagn', depth]
@@ -48,4 +48,4 @@ def analyze():
     return render_template_string(HTML, result=result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080, debug=True)
