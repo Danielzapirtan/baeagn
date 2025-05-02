@@ -80,11 +80,11 @@ def analyze():
             timeout=300  # timeout after 30 seconds
         )
         
-        if result.returncode != 0:
-            return jsonify({
-                'error': f'Engine error: {result.stderr}',
-                'time': round(time.time() - start_time, 2)
-            }), 500
+#        if result.returncode != 0:
+#            return jsonify({
+#                'error': f'Engine error: {result.stderr}',
+#                'time': round(time.time() - start_time, 2)
+#            }), 500
         
         # Parse the engine output
         engine_output = result.stdout.strip()
