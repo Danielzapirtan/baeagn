@@ -77,7 +77,7 @@ def analyze():
             input=fen,
             text=True,
             capture_output=True,
-            timeout=30  # timeout after 30 seconds
+            timeout=300  # timeout after 30 seconds
         )
         
         if result.returncode != 0:
