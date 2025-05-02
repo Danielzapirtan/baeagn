@@ -6,8 +6,6 @@ import chess
 import chess.pgn
 from io import StringIO
 
-app = Flask(__name__)
-
 # Ensure the start.fen file exists
 if not os.path.exists('start.fen'):
     with open('start.fen', 'w') as f:
