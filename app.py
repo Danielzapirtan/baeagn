@@ -1,51 +1,121 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, render_template, request, jsonify
 import subprocess
+import time
 import os
+import chess
+import chess.pgn
+from io import StringIO
 
 app = Flask(__name__)
 
-# HTML template for the UI
-HTML = """
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Baeagn Chess Engine</title>
-</head>
-<body>
-    <h1>Analyze FEN with Baeagn</h1>
-    <form method="POST">
-        <label for="depth">Depth:</label>
-        <input type="number" name="depth" value="11" min="6" required><br><br>
-        <label for="fen">FEN (or leave empty to use ./start.fen):</label><br>
-        <textarea name="fen" rows="10" cols="50"></textarea><br>
-        <button type="submit">Analyze</button>
-    </form>
-    {% if result %}
-    <h2>Result:</h2>
-    <pre>{{ result }}</pre>
-    {% endif %}
-</body>
-</html>
-"""
+# Ensure the start.fen file exists
+if not os.path.exists('start.fen'):
+    with open('start.fen', 'w') as f:
+        f.write('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
 
-@app.route('/', methods=['GET', 'POST'])
+def get_current_fen():
+    with open('start.fen', 'r') as f:
+        return f.read().strip()
+
+def save_fen(fen):
+    with open('start.fen', 'w') as f:
+        f.write(fen)
+
+def pgn_to_fen(pgn_text):
+    try:
+        game = chess.pgn.read_game(StringIO(pgn_text))
+        if game is None:
+            return None
+        board = game.board()
+        for move in game.mainline_moves():
+            board.push(move)
+        return board.fen()
+    except Exception as e:
+        print(f"Error converting PGN to FEN: {e}")
+        return None
+
+@app.route('/')
+def index():
+    return render_template('index.html', fen=get_current_fen())
+
+@app.route('/analyze', methods=['POST'])
 def analyze():
-    result = None
-    if request.method == 'POST':
-        depth = request.form['depth']
-        fen = request.form['fen'].strip()
-        
-        # Write FEN to ./start.fen if provided
-        if fen:
-            with open('start.fen', 'w') as f:
-                f.write(fen)
-        
-        # Run Baeagn engine
-        cmd = ['./baeagn', depth]
-        process = subprocess.run(cmd, capture_output=True, text=True)
-        result = process.stdout
+    data = request.json
+    depth = int(data.get('depth', 3))
+    fen = data.get('fen', '')
+    pgn = data.get('pgn', '')
     
-    return render_template_string(HTML, result=result)
+    # If PGN is provided, convert it to FEN
+    if pgn:
+        converted_fen = pgn_to_fen(pgn)
+        if converted_fen:
+            fen = converted_fen
+        else:
+            return jsonify({'error': 'Invalid PGN'}), 400
+    
+    if not fen:
+        fen = get_current_fen()
+    else:
+        save_fen(fen)
+    
+    # Validate FEN
+    try:
+        board = chess.Board(fen)
+    except ValueError:
+        return jsonify({'error': 'Invalid FEN'}), 400
+    
+    # Save the FEN to start.fen
+    save_fen(fen)
+    
+    # Start the timer
+    start_time = time.time()
+    
+    try:
+        # Call the engine
+        result = subprocess.run(
+            ['./baeagn', str(depth)],
+            input=fen,
+            text=True,
+            capture_output=True,
+            timeout=30  # timeout after 30 seconds
+        )
+        
+        if result.returncode != 0:
+            return jsonify({
+                'error': f'Engine error: {result.stderr}',
+                'time': round(time.time() - start_time, 2)
+            }), 500
+        
+        # Parse the engine output
+        engine_output = result.stdout.strip()
+        best_move = None
+        score = None
+        
+        # Simple parsing - adjust based on your engine's output format
+        for line in engine_output.split('\n'):
+            if 'bestmove' in line.lower():
+                best_move = line.split()[-1]
+            elif 'score' in line.lower():
+                score = line.split()[-1]
+        
+        return jsonify({
+            'fen': fen,
+            'best_move': best_move,
+            'score': score,
+            'engine_output': engine_output,
+            'time': round(time.time() - start_time, 2)
+        })
+        
+    except subprocess.TimeoutExpired:
+        return jsonify({
+            'error': 'Analysis timed out',
+            'time': round(time.time() - start_time, 2)
+        }), 500
+    except Exception as e:
+        return jsonify({
+            'error': str(e),
+            'time': round(time.time() - start_time, 2)
+        }), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(debug=True)
