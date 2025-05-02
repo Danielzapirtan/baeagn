@@ -41,9 +41,12 @@ def index():
 @app.route('/analyze', methods=['POST'])
 def analyze():
     data = request.json
-    depth = int(data.get('depth', 3))
+    depth = int(data.get('depth', 10))  # Default depth 10
     fen = data.get('fen', '')
     pgn = data.get('pgn', '')
+    
+    # Validate depth (6-15)
+    depth = max(6, min(15, depth))
     
     # If PGN is provided, convert it to FEN
     if pgn:
@@ -71,26 +74,46 @@ def analyze():
     start_time = time.time()
     
     try:
-        # Call the engine
+        # Call the engine with increased timeout (60 seconds)
         result = subprocess.run(
             ['./baeagn', str(depth)],
             input=fen,
             text=True,
             capture_output=True,
-            timeout=300  # timeout after 30 seconds
+            timeout=60  # timeout after 60 seconds
         )
         
-        return result.stdout
+        elapsed_time = round(time.time() - start_time, 2)
         
-    except subprocess.TimeoutExpired:
+        if result.returncode != 0:
+            return jsonify({
+                'error': f'Engine error: {result.stderr}',
+                'time': elapsed_time,
+                'stdout': result.stdout,
+                'stderr': result.stderr
+            }), 500
+        
+        # Return the complete stdout without parsing
         return jsonify({
-            'error': 'Analysis timed out',
-            'time': round(time.time() - start_time, 2)
-        }), 500
+            'fen': fen,
+            'stdout': result.stdout,
+            'stderr': result.stderr,
+            'time': elapsed_time
+        })
+        
+    except subprocess.TimeoutExpired as e:
+        elapsed_time = round(time.time() - start_time, 2)
+        return jsonify({
+            'stdout': e.stdout.decode('utf-8') if e.stdout else '',
+            'stderr': e.stderr.decode('utf-8') if e.stderr else '',
+            'time': elapsed_time,
+            'message': 'Analysis completed (time limit reached)'
+        })
     except Exception as e:
+        elapsed_time = round(time.time() - start_time, 2)
         return jsonify({
             'error': str(e),
-            'time': round(time.time() - start_time, 2)
+            'time': elapsed_time
         }), 500
 
 if __name__ == '__main__':
