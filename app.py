@@ -77,40 +77,9 @@ def analyze():
             input=fen,
             text=True,
             capture_output=True,
-            timeout=300  # timeout after 30 seconds
         )
+        return result
         
-#        if result.returncode != 0:
-#            return jsonify({
-#                'error': f'Engine error: {result.stderr}',
-#                'time': round(time.time() - start_time, 2)
-#            }), 500
-        
-        # Parse the engine output
-        engine_output = result.stdout.strip()
-        best_move = None
-        score = None
-        
-        # Simple parsing - adjust based on your engine's output format
-        for line in engine_output.split('\n'):
-            if 'bestmove' in line.lower():
-                best_move = line.split()[-1]
-            elif 'score' in line.lower():
-                score = line.split()[-1]
-        
-        return jsonify({
-            'fen': fen,
-            'best_move': best_move,
-            'score': score,
-            'engine_output': engine_output,
-            'time': round(time.time() - start_time, 2)
-        })
-        
-    except subprocess.TimeoutExpired:
-        return jsonify({
-            'error': 'Analysis timed out',
-            'time': round(time.time() - start_time, 2)
-        }), 500
     except Exception as e:
         return jsonify({
             'error': str(e),
