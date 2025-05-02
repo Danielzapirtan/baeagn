@@ -15,7 +15,7 @@ HTML = """
     <h1>Analyze FEN with Baeagn</h1>
     <form method="POST">
         <label for="depth">Depth:</label>
-        <input type="number" name="depth" value="10" min="6" required><br><br>
+        <input type="number" name="depth" value="11" min="6" required><br><br>
         <label for="fen">FEN (or leave empty to use ./start.fen):</label><br>
         <textarea name="fen" rows="10" cols="50"></textarea><br>
         <button type="submit">Analyze</button>
