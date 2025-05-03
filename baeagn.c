@@ -8,7 +8,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define _NOEDIT (1)
+#define _NOEDIT (2)
 #define _ALLOW_CASTLE (1)
 #define _DEBUG (0)
 #define _GAME_LOST (800)
@@ -233,7 +233,7 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
-	if (delapsed >= 8000.00) {
+	if (delapsed >= 300.00) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
 		exit(0);
@@ -1113,9 +1113,7 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     gmode = 4;
-    char buf[4096];
     maxdepth = atoi(argv[1]);
-    system(buf);
     analysis();
     return (0);
 }

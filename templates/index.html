@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Analysis App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Chess Analysis</h1>
+        
+        <div class="chessboard-container">
+            <div id="board" style="width: 400px"></div>
+        </div>
+        
+        <div class="controls">
+            <div class="input-group">
+                <label for="fen">FEN:</label>
+                <textarea id="fen" rows="3">{{ fen }}</textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="pgn">PGN:</label>
+                <textarea id="pgn" rows="5"></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label for="depth">Depth:</label>
+                <select id="depth">
+		    <option value="9">9</option>
+                    <option value="11" selected>11</option>
+                </select>
+            </div>
+            
+            <button id="analyze-btn">Analyze</button>
+            <button id="reset-btn">Reset Board</button>
+        </div>
+        
+        <div class="output">
+            <div id="timer">Time: 0.00s</div>
+            <div id="status">Ready</div>
+            <pre id="engine-output"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the chessboard
+        const board = Chessboard('board', {
+            position: '{{ fen }}',
+            draggable: true,
+            onDrop: (source, target) => {
+                // Update FEN when pieces are moved
+                updateFEN();
+            }
+        });
+        
+        // Initialize chess.js game
+        const game = new Chess();
+        game.load('{{ fen }}');
+        
+        // Update FEN from the board
+        function updateFEN() {
+            const fen = board.fen();
+            $('#fen').val(fen);
+            game.load(fen);
+        }
+        
+        // Update board from FEN
+        function updateBoard() {
+            try {
+                const fen = $('#fen').val().trim();
+                game.load(fen);
+                board.position(fen);
+                $('#status').text('Position loaded').removeClass('error');
+            } catch (e) {
+                $('#status').text('Invalid FEN').addClass('error');
+            }
+        }
+        
+        // Update board from PGN
+        function updateFromPGN() {
+            const pgn = $('#pgn').val().trim();
+            if (!pgn) return;
+            
+            $.ajax({
+                url: '/analyze',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ pgn: pgn, depth: 1 }), // Depth 1 just to get FEN
+                success: function(response) {
+                    if (response.fen) {
+                        $('#fen').val(response.fen);
+                        updateBoard();
+                    }
+                },
+                error: function(xhr) {
+                    $('#status').text('Invalid PGN: ' + xhr.responseJSON.error).addClass('error');
+                }
+            });
+        }
+        
+        // Analyze position
+        $('#analyze-btn').click(function() {
+            const fen = $('#fen').val().trim();
+            const pgn = $('#pgn').val().trim();
+            const depth = $('#depth').val();
+            
+            $('#status').text('Analyzing...').removeClass('error');
+            $('#engine-output').text('');
+            const startTime = Date.now();
+            
+            // Update timer
+            const timerInterval = setInterval(() => {
+                const elapsed = (Date.now() - startTime) / 1000;
+                $('#timer').text('Time: ' + elapsed.toFixed(2) + 's');
+            }, 100);
+            
+            $.ajax({
+                url: '/analyze',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ fen: fen, pgn: pgn, depth: depth }),
+                success: function(response) {
+                    clearInterval(timerInterval);
+                    $('#timer').text('Time: ' + response.time + 's');
+                    
+                    if (response.error) {
+                        $('#status').text('Error: ' + response.error).addClass('error');
+                    } else {
+                        $('#status').text('Analysis complete');
+                        $('#engine-output').text(response.engine_output);
+                        
+                        // Update FEN if it changed (from PGN)
+                        if (response.fen && response.fen !== fen) {
+                            $('#fen').val(response.fen);
+                            updateBoard();
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    clearInterval(timerInterval);
+                    $('#status').text('Error: ' + xhr.responseJSON.error).addClass('error');
+                }
+            });
+        });
+        
+        // Reset board to starting position
+        $('#reset-btn').click(function() {
+            board.start();
+            updateFEN();
+        });
+        
+        // Update board when FEN changes
+        $('#fen').on('change input', function() {
+            updateBoard();
+        });
+        
+        // Update board when PGN changes
+        $('#pgn').on('change input', function() {
+            updateFromPGN();
+        });
+    </script>
+</body>
+</html>

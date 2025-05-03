@@ -24,7 +24,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install -y build-essential pgn-extract clang-tools
+        sudo apt install -y build-essential pgn-extract clang-tools pychess
+        pip3 install python-chess
         
     - name: Build project
       run: |
