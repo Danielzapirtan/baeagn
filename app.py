@@ -6,6 +6,8 @@ import chess
 import chess.pgn
 from io import StringIO
 
+timelimit = 600
+
 # Ensure the start.fen file exists
 if not os.path.exists('start.fen'):
     with open('start.fen', 'w') as f:
@@ -58,12 +60,13 @@ def analyze(pgn):
     save_fen(fen)
     
     result = subprocess.run(
-        ['./baeagn', str(depth)],
+        ['./baeagn', str(timelimit)],
         input=fen,
         text=True
     )
         
 if __name__ == '__main__':
     pgn = sys.argv[1]
+    timelimit = sys.argv[2]
     analyze(pgn)
 
