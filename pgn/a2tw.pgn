@@ -1,17 +1,13 @@
 [Event "1000-1200 - Round 2"]
 [Site "Chess.com"]
-[Date "2025.04.24"]
-[Round "?"]
+[Date "2025-04-25"]
 [White "AntoniuDanielZapirtan"]
 [Black "A2thaLex"]
 [Result "*"]
+[WhiteElo "1267"]
+[BlackElo "1064"]
 [TimeControl "1/259200"]
-[WhiteElo "1229"]
-[BlackElo "1054"]
-[Termination "unterminated"]
-[ECO "C60"]
-[Link "https://www.chess.com/game/daily/805925526"]
-
+[EndDate "2025-05-07"]
 1. e4 e5 2. Nf3 Nc6 3. Bb5 Qf6 4. h3 a6 5. Ba4 Bc5 6. Nc3 Nge7 7. Bxc6 Nxc6 8.
 Nd5 Qd6 9. d3 Nd4 10. Nxe5 Qxe5 11. Bf4 Nxc2+ 12. Qxc2 Bb4+ 13. Kf1 Qd4 14. Bg5
-O-O 15. Nxb4 Qxb4 16. a4 h6 *
+O-O 15. Nxb4 Qxb4 16. a4 h6 17. Qd2 Qd4 *
