@@ -1,9 +1,9 @@
 #! /bin/bash
 
-DEPTH=$1
+TIMELIMIT=$1
 GAMESYMBOL=$2
-echo $GAMESYMBOL $DEPTH
+echo $GAMESYMBOL $TIMELIMIT
 rm -rf start.pgn
 cp pgn/$GAMESYMBOL.pgn start.pgn
-python3 app.py "$(cat start.pgn)" | tee $GAMESYMBOL.d$DEPTH.anl
+python3 app.py "$(cat start.pgn)" $TIMELIMIT | tee $GAMESYMBOL.anl
 
