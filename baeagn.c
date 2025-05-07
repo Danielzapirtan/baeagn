@@ -106,6 +106,7 @@ extern TREE *treeb;
 extern MOVE best_move;
 extern NODES nodes;
 extern int newpv;
+int timelimit = 600;
 extern int pvsready;
 extern s4 gmode;
 extern s4 stm;
@@ -198,7 +199,7 @@ void analysis(void)
     nodes = 0LL;
     pvsready = 0;
     int best;
-    for (depth = _S_DEPTH + 2; depth < maxdepth + 1; depth++) {
+    for (depth = _S_DEPTH + 2; depth < _MAXLEVEL + 1; depth++) {
         tree = &treea[0];
         copy_board(start, tree->curr_board);
         tree->level = 0;
@@ -233,7 +234,7 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
-	if (delapsed >= 300.00) {
+	if (delapsed >= (double) timelimit) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
 		exit(0);
@@ -1113,7 +1114,7 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     gmode = 4;
-    maxdepth = atoi(argv[1]);
+    timelimit = atoi(argv[1]);
     analysis();
     return (0);
 }
