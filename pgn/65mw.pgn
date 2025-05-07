@@ -1,19 +1,15 @@
 [Event "1000-1200 - Round 2"]
 [Site "Chess.com"]
-[Date "2025.04.24"]
-[Round "?"]
+[Date "2025-04-25"]
 [White "AntoniuDanielZapirtan"]
-[Black "BrokenSchool"]
+[Black "65mal64"]
 [Result "*"]
+[WhiteElo "1267"]
+[BlackElo "1156"]
 [TimeControl "1/259200"]
-[WhiteElo "1229"]
-[BlackElo "1067"]
-[Termination "unterminated"]
-[ECO "C61"]
-[Link "https://www.chess.com/game/daily/805925496"]
-
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. c3 a6 6. Bc4 b5 7. Bb3 dxc3 8.
-Nxc3 Bb7 9. Qh5 Qe7 10. O-O Nf6 11. Qf5 h6 12. e5 Nh7 13. Bd5 Rb8 14. Bxb7 Rxb7
-15. Nd5 Qg5 16. Qxg5 Nxg5 17. d3 c6 18. Ne3 Bc5 19. Nf5 O-O 20. d4 Bb6 21. a4 d5
-22. axb5 axb5 23. Rd1 Ne6 24. Be3 Kh7 25. Rdc1 Rc7 26. Ra6 Rb8 27. Ra3 b4 28.
-Rd3 Ra8 29. g4 c5 30. dxc5 Bxc5 31. Bxc5 Nxc5 *
+[EndDate "2025-05-07"]
+1. e4 e5 2. Nf3 d6 3. Bc4 Be7 4. d4 Bg4 5. dxe5 dxe5 6. Bxf7+ Kxf7 7. Nxe5+ Ke8
+8. Qxd8+ Bxd8 9. Nxg4 Nc6 10. O-O Nf6 11. Nxf6+ Bxf6 12. c3 Rd8 13. Bf4 Rd7 14.
+Na3 Rf8 15. Rad1 Rff7 16. Rxd7 Rxd7 17. Re1 g5 18. Bg3 Kd8 19. Kf1 h5 20. e5 Bg7
+21. e6 Rd2 22. Nc4 Rd5 23. h4 Bf6 24. hxg5 Bxg5 25. Ne5 Nxe5 26. Rxe5 Rxe5 27.
+Bxe5 Bc1 *
