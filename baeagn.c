@@ -367,6 +367,9 @@ VALUE eval(BOARD board, LEVEL level)
     nodes++;
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
+	double delapsed = dclock(&elapsed);
+	if (delapsed >= 21.0e3)
+		exit(0);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
