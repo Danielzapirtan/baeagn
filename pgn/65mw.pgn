@@ -5,7 +5,7 @@
 [Black "65mal64"]
 [Result "*"]
 [WhiteElo "1297"]
-[BlackElo "1152"]
+[BlackElo "1142"]
 [TimeControl "1/259200"]
 [EndDate "2025-05-09"]
 1. e4 e5 2. Nf3 d6 3. Bc4 Be7 4. d4 Bg4 5. dxe5 dxe5 6. Bxf7+ Kxf7 7. Nxe5+ Ke8
@@ -13,4 +13,4 @@
 Na3 Rf8 15. Rad1 Rff7 16. Rxd7 Rxd7 17. Re1 g5 18. Bg3 Kd8 19. Kf1 h5 20. e5 Bg7
 21. e6 Rd2 22. Nc4 Rd5 23. h4 Bf6 24. hxg5 Bxg5 25. Ne5 Nxe5 26. Rxe5 Rxe5 27.
 Bxe5 Bc1 28. Bf6+ Ke8 29. c4 Bxb2 30. Bxb2 Ke7 31. Be5 Kxe6 32. Bxc7 Kf5 33. Ke2
-Ke4 *
+Ke4 34. f4 Kd4 *
