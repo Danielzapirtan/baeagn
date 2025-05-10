@@ -4,7 +4,8 @@
 [White "AntoniuDanielZapirtan"]
 [Black "BrokenSchool"]
 [Result "*"]
-[WhiteElo "1297"]
+[WhiteElo "1314"]
 [BlackElo "1090"]
 [TimeControl "1/259200"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nc3 a6 *
+[EndDate "2025-05-10"]
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nc3 a6 5. Bd3 Nc6 *
