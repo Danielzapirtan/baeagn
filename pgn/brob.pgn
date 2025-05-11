@@ -1,16 +1,12 @@
-[Event "Let\\'s Play!"]
+[Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025.05.09"]
-[Round "?"]
+[Date "2025-05-09"]
 [White "BrokenSchool"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
+[WhiteElo "1090"]
+[BlackElo "1314"]
 [TimeControl "1/259200"]
-[WhiteElo "1081"]
-[BlackElo "1297"]
-[Termination "unterminated"]
-[ECO "A45"]
-[Link "https://www.chess.com/game/daily/811955060"]
-
+[EndDate "2025-05-11"]
 1. d4 Nf6 2. Bf4 c5 3. e3 Qb6 4. Qc1 cxd4 5. c3 dxc3 6. Nxc3 Nc6 7. Nf3 d6 8.
-Be2 e5 9. Bg3 *
+Be2 e5 9. Bg3 Bd7 10. O-O *
