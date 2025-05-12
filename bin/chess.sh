@@ -4,6 +4,8 @@ tempfile=/tmp/gh.tmp
 username=antoniudanielzapirtan
 url=https://api.chess.com/pub/player/$username/games
 
+ping -c 1 8.8.8.8 &>/dev/null || exit 1
+
 date +%H:%M
 gh run list | grep in_progress >$tempfile
 cat $tempfile | tail -n 6 | cut -f 1,7-9
