@@ -23,8 +23,8 @@ jobs:
     
     - name: Install dependencies
       run: |
-        apt update
-        apt install -y build-essential pgn-extract clang-tools pychess
+        #apt update
+        #apt install -y build-essential pgn-extract clang-tools pychess
         pip3 install python-chess
         
     - name: Build project
@@ -36,8 +36,8 @@ jobs:
     - name: Verify binary exists
       run: test -f baeagn || (echo "Binary not found" && exit 1)
       
-    - name: Install binary
-      run: install -m 0755 baeagn /usr/local/bin
+#    - name: Install binary
+#      run: install -m 0755 baeagn /usr/local/bin
       
     - name: Check for benchmark script
       run: test -f bin/bench.sh || (echo "Benchmark script not found" && exit 1)
