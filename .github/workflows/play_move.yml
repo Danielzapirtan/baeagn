@@ -25,7 +25,9 @@ jobs:
       run: |
         #apt update
         #apt install -y build-essential pgn-extract clang-tools pychess
-        #pip3 install python-chess
+        python3 -m venv venv
+        source venv/bin/activate
+        pip3 install python-chess
         
     - name: Build project
       run: |
