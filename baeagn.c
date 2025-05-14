@@ -427,10 +427,12 @@ VALUE eval(BOARD board, LEVEL level)
 	else if (board[y][x] < 0)
 	    ivalue -= PCSQ[-board[y][x] - 1][y][x];
     }
+#if 0
     if (board[7][4] == 4 || board[7][4] == 5)
 	    ivalue += 642;
     if (board[0][4] == -4 || board[0][4] == -5)
 	    ivalue -= 642;
+#endif
     if (kings) {
     if (kings > 0)
         return ( _MAXVALUE - level);
