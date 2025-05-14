@@ -198,7 +198,7 @@ void analysis(void)
     nodes = 0LL;
     pvsready = 0;
     int best;
-    for (depth = _S_DEPTH + 2; depth < maxdepth + 1; depth++) {
+    for (depth = _S_DEPTH + 2; depth < 65; depth++) {
         tree = &treea[0];
         copy_board(start, tree->curr_board);
         tree->level = 0;
@@ -233,11 +233,11 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
-	if (delapsed >= 1500.00) {
+	/*if (delapsed >= 1500.00) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
 		exit(0);
-	}
+	}*/
     }
     free(treea);
     free(treeb);
