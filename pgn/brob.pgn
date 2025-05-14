@@ -4,10 +4,10 @@
 [White "BrokenSchool"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1105"]
-[BlackElo "1326"]
+[WhiteElo "1102"]
+[BlackElo "1333"]
 [TimeControl "1/259200"]
-[EndDate "2025-05-13"]
+[EndDate "2025-05-14"]
 1. d4 Nf6 2. Bf4 c5 3. e3 Qb6 4. Qc1 cxd4 5. c3 dxc3 6. Nxc3 Nc6 7. Nf3 d6 8.
 Be2 e5 9. Bg3 Bd7 10. O-O Qa5 11. Qc2 a6 12. Rfd1 Qc7 13. Rd2 Bg4 14. Rad1 Bh5
-15. Nd5 Nxd5 16. Rxd5 h6 17. Qf5 *
+15. Nd5 Nxd5 16. Rxd5 h6 17. Qf5 Bxf3 18. Bxf3 Ne7 19. Qh5 g6 20. Qg4 *
