@@ -36,30 +36,30 @@ def analyze(pgn):
     depth = 64
     
     # If PGN is provided, convert it to FEN
-    if pgn:
-        converted_fen = pgn_to_fen(pgn)
-        if converted_fen:
-            fen = converted_fen
-        else:
-            return jsonify({'error': 'Invalid PGN'}), 400
+#    if pgn:
+#        converted_fen = pgn_to_fen(pgn)
+#        if converted_fen:
+#            fen = converted_fen
+#        else:
+#            return jsonify({'error': 'Invalid PGN'}), 400
     
-    if not fen:
-        fen = get_current_fen()
-    else:
-        save_fen(fen)
+#    if not fen:
+#        fen = get_current_fen()
+#    else:
+#        save_fen(fen)
     
     # Validate FEN
-    try:
-        board = chess.Board(fen)
-    except ValueError:
-        return jsonify({'error': 'Invalid FEN'}), 400
+#    try:
+#        board = chess.Board(fen)
+#    except ValueError:
+#        return jsonify({'error': 'Invalid FEN'}), 400
     
     # Save the FEN to start.fen
-    save_fen(fen)
+#    save_fen(fen)
     
     result = subprocess.run(
         ['./baeagn', str(depth)],
-        input=fen,
+        input=pgn,
         text=True
     )
         
