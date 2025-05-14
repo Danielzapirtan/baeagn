@@ -51,7 +51,7 @@ jobs:
 
     - name: Run benchmarks ${{ inputs.game_symbol }}
       run: |
-        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }} &
+        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
         cpulimit -e baeagn -l 20
         
     - name: Upload analysis files
