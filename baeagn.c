@@ -152,7 +152,7 @@ const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
-const VALUE _VALUES[6]    = { 0, 100, 315, 325, 500, 980, };
+const VALUE _VALUES[6]    = { 0, 100, 400, 325, 600, 980, };
 
 ELAPSED elapsed;
 LEVEL gdepth;
