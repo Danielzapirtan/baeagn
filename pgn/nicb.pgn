@@ -6,4 +6,6 @@
 [Result "*"]
 [WhiteElo "1351"]
 [BlackElo "1339"]
-[TimeControl "1/259200"]*
+[TimeControl "1/259200"]
+
+*
