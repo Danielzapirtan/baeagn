@@ -11,7 +11,7 @@ on:
 jobs:
   analyze:
     runs-on: self-hosted
-    timeout-minutes: 420
+    timeout-minutes: 4320
     
     strategy:
       matrix:
