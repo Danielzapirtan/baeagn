@@ -4,9 +4,9 @@
 [White "Hakeboom"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1100"]
-[BlackElo "1326"]
+[WhiteElo "1111"]
+[BlackElo "1339"]
 [TimeControl "1/259200"]
-[EndDate "2025-05-13"]
+[EndDate "2025-05-16"]
 1. e4 c5 2. Nf3 d6 3. Nc3 e5 4. Bb5+ Bd7 5. d3 Bxb5 6. Nxb5 Nd7 7. c4 h6 8. O-O
-Qc8 9. a4 Be7 10. g3 *
+Qc8 9. a4 Be7 10. g3 Kf8 11. h4 *
