@@ -1,1 +1,12 @@
-1. e4 c5 2. Nf3 d6 3. Nc3 *
+[Event "1000-1200 - Round 2"]
+[Site "Chess.com"]
+[Date "2025-04-25"]
+[White "Hakeboom"]
+[Black "AntoniuDanielZapirtan"]
+[Result "*"]
+[WhiteElo "1096"]
+[BlackElo "1339"]
+[TimeControl "1/259200"]
+[EndDate "2025-05-22"]
+1. e4 c5 2. Nf3 d6 3. Nc3 e5 4. Bb5+ Bd7 5. d3 Bxb5 6. Nxb5 Nd7 7. c4 h6 8. O-O
+Qc8 9. a4 Be7 10. g3 Kf8 11. h4 a5 12. Be3 Ngf6 13. Nd2 Nb6 14. b3 Qh3 15. Qf3 *
