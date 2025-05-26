@@ -27,9 +27,11 @@ who=$(echo $who | grep -o "[[:alnum:]]\+$")
 	fi
 done
 
+if echo $k|grep -qv "^0$"; then
 for id in $(gh run list -L $k | cut -f 7); do
 	for job in $(gh run view $id | grep -o "\<4[0-9]\{10\}\>"|head -n 1); do
 		gh run view --job $job
 	done;
 done | grep "Run benchmarks" | grep -o "\<[a-z]\{4\}$" | fmt
+fi
 
