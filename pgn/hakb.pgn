@@ -5,9 +5,9 @@
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [WhiteElo "1096"]
-[BlackElo "1345"]
+[BlackElo "1359"]
 [TimeControl "1/259200"]
-[EndDate "2025-05-26"]
+[EndDate "2025-05-28"]
 1. e4 c5 2. Nf3 d6 3. Nc3 e5 4. Bb5+ Bd7 5. d3 Bxb5 6. Nxb5 Nd7 7. c4 h6 8. O-O
 Qc8 9. a4 Be7 10. g3 Kf8 11. h4 a5 12. Be3 Ngf6 13. Nd2 Nb6 14. b3 Qh3 15. Qf3
-Ng4 16. Qg2 Qxg2+ 17. Kxg2 Nf6 18. f3 *
+Ng4 16. Qg2 Qxg2+ 17. Kxg2 Nf6 18. f3 Nbd7 19. g4 *
