@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       nmin:
-        description: 'Starting even number (n ≥ 4)'
+        description: 'Starting even number (n ≥ 6)'
         required: true
-        default: '4'
+        default: '6'
         type: string
 
 jobs:
   check-goldbach:
     runs-on: ubuntu-latest
-    timeout-minutes: 355  # 5 hours 50 minutes
+    timeout-minutes: 355  # 5 hours 55 minutes
     
     steps:
     - name: Checkout code
