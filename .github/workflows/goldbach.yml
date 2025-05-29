@@ -28,25 +28,8 @@ jobs:
         python -c "
         import time
         import math
+        from goldbach import gbn
         from datetime import datetime, timedelta
-
-        def is_prime(num):
-            i = 3
-            while i <= num // i:
-                if num % i == 0:
-                    return False
-                i += 2
-            return True
-
-        def check_goldbach(n):
-            i = 3
-            while i <= n - i:
-                if is_prime(i):
-                    if is_prime(n - i):
-                        return True
-                i += 2
-            return False
-
         try:
             nmin = int('${{ inputs.nmin }}')
             if nmin < 6 or nmin % 2 != 0:
@@ -64,7 +47,7 @@ jobs:
         print(f'Will run until approximately {end_time}')
 
         while datetime.now() < end_time:
-            if not check_goldbach(current):
+            if not gbn(current):
                 print(f'Counterexample found! {current} cannot be expressed as sum of two primes')
                 exit(0)
             last_checked = current
