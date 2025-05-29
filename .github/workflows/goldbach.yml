@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       nmin:
-        description: 'Starting even number (n ≥ 6)'
+        description: 'Starting even number n * 1024 (n ≥ 1)'
         required: true
-        default: '6'
+        default: '15360'
         type: string
 
 jobs:
@@ -31,8 +31,8 @@ jobs:
         from goldbach import gbn
         from datetime import datetime, timedelta
         try:
-            nmin = int('${{ inputs.nmin }}')
-            if nmin < 6 or nmin % 2 != 0:
+            nmin = int('${{ inputs.nmin }}') * 1024
+            if nmin < 1024 or nmin % 1024 != 0:
                 print('Error: Starting number must be an even number ≥ 6')
                 exit(1)
         except ValueError:
@@ -40,7 +40,7 @@ jobs:
             exit(1)
 
         current = nmin
-        end_time = datetime.now() + timedelta(hours=0, minutes=10)
+        end_time = datetime.now() + timedelta(hours=0, minutes=50)
         last_checked = current
 
         print(f'Starting Goldbach Conjecture check from {current} at {datetime.now()}')
