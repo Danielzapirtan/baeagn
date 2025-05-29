@@ -1222,22 +1222,9 @@ void parse_pgn(void)
 }
 
 #if 0
-#include <stdio.h>
-#include <string.h>
 #include <ctype.h>
 
 #define MAX_MOVES 500
-
-typedef struct {
-    int from_row, from_col;
-    int to_row, to_col;
-    char promote; // promotion piece (0 if no promotion)
-} MOVE;
-
-typedef struct {
-    MOVE moves[MAX_MOVES];
-    int count;
-} MOVELIST;
 
 // Function to initialize the starting chess position
 void init_board(BOARD board) {
