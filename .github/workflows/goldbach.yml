@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       nmin:
-        description: 'Starting even number n * 1024 (n ≥ 1)'
+        description: 'Starting even number n * 2**20 (n ≥ 1)'
         required: true
-        default: '15360'
+        default: '35'
         type: string
 
 jobs:
@@ -31,9 +31,9 @@ jobs:
         from goldbach import gbn
         from datetime import datetime, timedelta
         try:
-            nmin = int('${{ inputs.nmin }}') * 1024
-            if nmin < 1024 or nmin % 1024 != 0:
-                print('Error: Starting number must be an even number ≥ 6')
+            nmin = int('${{ inputs.nmin }}') << 20
+            if nmin < 2**20 or nmin % (2**20) != 0:
+                print('Error: Starting number must be an even number ≥ 2**20')
                 exit(1)
         except ValueError:
             print('Error: Please provide a valid integer for nmin')
@@ -51,9 +51,9 @@ jobs:
                 print(f'Counterexample found! {current} cannot be expressed as sum of two primes')
                 exit(0)
             last_checked = current
-            if last_checked % (1 << 17) == 0:
-                lck = last_checked // 1024
-                print(f'GC checked till {lck}k')
+            if last_checked % (1 << 20) == 0:
+                lcm = last_checked >> 20
+                print(f'GC checked till {lcm}M')
             current += 2
 
         print(f'Time limit reached. Last even number checked: {last_checked}')
