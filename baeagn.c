@@ -1243,27 +1243,27 @@ void init_board(BOARD board) {
 }
 
 // Function to convert SAN to move coordinates
-int san_to_move(BOARD board, const char *san, MOVE *move, int white_turn) {
+int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
-    gen(board, movelist);
+    int count = gen(board, movelist, 1);
     
     memset(move, 0, sizeof(MOVE));
     
     // Handle castling
     if (strcmp(san, "O-O") == 0 || strcmp(san, "0-0") == 0) {
         int row = white_turn ? 7 : 0;
-        move->from_row = row;
-        move->from_col = 4;
-        move->to_row = row;
-        move->to_col = 6;
+        move[0] = row;
+        move[1] = 4;
+        move[2] = row;
+        move[3] = 6;
         return 1;
     }
     if (strcmp(san, "O-O-O") == 0 || strcmp(san, "0-0-0") == 0) {
         int row = white_turn ? 7 : 0;
-        move->from_row = row;
-        move->from_col = 4;
-        move->to_row = row;
-        move->to_col = 2;
+        move[0] = row;
+        move[1] = 4;
+        move[2] = row;
+        move[3] = 2;
         return 1;
     }
     
@@ -1277,9 +1277,9 @@ int san_to_move(BOARD board, const char *san, MOVE *move, int white_turn) {
     
     // Parse destination square
     if (len < 2) return 0;
-    move->to_col = tolower(san[len-2]) - 'a';
-    move->to_row = '8' - san[len-1];
-    if (move->to_col < 0 || move->to_col > 7 || move->to_row < 0 || move->to_row > 7) return 0;
+    move[3] = tolower(san[len-2]) - 'a';
+    move[2] = '8' - san[len-1];
+    if (move[3] < 0 || move[3] > 7 || move[2] < 0 || move[2] > 7) return 0;
     len -= 2;
     
     // Parse piece type (default to pawn)
@@ -1290,9 +1290,9 @@ int san_to_move(BOARD board, const char *san, MOVE *move, int white_turn) {
     }
     
     // Find matching move in movelist
-    for (int i = 0; i < movelist.count; i++) {
-        MOVE m = movelist.moves[i];
-        int piece_val = board[m.from_row][m.from_col];
+    for (int i = 0; i < count; i++) {
+        MOVE m = movelist[i];
+        int piece_val = board[m[0]][m[1]];
         if ((piece == 'P' && abs(piece_val) != 1) ||
             (piece == 'N' && abs(piece_val) != 2) ||
             (piece == 'B' && abs(piece_val) != 3) ||
@@ -1300,7 +1300,7 @@ int san_to_move(BOARD board, const char *san, MOVE *move, int white_turn) {
             (piece == 'Q' && abs(piece_val) != 5) ||
             (piece == 'K' && abs(piece_val) != 6)) continue;
             
-        if (m.to_row != move->to_row || m.to_col != move->to_col) continue;
+        if (m[2] != move[2] || m[3] != move[3]) continue;
         
         // Check promotion
         if (promote && ((promote == 'Q' && abs(piece_val) != 1) || 
@@ -1312,39 +1312,19 @@ int san_to_move(BOARD board, const char *san, MOVE *move, int white_turn) {
         if (len > 0) {
             if (isdigit(san[0])) { // row disambiguation
                 int row = '8' - san[0];
-                if (m.from_row != row) continue;
+                if (m[0] != row) continue;
             } else { // column disambiguation
                 int col = tolower(san[0]) - 'a';
-                if (m.from_col != col) continue;
+                if (m[1] != col) continue;
             }
         }
         
-        *move = m;
-        move->promote = promote;
+        copy_move(m, move);
+        move[4] = promote;
         return 1;
     }
     
     return 0;
-}
-
-// Function to make a move on the board
-void make_move(BOARD board, MOVE move) {
-    int piece = board[move.from_row][move.from_col];
-    board[move.from_row][move.from_col] = 0;
-    
-    // Handle promotion
-    if (move.promote) {
-        switch (move.promote) {
-            case 'Q': piece = (piece > 0) ? 5 : -5; break;
-            case 'R': piece = (piece > 0) ? 4 : -4; break;
-            case 'B': piece = (piece > 0) ? 3 : -3; break;
-            case 'N': piece = (piece > 0) ? 2 : -2; break;
-        }
-    }
-    
-    board[move.to_row][move.to_col] = piece;
-    
-    // Handle en passant and castling would go here in a complete implementation
 }
 
 void parse_pgn(BOARD board) {
@@ -1381,8 +1361,8 @@ void parse_pgn(BOARD board) {
             
             // Process move
             MOVE move;
-            if (san_to_move(board, token, &move, white_turn)) {
-                make_move(board, move);
+            if (san_to_move(board, token, move, white_turn)) {
+                makemmove(board, move);
                 white_turn = !white_turn;
             } else {
                 printf("Error parsing move: %s\n", token);
