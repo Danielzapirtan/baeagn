@@ -40,7 +40,7 @@ jobs:
             exit(1)
 
         current = nmin
-        end_time = datetime.now() + timedelta(hours=0, minutes=10)
+        end_time = datetime.now() + timedelta(hours=5, minutes=50)
         last_checked = current
 
         print(f'Starting Goldbach Conjecture check from {current} at {datetime.now()}')
@@ -51,6 +51,9 @@ jobs:
                 print(f'Counterexample found! {current} cannot be expressed as sum of two primes')
                 exit(0)
             last_checked = current
+            if last_checked % (1 << 17) == 0:
+                lck = last_checked // 1024
+                print(f'GC checked till {lck}k')
             current += 2
 
         print(f'Time limit reached. Last even number checked: {last_checked}')
