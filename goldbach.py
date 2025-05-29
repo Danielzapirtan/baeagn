@@ -11,8 +11,8 @@ def pr(p):
 def gbn(n):
     p = 3
     while p <= n - p:
-        if prime(p):
-            if prime(n - p):
+        if pr(p):
+            if pr(n - p):
                return True
         p += 2
     return False
