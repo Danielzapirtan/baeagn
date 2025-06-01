@@ -29,7 +29,7 @@ def gbn(n, tab):
     p = 3
     while p <= n - p:
         if pr(p):
-            if pr(n - p, tab):
+            if longpr(n - p, tab):
                return True
         p += 2
     return False
