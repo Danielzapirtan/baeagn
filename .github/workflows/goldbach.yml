@@ -6,7 +6,7 @@ on:
       nmin:
         description: 'Starting even number n * 2**20 (n ≥ 1)'
         required: true
-        default: '35'
+        default: '352'
         type: string
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
             exit(1)
 
         current = nmin
-        end_time = datetime.now() + timedelta(hours=0, minutes=50)
+        end_time = datetime.now() + timedelta(hours=5, minutes=50)
         last_checked = current
 
         print(f'Starting Goldbach Conjecture check from {current} at {datetime.now()}')
