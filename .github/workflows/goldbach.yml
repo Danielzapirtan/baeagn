@@ -28,7 +28,7 @@ jobs:
         python -c "
         import time
         import math
-        from goldbach import gbn
+        from goldbach import gbn, prtab
         from datetime import datetime, timedelta
         try:
             nmin = int('${{ inputs.nmin }}') << 20
@@ -40,14 +40,14 @@ jobs:
             exit(1)
 
         current = nmin
-        end_time = datetime.now() + timedelta(hours=5, minutes=50)
+        end_time = datetime.now() + timedelta(hours=0, minutes=5)
         last_checked = current
 
         print(f'Starting Goldbach Conjecture check from {current} at {datetime.now()}')
         print(f'Will run until approximately {end_time}')
-
+        tab = prtab(1 << 20) # Adjust as needed
         while datetime.now() < end_time:
-            if not gbn(current):
+            if not gbn(current, tab):
                 print(f'Counterexample found! {current} cannot be expressed as sum of two primes')
                 exit(0)
             last_checked = current
