@@ -6,13 +6,13 @@ on:
       nmin:
         description: 'Starting even number n * 2**20 (n ≥ 1)'
         required: true
-        default: '352'
+        default: '815'
         type: string
 
 jobs:
   check-goldbach:
     runs-on: ubuntu-latest
-    timeout-minutes: 815  # 5 hours 55 minutes
+    timeout-minutes: 355  # 5 hours 55 minutes
     
     steps:
     - name: Checkout code
