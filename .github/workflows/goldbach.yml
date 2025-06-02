@@ -12,7 +12,7 @@ on:
 jobs:
   check-goldbach:
     runs-on: ubuntu-latest
-    timeout-minutes: 355  # 5 hours 55 minutes
+    timeout-minutes: 815  # 5 hours 55 minutes
     
     steps:
     - name: Checkout code
