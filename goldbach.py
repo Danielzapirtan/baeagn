@@ -19,6 +19,9 @@ def prtab(l):
 
 def longpr(p, tab):
     for k in tab:
+        if k == 61:
+            if pow(3, p-1, p) != 1:
+                return False
         if k > p // k:
             return True
         if p % k == 0:
