@@ -1199,7 +1199,7 @@ end:
   }
 }
 
-#if 0
+#if 1
 void parse_pgn(void)
 {
     if (system("pgn-extract -w200 -F start.pgn > pf") != 0) {
