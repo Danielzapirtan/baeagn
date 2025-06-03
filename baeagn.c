@@ -15,7 +15,7 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (32)
+#define _MAXLEVEL (200)
 #define _FRAMESPERSEC (32)
 #define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
@@ -152,7 +152,12 @@ const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
+#define SEBB
+#ifdef SEBB
 const VALUE _VALUES[6]    = { 0, 100, 445, 325, 615, 980, };
+#else
+const VALUE _VALUES[6]    = { 0, 100, 315, 325, 500, 980, };
+#endif
 
 ELAPSED elapsed;
 LEVEL gdepth;
