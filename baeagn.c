@@ -1369,6 +1369,7 @@ void parse_pgn(BOARD board) {
             // Process move
             MOVE move;
             if (san_to_move(board, token, move, white_turn)) {
+                BOARD aux;
                 makemove(board, move, aux);
                 copy_board(aux, board);
                 white_turn = !white_turn;
