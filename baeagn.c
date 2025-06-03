@@ -1199,6 +1199,7 @@ end:
   }
 }
 
+#if 0
 void parse_pgn(void)
 {
     if (system("pgn-extract -w200 -F start.pgn > pf") != 0) {
@@ -1226,7 +1227,7 @@ void parse_pgn(void)
     save(board);
 }
 
-#if 0
+#else
 #include <ctype.h>
 
 #define MAX_MOVES 500
