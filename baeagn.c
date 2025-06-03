@@ -144,7 +144,7 @@ extern void show_board(BOARD board, FILE *f);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
-extern void parse_pgn(void);
+extern void parse_pgn(BOARD board);
 extern void save(BOARD board);
 
 const VALUE _ALPHA_DFL    = (-20000);
@@ -186,8 +186,8 @@ void analysis(void)
     parse_fen(start);
     save(start);
 #elif _NOEDIT == 1
-    parse_pgn();
-    load(start);
+    parse_pgn(start);
+    //load(start);
 #else
     load(start);
 #endif
@@ -1297,7 +1297,8 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     
     // Find matching move in movelist
     for (int i = 0; i < count; i++) {
-        MOVE m = movelist[i];
+        MOVE m;
+        copy_move(movelist[i], m);
         int piece_val = board[m[0]][m[1]];
         if ((piece == 'P' && abs(piece_val) != 1) ||
             (piece == 'N' && abs(piece_val) != 2) ||
@@ -1368,7 +1369,7 @@ void parse_pgn(BOARD board) {
             // Process move
             MOVE move;
             if (san_to_move(board, token, move, white_turn)) {
-                makemmove(board, move);
+                makemove(board, move);
                 white_turn = !white_turn;
             } else {
                 printf("Error parsing move: %s\n", token);
