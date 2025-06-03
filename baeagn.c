@@ -1216,7 +1216,6 @@ void parse_pgn(BOARD board)
         return;
     }
     int ch;
-    BOARD board;
     copy_board(*get_init(), board);
     while ((ch = fgetc(f)) != '{') {}
     while ((ch = fgetc(f)) != '"') {}
