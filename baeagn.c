@@ -1200,7 +1200,7 @@ end:
 }
 
 #if 1
-void parse_pgn(void)
+void parse_pgn(BOARD board)
 {
     if (system("pgn-extract -w200 -F start.pgn > pf") != 0) {
         // Handle error when pgn-extract fails
