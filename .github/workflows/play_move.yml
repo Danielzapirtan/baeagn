@@ -14,7 +14,7 @@ jobs:
     
     strategy:
       matrix:
-        depths: [9, 11, 13, 14]
+        depths: [9, 11, 13, 15, 17, 19]
       fail-fast: false
     
     steps:
