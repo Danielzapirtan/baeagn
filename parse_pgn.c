@@ -66,12 +66,14 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
             
         if (m[2] != move[2] || m[3] != move[3]) continue;
         
-        // Check promotion
+/*
+	// Check promotion
         if (promote && ((promote == 'Q' && abs(piece_val) != 1) || 
                         (promote == 'R' && abs(piece_val) != 4) ||
                         (promote == 'B' && abs(piece_val) != 3) ||
                         (promote == 'N' && abs(piece_val) != 2))) continue;
         
+  */      
         // Check disambiguation
         if (len > 0) {
             if (isdigit(san[0])) { // row disambiguation
@@ -82,7 +84,6 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
                 if (m[1] != col) continue;
             }
         }
-        
         copy_move(m, move);
         move[4] = promote;
         return 1;
@@ -99,12 +100,13 @@ void parse_pgn(BOARD board) {
     }
     
     // Initialize board
-    init_board(board);
+    copy_board(*get_init(), board);
+    show_board(board, stdout);
     
-    char line[256];
+    char line[4096];
     int white_turn = 1;
     
-    while (fgets(line, sizeof(line), file) {
+    while (fgets(line, sizeof(line), file)) {
         // Skip header lines
         if (line[0] == '[') continue;
         
