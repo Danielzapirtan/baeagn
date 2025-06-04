@@ -1,10 +1,17 @@
 #include <ctype.h>
+#include <string.h>
+#include <stdio.h>
 
 #define MAX_MOVES 500
 
+// Define board and move types
+typedef int BOARD[8][8];
+typedef int MOVE[5];  // [from_row, from_col, to_row, to_col, promote]
+typedef MOVE MOVELIST[MAX_MOVES];
+
 // Function to initialize the starting chess position
 void init_board(BOARD board) {
-    int starting_pos[9][8] = {
+    int starting_pos[8][8] = {
         {-4, -2, -3, -5, -6, -3, -2, -4}, // black pieces
         {-1, -1, -1, -1, -1, -1, -1, -1},
         {0, 0, 0, 0, 0, 0, 0, 0},
@@ -12,16 +19,21 @@ void init_board(BOARD board) {
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 1, 1, 1},         // white pawns
-        {4, 2, 3, 5, 6, 3, 2, 4},         // white pieces
-        {0, 0, 0, 0, 0, 0, 0, 0}          // extra row (unused in standard chess)
+        {4, 2, 3, 5, 6, 3, 2, 4}          // white pieces
     };
     memcpy(board, starting_pos, sizeof(starting_pos));
+}
+
+// Helper function to copy a move
+void copy_move(const MOVE src, MOVE dst) {
+    memcpy(dst, src, sizeof(MOVE));
 }
 
 // Function to convert SAN to move coordinates
 int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
-    int count = gen(board, movelist, 1);
+    // Assuming gen() generates all possible moves
+    int count = gen(board, movelist, white_turn);
     
     memset(move, 0, sizeof(MOVE));
     
@@ -53,8 +65,8 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     
     // Parse destination square
     if (len < 2) return 0;
-    move[3] = tolower(san[len-2]) - 'a';
-    move[2] = '8' - san[len-1];
+    move[3] = tolower(san[len-1]) - 'a';
+    move[2] = '8' - san[len-2];
     if (move[3] < 0 || move[3] > 7 || move[2] < 0 || move[2] > 7) return 0;
     len -= 2;
     
@@ -111,13 +123,13 @@ void parse_pgn(BOARD board) {
         return;
     }
     
-    copy_board(*get_init(), board);
+    // Initialize board
+    init_board(board);
     
     char line[256];
-    int move_number = 0;
     int white_turn = 1;
     
-    while (fgets(line, sizeof(line), file)) {
+    while (fgets(line, sizeof(line), file) {
         // Skip header lines
         if (line[0] == '[') continue;
         
@@ -139,10 +151,10 @@ void parse_pgn(BOARD board) {
             // Process move
             MOVE move;
             if (san_to_move(board, token, move, white_turn)) {
-                BOARD aux;
-                makemove(board, move, aux);
-                copy_board(aux, board);
-                show_board(board, stdout);
+                BOARD new_board;
+                // Assuming makemove makes a move and returns new board
+                makemove(board, move, new_board);
+                copy_board(new_board, board);
                 white_turn = !white_turn;
             } else {
                 printf("Error parsing move: %s\n", token);
