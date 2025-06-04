@@ -34,6 +34,9 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     // Parse promotion
     char promote = 0;
     int len = strlen(san);
+    if (len >= 3)
+    if (san[len - 1] == '+')
+	    len--;
     if (len >= 4 && san[len-2] == '=') {
         promote = san[len-1];
         len -= 2;

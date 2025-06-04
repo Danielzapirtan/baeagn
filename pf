@@ -1,15 +1,16 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025-05-28"]
+[Date "2025-05-15"]
 [Round "?"]
-[White "Sarkazztro187000"]
+[White "nickcadobson"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1372"]
+[WhiteElo "1359"]
 [BlackElo "1359"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-04"]
 
-1. d4 Nf6 2. d5 e6 3. dxe6 fxe6 4. Nc3 Bb4 5. Bd2 O-O 6. a3 Bxc3 7. Bxc3 d5 8. e3 a6 9. Qd4 Nc6 10. Qg4 Nxg4 11. h3 Nxf2 12. Rh2 Qg5 13. Bd2 Ne5 14. Nf3 Qg3 15. Ke2 Nxf3 16. gxf3 Qxh2 17. Ke1
-{ "r1b2rk1/1pp3pp/p3p3/3p4/8/P3PP1P/1PPB1n1q/R3KB2 b - - 1 17" } *
+1. e4 e6 2. d4 c5 3. Nf3 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bb5+ Bd7 7. O-O a6 8. Bxd7+ Nfxd7 9. Nf3 Qb6 10. Ng5 Nc6 11. b3 Qd8 12. Qf3 Nde5 13. Qg3 Be7 14. f4 Ng6 15. f5 Nf8 16. fxe6 Nxe6 17. Nxf7 Qb6+
+18. Be3 Qa5 19. Nxh8 Qxc3 20. Qh3 Kd7 21. Nf7 Qxc2 22. Bg5 Bxg5 23. Nxg5 Qc5+ 24. Kh1 Qxg5 25. Qf5 Rh8 26. Qd5 Qg6 27. Rad1 Kc8 28. Qxd6 Rd8 29. Qg3
+{ "2kr4/1p4pp/p1n1n1q1/8/4P3/1P4Q1/P5PP/3R1R1K b - - 2 29" } *
 
