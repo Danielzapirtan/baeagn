@@ -8,7 +8,10 @@
 int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
     // Assuming gen() generates all possible moves
-    int count = gen(board, movelist, 1);
+    show_board(board, stdout);
+    int count = gendeep(board, movelist, 0);
+    printf("%d moves\n", count);
+    fflush(stdout);
     
     // Handle castling
     if (strcmp(san, "O-O") == 0 || strcmp(san, "0-0") == 0) {
@@ -31,15 +34,15 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     // Parse promotion
     char promote = 0;
     int len = strlen(san);
-    if (len >= 2 && san[len-2] == '=') {
+    if (len >= 4 && san[len-2] == '=') {
         promote = san[len-1];
         len -= 2;
     }
     
     // Parse destination square
     if (len < 2) return 0;
-    move[3] = tolower(san[len-1]) - 'a';
-    move[2] = san[len-2] - 1;
+    move[3] = tolower(san[len-2]) - 'a';
+    move[2] = san[len-1] - '1';
     if (white_turn)
 	    move[2] = 7 - move[2];
     if (move[3] < 0 || move[3] > 7 || move[2] < 0 || move[2] > 7) return 0;
@@ -56,6 +59,8 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     for (int i = 0; i < count; i++) {
         MOVE m;
         copy_move(movelist[i], m);
+	printf("move: %d%d%d%d\n", m[1], m[0], m[3], m[2]);
+	fflush(stdout);
         int piece_val = board[m[0]][m[1]];
         if ((piece == 'P' && abs(piece_val) != 1) ||
             (piece == 'N' && abs(piece_val) != 2) ||
@@ -67,7 +72,7 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
         if (m[2] != move[2] || m[3] != move[3]) continue;
         
 	// Check promotion
-        if (promote && ((promote == 'Q' && abs(piece_val) != 1) || 
+        if (promote && ((promote == 'Q' && abs(piece_val) != 5) || 
                         (promote == 'R' && abs(piece_val) != 4) ||
                         (promote == 'B' && abs(piece_val) != 3) ||
                         (promote == 'N' && abs(piece_val) != 2))) continue;
@@ -102,31 +107,46 @@ void parse_pgn(BOARD board) {
     copy_board(*get_init(), board);
     show_board(board, stdout);
     
-    char line[4096];
+    char lline[256];
+    char *line = lline;
     int white_turn = 0;
     
-    while (fgets(line, sizeof(line), file)) {
+    while (fgets(line, 256, file)) {
         // Skip header lines
+	printf("%s\n", line);
+	fflush(stdout);
         if (line[0] == '[') continue;
         
         // Tokenize move text
-        char *token = strtok(line, " \t\n");
-        while (token) {
-            // Skip move numbers
-            if (strstr(token, ".")) {
-                token = strtok(NULL, " \t\n");
-                continue;
+        while (1) {
+	    char *cline = line;
+	    char *token;
+	    while (1) {
+		    if (isblank(*cline)) {
+			    *cline = '\0';
+			    token = line;
+			    line = cline + 1;
+			    break;
+		    }
+		    cline++;
             }
-            
+	    if (!cline)
+		    break;
+	    printf("Token: %s\n", token);
+	    fflush(stdout);
             // Skip result (1-0, 0-1, 1/2-1/2)
             if (strcmp(token, "1-0") == 0 || strcmp(token, "0-1") == 0 || 
                 strcmp(token, "1/2-1/2") == 0 || strcmp(token, "*") == 0) {
                 break;
             }
             
+	    if (token[strlen(token) - 1] == '.')
+		    continue;
             // Process move
             MOVE move;
             if (san_to_move(board, (const char *)  token, move, white_turn)) {
+		printf("%c%c%c%c\n", move[1] + 97, move[0] + 49, move[3] + 97, move[2] + 49);
+		fflush(stdout);
                 BOARD new_board;
                 // Assuming makemove makes a move and returns new board
                 makemove(board, move, new_board);
@@ -136,7 +156,6 @@ void parse_pgn(BOARD board) {
                 printf("Error parsing move: %s\n", token);
             }
             
-            token = strtok(NULL, " \t\n");
         }
     }
     

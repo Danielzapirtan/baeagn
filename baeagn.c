@@ -1196,7 +1196,7 @@ end:
   }
 }
 
-#if 1
+#if 0
 void parse_pgn(BOARD board)
 {
     if (system("pgn-extract -w200 -F start.pgn > pf") != 0) {
