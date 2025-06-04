@@ -59,8 +59,8 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     for (int i = 0; i < count; i++) {
         MOVE m;
         copy_move(movelist[i], m);
-	printf("move: %d%d%d%d\n", m[1], m[0], m[3], m[2]);
-	fflush(stdout);
+//	printf("move: %d%d%d%d\n", m[1], m[0], m[3], m[2]);
+//	fflush(stdout);
         int piece_val = board[m[0]][m[1]];
         if ((piece == 'P' && abs(piece_val) != 1) ||
             (piece == 'N' && abs(piece_val) != 2) ||
@@ -78,6 +78,7 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
                         (promote == 'N' && abs(piece_val) != 2))) continue;
         
         if (len > 0) {
+	    char s0 = san[isupper(san[0])];
             if (isdigit(san[0])) { // row disambiguation
                 int row = san[0] - 1;
 		if (white_turn)
