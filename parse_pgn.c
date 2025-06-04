@@ -4,31 +4,6 @@
 
 #define MAX_MOVES 500
 
-// Define board and move types
-typedef int BOARD[8][8];
-typedef int MOVE[5];  // [from_row, from_col, to_row, to_col, promote]
-typedef MOVE MOVELIST[MAX_MOVES];
-
-// Function to initialize the starting chess position
-void init_board(BOARD board) {
-    int starting_pos[8][8] = {
-        {-4, -2, -3, -5, -6, -3, -2, -4}, // black pieces
-        {-1, -1, -1, -1, -1, -1, -1, -1},
-        {0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1},         // white pawns
-        {4, 2, 3, 5, 6, 3, 2, 4}          // white pieces
-    };
-    memcpy(board, starting_pos, sizeof(starting_pos));
-}
-
-// Helper function to copy a move
-void copy_move(const MOVE src, MOVE dst) {
-    memcpy(dst, src, sizeof(MOVE));
-}
-
 // Function to convert SAN to move coordinates
 int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
