@@ -8,13 +8,11 @@
 int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
     // Assuming gen() generates all possible moves
-    int count = gen(board, movelist, white_turn);
-    
-    memset(move, 0, sizeof(MOVE));
+    int count = gen(board, movelist, 1);
     
     // Handle castling
     if (strcmp(san, "O-O") == 0 || strcmp(san, "0-0") == 0) {
-        int row = white_turn ? 7 : 0;
+        int row = 0;
         move[0] = row;
         move[1] = 4;
         move[2] = row;
@@ -22,7 +20,7 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
         return 1;
     }
     if (strcmp(san, "O-O-O") == 0 || strcmp(san, "0-0-0") == 0) {
-        int row = white_turn ? 7 : 0;
+        int row = 0;
         move[0] = row;
         move[1] = 4;
         move[2] = row;
@@ -41,7 +39,9 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     // Parse destination square
     if (len < 2) return 0;
     move[3] = tolower(san[len-1]) - 'a';
-    move[2] = '8' - san[len-2];
+    move[2] = san[len-2] - 1;
+    if (white_turn)
+	    move[2] = 7 - move[2];
     if (move[3] < 0 || move[3] > 7 || move[2] < 0 || move[2] > 7) return 0;
     len -= 2;
     
@@ -66,18 +66,17 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
             
         if (m[2] != move[2] || m[3] != move[3]) continue;
         
-/*
 	// Check promotion
         if (promote && ((promote == 'Q' && abs(piece_val) != 1) || 
                         (promote == 'R' && abs(piece_val) != 4) ||
                         (promote == 'B' && abs(piece_val) != 3) ||
                         (promote == 'N' && abs(piece_val) != 2))) continue;
         
-  */      
-        // Check disambiguation
         if (len > 0) {
             if (isdigit(san[0])) { // row disambiguation
-                int row = '8' - san[0];
+                int row = san[0] - 1;
+		if (white_turn)
+			row = 7 - row;
                 if (m[0] != row) continue;
             } else { // column disambiguation
                 int col = tolower(san[0]) - 'a';
@@ -104,7 +103,7 @@ void parse_pgn(BOARD board) {
     show_board(board, stdout);
     
     char line[4096];
-    int white_turn = 1;
+    int white_turn = 0;
     
     while (fgets(line, sizeof(line), file)) {
         // Skip header lines
@@ -127,7 +126,7 @@ void parse_pgn(BOARD board) {
             
             // Process move
             MOVE move;
-            if (san_to_move(board, token, move, white_turn)) {
+            if (san_to_move(board, (const char *)  token, move, white_turn)) {
                 BOARD new_board;
                 // Assuming makemove makes a move and returns new board
                 makemove(board, move, new_board);
