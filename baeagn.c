@@ -1117,7 +1117,6 @@ void setup_board(BOARD board)
 
 int main(int argc, char *argv[])
 {
-    gmode = 4;
     maxdepth = atoi(argv[1]);
     analysis();
     return (0);
@@ -1306,6 +1305,7 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
             
         if (m[2] != move[2] || m[3] != move[3]) continue;
         
+/*
         // Check promotion
         if (promote && ((promote == 'Q' && abs(piece_val) != 1) || 
                         (promote == 'R' && abs(piece_val) != 4) ||
@@ -1322,6 +1322,7 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
                 if (m[1] != col) continue;
             }
         }
+*/
         
         copy_move(m, move);
         move[4] = promote;
@@ -1338,7 +1339,7 @@ void parse_pgn(BOARD board) {
         return;
     }
     
-    init_board(board);
+    copy_board(*get_init(), board);
     
     char line[256];
     int move_number = 0;
@@ -1369,6 +1370,7 @@ void parse_pgn(BOARD board) {
                 BOARD aux;
                 makemove(board, move, aux);
                 copy_board(aux, board);
+                show_board(board, stdout);
                 white_turn = !white_turn;
             } else {
                 printf("Error parsing move: %s\n", token);
