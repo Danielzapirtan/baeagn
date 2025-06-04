@@ -8,10 +8,10 @@
 int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
     MOVELIST movelist;
     // Assuming gen() generates all possible moves
-    show_board(board, stdout);
+    //show_board(board, stdout);
     int count = gendeep(board, movelist, 0);
-    printf("%d moves\n", count);
-    fflush(stdout);
+    //printf("%d moves\n", count);
+    //fflush(stdout);
     
     // Handle castling
     if (strcmp(san, "O-O") == 0 || strcmp(san, "0-0") == 0) {
@@ -109,20 +109,21 @@ void parse_pgn(BOARD board) {
     
     // Initialize board
     copy_board(*get_init(), board);
-    show_board(board, stdout);
+    //show_board(board, stdout);
     
-    char lline[256];
+    char lline[4096];
     char *line = lline;
     int white_turn = 0;
     
     while (fgets(line, 256, file)) {
         // Skip header lines
-	printf("%s\n", line);
-	fflush(stdout);
+	//printf("%s\n", line);
+	//fflush(stdout);
         if (line[0] == '[') continue;
         
         // Tokenize move text
         while (1) {
+	    if (!line) break;
 	    char *cline = line;
 	    char *token;
 	    while (1) {
@@ -136,8 +137,8 @@ void parse_pgn(BOARD board) {
             }
 	    if (!cline)
 		    break;
-	    printf("Token: %s\n", token);
-	    fflush(stdout);
+	    //printf("Token: %s\n", token);
+	    //fflush(stdout);
             // Skip result (1-0, 0-1, 1/2-1/2)
             if (strcmp(token, "1-0") == 0 || strcmp(token, "0-1") == 0 || 
                 strcmp(token, "1/2-1/2") == 0 || strcmp(token, "*") == 0) {
@@ -149,19 +150,20 @@ void parse_pgn(BOARD board) {
             // Process move
             MOVE move;
             if (san_to_move(board, (const char *)  token, move, white_turn)) {
-		printf("%c%c%c%c\n", move[1] + 97, move[0] + 49, move[3] + 97, move[2] + 49);
-		fflush(stdout);
+		//printf("%c%c%c%c\n", move[1] + 97, move[0] + 49, move[3] + 97, move[2] + 49);
+		//fflush(stdout);
                 BOARD new_board;
                 // Assuming makemove makes a move and returns new board
                 makemove(board, move, new_board);
                 copy_board(new_board, board);
                 white_turn = !white_turn;
             } else {
-                printf("Error parsing move: %s\n", token);
+		goto end;
             }
             
         }
     }
     
+end:
     fclose(file);
 }
