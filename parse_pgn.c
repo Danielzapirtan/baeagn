@@ -77,17 +77,20 @@ int san_to_move(BOARD board, const char *san, MOVE move, int white_turn) {
                         (promote == 'B' && abs(piece_val) != 3) ||
                         (promote == 'N' && abs(piece_val) != 2))) continue;
         
-        if (len > 0) {
+        if (len > 0)
+        if (len > isupper(san[0])) {
 	    char s0 = san[isupper(san[0])];
-            if (isdigit(san[0])) { // row disambiguation
-                int row = san[0] - 1;
+	    if (s0 != 'x') {
+            if (isdigit(s0)) { // row disambiguation
+                int row = s0 - '1';
 		if (white_turn)
 			row = 7 - row;
                 if (m[0] != row) continue;
             } else { // column disambiguation
-                int col = tolower(san[0]) - 'a';
+                int col = tolower(s0) - 'a';
                 if (m[1] != col) continue;
             }
+	    }
         }
         copy_move(m, move);
         move[4] = promote;
