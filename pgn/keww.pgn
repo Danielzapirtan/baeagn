@@ -7,4 +7,5 @@
 [WhiteElo "1373"]
 [BlackElo "1348"]
 [TimeControl "1/259200"]
-1. e4 d5 2. exd5 Nf6 *
+[EndDate "2025-06-05"]
+1. e4 d5 2. exd5 Nf6 3. c4 e6 *
