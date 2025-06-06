@@ -457,6 +457,9 @@ VALUE eval(BOARD board, LEVEL level)
         }
     }
 #endif
+#define EVALCUSTOM
+#ifdef EVALCUSTOM
+#endif
     value += ((rand() % 19) - 9);
     if (level > 1)
         return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
