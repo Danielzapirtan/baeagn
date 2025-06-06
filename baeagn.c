@@ -357,7 +357,8 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
 
 #include "pcsq.c"
 
-#define abs(x) ((x > 0) ? (x) : ((-x)))
+#define abs(x) ((x > 0) ? (x) : (-x))
+#define sgn(x) ((x >= 0) ? (1) : (-1))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 VALUE eval(BOARD board, LEVEL level)
 {
