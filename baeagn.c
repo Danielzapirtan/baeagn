@@ -460,7 +460,9 @@ VALUE eval(BOARD board, LEVEL level)
 #endif
 #define EVALCUSTOM
 #ifdef EVALCUSTOM
+/*
     value += (_VALUES[abs(board[2][7])] * sgn(board[2][7]) + _VALUES[abs(board[5][7])] * sgn(board[5][7]));
+*/
 #endif
     value += ((rand() % 19) - 9);
     if (level > 1)
