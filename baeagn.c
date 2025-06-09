@@ -152,7 +152,7 @@ const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
-#define SEBB
+#undef SEBB
 #ifdef SEBB
 const VALUE _VALUES[6]    = { 0, 100, 445, 325, 615, 980, };
 #else
@@ -534,7 +534,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 3;
+        newmax_index = 2;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
