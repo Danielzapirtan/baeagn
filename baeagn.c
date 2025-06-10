@@ -152,7 +152,7 @@ const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
-#undef SEBB
+#define SEBB
 #ifdef SEBB
 const VALUE _VALUES[6]    = { 0, 100, 445, 325, 615, 980, };
 #else
@@ -238,7 +238,7 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
-	if (delapsed >= 800.00) {
+	if (delapsed >= 2500.00) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
 		exit(0);
