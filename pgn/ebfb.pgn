@@ -5,6 +5,7 @@
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [WhiteElo "1373"]
-[BlackElo "1400"]
+[BlackElo "1412"]
 [TimeControl "1/259200"]
-1. d4 Nf6 2. Nc3 d5 3. Bg5 *
+[EndDate "2025-06-12"]
+1. d4 Nf6 2. Nc3 d5 3. Bg5 Ne4 4. Nxe4 dxe4 5. d5 *
