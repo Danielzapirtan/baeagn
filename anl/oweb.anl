@@ -116,3 +116,17 @@ Best variation: e7e5 Nd4f3 Qd8a5 Bf1d3 Nf6g4 Qd1c1 h7h6 Ra1b1 d6d5 e4xd5 Ng4xe3 
 Elapsed: 2351.15
 NPS: 1851818
 
+Depth: 12*
+Evaluation: -0.19
+Branching factor: 6.66
+Best variation: e7e5 Nd4f3 Nf6g4 Nc3b1 Nb8c6 Be3d2 d6d5 e4xd5 Qd8xd5 Qd1c1 e5e4 Bf1xa6 
+Elapsed: 4070.34
+NPS: 1868496
+
+Depth: 12
+Evaluation: -0.19
+Branching factor: 6.77
+Best variation: e7e5 Nd4f3 Nf6g4 Nc3b1 Nb8c6 Be3d2 d6d5 e4xd5 Qd8xd5 Qd1c1 e5e4 Bf1xa6 
+Elapsed: 4948.32
+NPS: 1883511
+
