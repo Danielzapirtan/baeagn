@@ -7,5 +7,6 @@
 [WhiteElo "1412"]
 [BlackElo "1324"]
 [TimeControl "1/259200"]
-[EndDate "2025-06-12"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 a6 6. Bxc6 bxc6 7. Qe2 d5 *
+[EndDate "2025-06-13"]
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 a6 6. Bxc6 bxc6 7. Qe2 d5 8.
+Nxe5 f6 *
