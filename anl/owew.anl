@@ -1,0 +1,76 @@
+Processing start.pgn
+Owens, Johnny - Zapirtan, Antoniu Daniel WSTT/SEA/68 ICCF 2025.06.15 
+1 game matched out of 1.
+8 r  n  b  q  k  b  .  r 
+7 .  p  .  .  .  p  p  p 
+6 p  .  .  p  .  n  .  . 
+5 .  .  .  .  p  .  .  . 
+4 .  .  .  N  P  .  .  . 
+3 .  .  N  .  B  .  .  . 
+2 P  P  P  .  .  P  P  P 
+1 R  .  .  Q  K  B  .  R 
+@ a  b  c  d  e  f  g  h
+
+Depth: 6*
+Evaluation: 0.00
+Branching factor: 9.77
+Best variation: Nd4b3 Bc8g4 Qd1d3 Bg4e6 Be3c1 Nb8d7 
+Elapsed: 0.66
+NPS: 1317649
+
+Depth: 6
+Evaluation: 0.00
+Branching factor: 13.36
+Best variation: Nd4b3 Bc8g4 Qd1d3 Bg4e6 Be3c1 Nb8d7 
+Elapsed: 3.95
+NPS: 1436399
+
+Depth: 7*
+Evaluation: 0.30
+Branching factor: 10.94
+Best variation: Nd4b3 Bc8g4 Qd1d2 Qd8e7 Nc3d5 Nf6xd5 e4xd5 Nb8c6 
+Elapsed: 13.46
+NPS: 1390720
+
+Depth: 7
+Evaluation: 0.30
+Branching factor: 13.19
+Best variation: Nd4b3 Bc8g4 Qd1d2 Qd8e7 Nc3d5 Nf6xd5 e4xd5 Nb8c6 
+Elapsed: 46.16
+NPS: 1505997
+
+Depth: 8*
+Evaluation: -0.06
+Branching factor: 10.31
+Best variation: Nd4b3 Bc8d7 Nc3d5 Nf6xe4 Be3b6 Qd8c8 Nb3a5 Nb8c6 Na5xb7 
+Elapsed: 85.36
+NPS: 1498297
+
+Depth: 8
+Evaluation: -0.06
+Branching factor: 10.77
+Best variation: Nd4b3 Bc8d7 Nc3d5 Nf6xe4 Be3b6 Qd8c8 Nb3a5 Nb8c6 Na5xb7 
+Elapsed: 121.83
+NPS: 1489493
+
+Depth: 9*
+Evaluation: 0.20
+Branching factor: 8.79
+Best variation: Nd4b3 Nf6g4 Ra1c1 Bc8e6 Be3d2 Nb8c6 Bf1d3 d6d5 O-O 
+Elapsed: 173.48
+NPS: 1809582
+
+Depth: 9
+Evaluation: 0.20
+Branching factor: 9.54
+Best variation: Nd4b3 Nf6g4 Ra1c1 Bc8e6 Be3d2 Nb8c6 Bf1d3 d6d5 O-O 
+Elapsed: 321.10
+NPS: 2031720
+
+Depth: 10*
+Evaluation: -0.08
+Branching factor: 7.99
+Best variation: Nd4b3 Bc8e6 Bf1e2 h7h5 h2h3 g7g6 Nb3d2 Qd8a5 Nc3b1 Nf6xe4 Be2xa6 
+Elapsed: 518.05
+NPS: 2049207
+

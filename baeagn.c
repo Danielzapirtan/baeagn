@@ -238,11 +238,13 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
+#if 0
 	if (delapsed >= 8000.00) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
 		exit(0);
 	}
+#endif
     }
     free(treea);
     free(treeb);

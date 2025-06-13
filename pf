@@ -1,16 +1,12 @@
-[Event "Let's Play!"]
-[Site "Chess.com"]
-[Date "2025-05-15"]
-[Round "?"]
-[White "nickcadobson"]
-[Black "AntoniuDanielZapirtan"]
+[Event "WSTT/SEA/68"]
+[Site "ICCF"]
+[Date "2025.06.15"]
+[Round "-"]
+[White "Owens, Johnny"]
+[Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[WhiteElo "1359"]
-[BlackElo "1359"]
-[TimeControl "1/259200"]
-[EndDate "2025-06-04"]
+[WhiteElo "2371"]
+[BlackElo "1485"]
 
-1. e4 e6 2. d4 c5 3. Nf3 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bb5+ Bd7 7. O-O a6 8. Bxd7+ Nfxd7 9. Nf3 Qb6 10. Ng5 Nc6 11. b3 Qd8 12. Qf3 Nde5 13. Qg3 Be7 14. f4 Ng6 15. f5 Nf8 16. fxe6 Nxe6 17. Nxf7 Qb6+
-18. Be3 Qa5 19. Nxh8 Qxc3 20. Qh3 Kd7 21. Nf7 Qxc2 22. Bg5 Bxg5 23. Nxg5 Qc5+ 24. Kh1 Qxg5 25. Qf5 Rh8 26. Qd5 Qg6 27. Rad1 Kc8 28. Qxd6 Rd8 29. Qg3
-{ "2kr4/1p4pp/p1n1n1q1/8/4P3/1P4Q1/P5PP/3R1R1K b - - 2 29" } *
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6 6. Be3 e5 { "rnbqkb1r/1p3ppp/p2p1n2/4p3/3NP3/2N1B3/PPP2PPP/R2QKB1R w KQkq e6 0 7" } *
 

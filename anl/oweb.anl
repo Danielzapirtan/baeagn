@@ -1,0 +1,118 @@
+Processing start.pgn
+Owens, Johnny - Zapirtan, Antoniu Daniel WSTT/SEA/68 ICCF 2025.06.15 
+1 game matched out of 1.
+8 r  .  .  q  k  b  .  r 
+7 p  p  p  .  .  p  p  p 
+6 .  .  n  .  b  .  .  . 
+5 .  .  .  n  p  .  .  . 
+4 .  .  .  .  .  .  .  . 
+3 P  .  .  P  .  N  .  . 
+2 .  P  .  .  P  P  P  P 
+1 R  N  B  Q  K  B  .  R 
+@ a  b  c  d  e  f  g  h
+
+Depth: 6*
+Evaluation: -0.45
+Branching factor: 9.93
+Best variation: Bc8g4 f2f3 Bg4d7 Be3g5 Nb8c6 Nd4xc6 Bd7xc6 
+Elapsed: 0.39
+NPS: 2434584
+
+Depth: 6*
+Evaluation: -0.21
+Branching factor: 12.34
+Best variation: Qd8b6 Nd4b3 Qb6c6 Nb3c1 h7h6 f2f4 e7e5 
+Elapsed: 1.28
+NPS: 2770170
+
+Depth: 6
+Evaluation: -0.21
+Branching factor: 15.47
+Best variation: Qd8b6 Nd4b3 Qb6c6 Nb3c1 h7h6 f2f4 e7e5 
+Elapsed: 4.52
+NPS: 3040357
+
+Depth: 7*
+Evaluation: -0.23
+Branching factor: 12.26
+Best variation: Qd8b6 Nd4b3 Qb6c6 Nb3a5 Qc6c7 e4e5 Qc7xa5 e5xd6 
+Elapsed: 14.21
+NPS: 2935690
+
+Depth: 7*
+Evaluation: -0.13
+Branching factor: 13.10
+Best variation: b7b5 Qd1f3 e7e5 Nd4b3 Bc8b7 Nc3d1 Nb8c6 
+Elapsed: 22.14
+NPS: 2993709
+
+Depth: 7*
+Evaluation: 0.07
+Branching factor: 13.23
+Best variation: e7e5 Nd4f3 Qd8a5 Qd1d2 Nf6g4 Nc3d5 Qa5xd2+ Be3xd2 Ng4xf2 
+Elapsed: 23.80
+NPS: 2980708
+
+Depth: 7
+Evaluation: 0.07
+Branching factor: 14.02
+Best variation: e7e5 Nd4f3 Qd8a5 Qd1d2 Nf6g4 Nc3d5 Qa5xd2+ Be3xd2 Ng4xf2 
+Elapsed: 35.29
+NPS: 3011087
+
+Depth: 8*
+Evaluation: -0.30
+Branching factor: 10.77
+Best variation: e7e5 Nd4f3 Bc8e6 Qd1d3 h7h6 Bf1e2 Qd8c7 a2a4 Nb8c6 
+Elapsed: 69.07
+NPS: 2617004
+
+Depth: 8
+Evaluation: -0.30
+Branching factor: 11.16
+Best variation: e7e5 Nd4f3 Bc8e6 Qd1d3 h7h6 Bf1e2 Qd8c7 a2a4 Nb8c6 
+Elapsed: 96.42
+NPS: 2488877
+
+Depth: 9*
+Evaluation: 0.15
+Branching factor: 9.06
+Best variation: e7e5 Nd4b3 Bc8e6 Nb3c1 d6d5 e4xd5 Be6xd5 Nc3xd5 Bf8b4+ Be3d2 Nf6xd5 
+Elapsed: 176.98
+NPS: 2325417
+
+Depth: 9
+Evaluation: 0.15
+Branching factor: 9.58
+Best variation: e7e5 Nd4b3 Bc8e6 Nb3c1 d6d5 e4xd5 Be6xd5 Nc3xd5 Bf8b4+ Be3d2 Nf6xd5 
+Elapsed: 297.30
+NPS: 2284708
+
+Depth: 10*
+Evaluation: -0.22
+Branching factor: 8.11
+Best variation: e7e5 Nd4f5 Bc8xf5 e4xf5 d6d5 Qd1d3 Nb8c6 O-O-O d5d4 Kc1b1 
+Elapsed: 549.25
+NPS: 2235101
+
+Depth: 10
+Evaluation: -0.22
+Branching factor: 8.31
+Best variation: e7e5 Nd4f5 Bc8xf5 e4xf5 d6d5 Qd1d3 Nb8c6 O-O-O d5d4 Kc1b1 
+Elapsed: 707.58
+NPS: 2218311
+
+Depth: 11*
+Evaluation: 0.09
+Branching factor: 7.17
+Best variation: e7e5 Nd4f3 Qd8a5 Bf1d3 Nf6g4 Qd1c1 h7h6 Ra1b1 d6d5 e4xd5 Ng4xe3 Nf3xe5 
+Elapsed: 1283.12
+NPS: 1993690
+
+Depth: 11
+Evaluation: 0.09
+Branching factor: 7.52
+Best variation: e7e5 Nd4f3 Qd8a5 Bf1d3 Nf6g4 Qd1c1 h7h6 Ra1b1 d6d5 e4xd5 Ng4xe3 Nf3xe5 
+Elapsed: 2351.15
+NPS: 1851818
+
