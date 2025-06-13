@@ -7,7 +7,8 @@
 [WhiteElo "1356"]
 [BlackElo "1412"]
 [TimeControl "1/259200"]
-[EndDate "2025-06-12"]
+[EndDate "2025-06-13"]
 1. e4 c5 2. Nf3 d6 3. h3 Qb6 4. Nc3 Nf6 5. d3 h6 6. b3 Qc7 7. Be3 e5 8. Ne2 d5
 9. exd5 Nxd5 10. c4 Nxe3 11. fxe3 a6 12. Nc3 Bd6 13. Be2 Qa5 14. Qd2 Nc6 15. Ne4
-Qd8 16. g4 Ra7 17. O-O-O Be7 18. Qc3 O-O 19. a3 f5 20. gxf5 Rxf5 21. h4 *
+Qd8 16. g4 Ra7 17. O-O-O Be7 18. Qc3 O-O 19. a3 f5 20. gxf5 Rxf5 21. h4 Qc7 22.
+Rdg1 *
