@@ -367,6 +367,129 @@ VALUE eval(BOARD board, LEVEL level)
     BOARD aux;
     int ivalue = 0;
     int kings = 0;
+    u5 x, y;
+    VALUE pvalue = 0;
+    VALUE value;
+    int white_castled_long = 0, black_castled_short = 0;
+    int black_dark_bishop_missing = 1;
+    nodes++;
+
+    if ((nodes % _SKIPFRAMES) == 0) {
+        update(&elapsed);
+    }
+
+    for (y = 0; y < 8; y++)
+    for (x = 0; x < 8; x++) {
+        switch (board[y][x]) {
+        case _WP:
+            switch (y) {
+            case 1: case 2: case 3: case 4:
+                ivalue += 100;
+                break;
+            case 5:
+                ivalue += 200;
+                break;
+            case 6:
+                ivalue += 400;
+            default:;
+            }
+            break;
+        case _WN: case _WB: case _WR: case _WQ:
+            ivalue += _VALUES[(u5) board[y][x]];
+            break;
+        case _BP:
+            switch (y) {
+            case 6: case 5: case 4: case 3:
+                ivalue -= 100;
+                break;
+            case 2:
+                ivalue -= 200;
+                break;
+            case 1:
+                ivalue -= 400;
+                break;
+            default:;
+            }
+            break;
+        case _BN: case _BB: case _BR: case _BQ:
+            ivalue -= _VALUES[(u5)(-board[y][x])];
+            break;
+        case _WK:
+            kings++;
+            if ((y == 7) && (x == 2 || x == 3)) white_castled_long = 1;
+            break;
+        case _BK:
+            kings--;
+            if ((y == 0) && (x == 5 || x == 6)) black_castled_short = 1;
+            break;
+        default:;
+        }
+
+        // Check if Black dark-square bishop still exists
+        if (board[y][x] == _BB && ((x + y) % 2 == 1)) {
+            black_dark_bishop_missing = 0;
+        }
+    }
+
+    for (y = 0; y < 8; y++)
+    for (x = 0; x < 8; x++) {
+        if (board[y][x] > 0)
+            ivalue += PCSQ[board[y][x] - 1][7 - y][x];
+        else if (board[y][x] < 0)
+            ivalue -= PCSQ[-board[y][x] - 1][y][x];
+    }
+
+    // Opposite-side castling English Attack incentives
+    if (white_castled_long && black_castled_short) {
+        // Encourage kingside pawn advances
+        if (board[6][5] == _WP) ivalue += 15; // f3
+        if (board[5][6] == _WP) ivalue += 20; // g4
+        if (board[6][7] == _WP) ivalue += 20; // h4
+        ivalue += 50; // Bonus for castling opposite
+        if (black_dark_bishop_missing) ivalue += 30; // Reward Bh6-type trade
+    }
+
+    if (kings) {
+        if (kings > 0)
+            return (_MAXVALUE - level);
+        else
+            return (-_MAXVALUE + level);
+    }
+
+    value = ivalue + pvalue;
+
+#if 1
+    if (treea[level].depth == 1) {
+        copy_board(board, aux);
+        transpose(aux);
+        if (in_check(aux))
+            return (_MAXVALUE - (level + 1));
+    }
+
+    if (treea[level].depth / 2 == 1) {
+        if (in_check(board))
+            return (-2000 + value + level);
+        if (value > treea[level].alpha) {
+            value = value * 10;
+            if (value > 1500)
+                value = 2000 - level;
+            return value;
+        }
+    }
+#endif
+
+    value += ((rand() % 7) - 3); // Reduced noise
+
+    if (level > 1)
+        return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
+    return value;
+}
+
+/*VALUE eval(BOARD board, LEVEL level)
+{
+    BOARD aux;
+    int ivalue = 0;
+    int kings = 0;
     u5 x;
     u5 y;
     VALUE pvalue = 0;
@@ -460,17 +583,11 @@ VALUE eval(BOARD board, LEVEL level)
         }
     }
 #endif
-#define EVALCUSTOM
-#ifdef EVALCUSTOM
-/*
-    value += (_VALUES[abs(board[2][7])] * sgn(board[2][7]) + _VALUES[abs(board[5][7])] * sgn(board[5][7]));
-*/
-#endif
     value += ((rand() % 19) - 9);
     if (level > 1)
         return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
     return (value);
-}
+}*/
 
 MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL depth)
 // depth means 1 if sortable, 0 otherwise
