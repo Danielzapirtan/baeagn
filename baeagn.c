@@ -371,7 +371,9 @@ VALUE eval(BOARD board, LEVEL level)
     VALUE pvalue = 0;
     VALUE value;
     int white_castled_long = 0, black_castled_short = 0;
+    int black_castled_long = 0, white_castled_short = 0;
     int black_dark_bishop_missing = 1;
+    int white_dark_bishop_missing = 1;
     nodes++;
 
     if ((nodes % _SKIPFRAMES) == 0) {
@@ -416,18 +418,23 @@ VALUE eval(BOARD board, LEVEL level)
             break;
         case _WK:
             kings++;
-            if ((y == 7) && (x == 2 || x == 3)) white_castled_long = 1;
+            if ((y == 7) && (x == 2 || x == 3)) black_castled_long = 1;
+            if ((y == 0) && (x == 2 || x == 3)) white_castled_long = 1;
             break;
         case _BK:
             kings--;
-            if ((y == 0) && (x == 5 || x == 6)) black_castled_short = 1;
+            if ((y == 7) && (x == 5 || x == 6)) black_castled_short = 1;
+            if ((y == 0) && (x == 5 || x == 6)) white_castled_short = 1;
             break;
         default:;
         }
 
         // Check if Black dark-square bishop still exists
-        if (board[y][x] == _BB && ((x + y) % 2 == 1)) {
+        if (board[y][x] == _BB && ((x + y) % 2 == 0)) {
             black_dark_bishop_missing = 0;
+        }
+        if (board[y][x] == _WB && ((x + y) % 2 == 1)) {
+            white_dark_bishop_missing = 0;
         }
     }
 
@@ -442,11 +449,19 @@ VALUE eval(BOARD board, LEVEL level)
     // Opposite-side castling English Attack incentives
     if (white_castled_long && black_castled_short) {
         // Encourage kingside pawn advances
-        if (board[6][5] == _WP) ivalue += 15; // f3
-        if (board[5][6] == _WP) ivalue += 20; // g4
-        if (board[6][7] == _WP) ivalue += 20; // h4
+        if (board[2][5] == _WP) ivalue += 15; // f3
+        if (board[3][6] == _WP) ivalue += 20; // g4
+        if (board[3][7] == _WP) ivalue += 20; // h4
         ivalue += 50; // Bonus for castling opposite
         if (black_dark_bishop_missing) ivalue += 30; // Reward Bh6-type trade
+    }
+    if (black_castled_long && white_castled_short) {
+        // Encourage kingside pawn advances
+        if (board[5][5] == _WP) ivalue -= 15; // f3
+        if (board[4][6] == _WP) ivalue -= 20; // g4
+        if (board[4][7] == _WP) ivalue -= 20; // h4
+        ivalue += 50; // Bonus for castling opposite
+        if (white_dark_bishop_missing) ivalue += 30; // Reward Bh6-type trade
     }
 
     if (kings) {
