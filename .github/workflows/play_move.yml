@@ -1,4 +1,4 @@
-name: CalVar
+name: Chess.com
 
 on:
   workflow_dispatch:
