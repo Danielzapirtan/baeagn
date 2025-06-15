@@ -1,4 +1,4 @@
-name: CalVar
+name: ICCF
 
 on:
   workflow_dispatch:
