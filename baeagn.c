@@ -238,7 +238,7 @@ void analysis(void)
 	best = tree->best;
 	update(&elapsed);
         delapsed = dclock(&elapsed);
-#if 1
+#if 0
 	if (delapsed >= 800.00) {
 		printf("Analysis completed!\n");
 		fflush(stdout);
