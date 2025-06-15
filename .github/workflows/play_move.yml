@@ -48,7 +48,7 @@ jobs:
 
     - name: Run benchmarks ${{ inputs.game_symbol }}
       run: |
-        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
+        timeout 180s bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
