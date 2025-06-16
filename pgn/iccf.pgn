@@ -2,12 +2,13 @@
 [Site "ICCF"]
 [Date "2025.06.15"]
 [Round "-"]
-[White "Stenvaag, Per-Christian"]
+[White "Palladino, Mario"]
 [Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[WhiteElo "1842"]
+[WhiteElo "2381"]
 [BlackElo "1485"]
 
 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 e5 7.Nb3 Be6 8.f3 h5 9.Be2 Nbd7 10.Nd5 Bxd5 
-11.exd5 g6 12.Qd2 Bg7 13.O-O Nb6 14.c4 *
+6.Be3 e5 7.Nb3 Be6 8.f3 h5 9.Nd5 Bxd5 10.exd5 Nbd7 
+11.Qd2 g6 12.O-O-O Nb6 13.Kb1 Nbxd5 14.Bg5 Be7 15.Bd3 Nd7 
+16.Be4 Bxg5 17.Qxd5 Rb8 *
