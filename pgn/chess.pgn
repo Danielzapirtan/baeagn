@@ -2,12 +2,11 @@
 [Site "Chess.com"]
 [Date "2025-06-11"]
 [White "AntoniuDanielZapirtan"]
-[Black "TomaskoTO"]
+[Black "ToppiesAteljee"]
 [Result "*"]
 [WhiteElo "1441"]
-[BlackElo "1303"]
+[BlackElo "1337"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-16"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 a6 6. Bxc6 bxc6 7. Qe2 d5 8.
-Nxe5 f6 9. Qh5+ g6 10. Nxg6 Rg8 11. Ne5+ Rg6 12. Nxg6 hxg6 13. Qxg6+ Kd7 14.
-Qg4+ Ke7 15. Qg6 Be6 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. d4 exd4 5. Bxc6+ bxc6 6. Qxd4 Qf6 7. Bg5 Qxd4
+8. Nxd4 f6 *
