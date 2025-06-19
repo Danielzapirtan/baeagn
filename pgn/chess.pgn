@@ -2,12 +2,10 @@
 [Site "Chess.com"]
 [Date "2025-06-11"]
 [White "AntoniuDanielZapirtan"]
-[Black "eliaharelw"]
+[Black "Dmacri7"]
 [Result "*"]
 [WhiteElo "1441"]
-[BlackElo "1377"]
+[BlackElo "1337"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-17"]
-1. e4 a6 2. d4 h6 3. Nc3 e6 4. Bc4 c5 5. Nf3 b5 6. Bd3 Ne7 7. dxc5 Ng6 8. Be3
-Nc6 9. Qd2 Be7 10. O-O-O O-O 11. g4 Bb7 12. h4 Nce5 13. Nxe5 Nxe5 14. g5 h5 15.
-Be2 g6 *
+1. e4 d5 2. exd5 Qxd5 3. Nc3 Qe5+ 4. Qe2 Nc6 5. Nb5 Qxe2+ *
