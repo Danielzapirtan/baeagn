@@ -1,13 +1,14 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
 [Date "2025-06-11"]
-[White "DAMOBYRNE2011"]
+[White "gennady0257"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1464"]
+[WhiteElo "1576"]
 [BlackElo "1382"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-25"]
-1. d4 Nf6 2. h3 e6 3. Bg5 d5 4. e3 Nc6 5. Nf3 h6 6. Bf4 Bd7 7. Ne5 g5 8. Bg3 Ne4
-9. Qf3 Nxe5 10. Bxe5 Rg8 11. Bd3 Bb4+ 12. c3 Bd6 13. Bxe4 dxe4 14. Qxe4 Bc6 15.
-Qh7 Ke7 16. Qxh6 Rg6 17. Qh7 Bxe5 18. dxe5 *
+1. e4 c5 2. Bc4 e6 3. Nc3 Nc6 4. a3 Nge7 5. Nf3 Nd4 6. d3 a6 7. Be3 Nec6 8. O-O
+Bd6 9. Nd2 b6 10. f4 Bb7 11. Ne2 Nxe2+ 12. Qxe2 Qc7 13. Qg4 O-O-O 14. c3 Bf8 15.
+b4 g6 16. b5 axb5 17. Bxb5 Na7 18. a4 d5 19. e5 d4 20. cxd4 Nxb5 21. axb5 cxd4
+22. Bf2 Qd7 23. Rfb1 *
