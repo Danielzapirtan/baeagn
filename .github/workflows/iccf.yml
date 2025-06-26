@@ -7,6 +7,10 @@ on:
         description: "Game symbol"
         required: true
         type: string
+      c7flag:
+        description: "c7 pruning flag"
+        type: number
+        default: 1
 
 jobs:
   analyze:
@@ -48,7 +52,7 @@ jobs:
 
     - name: Run benchmarks ${{ inputs.game_symbol }}
       run: |
-        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }}
+        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }} ${{ inputs.c7flag }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
