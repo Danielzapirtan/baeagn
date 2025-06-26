@@ -3,10 +3,10 @@ name: Chess.com
 on:
   workflow_dispatch:
     inputs:
-      game_symbol:
-        description: "Game symbol"
-        required: true
-        type: string
+#      game_symbol:
+#        description: "Game symbol"
+@        required: true
+#        type: string
       c7flag:
         description: "c7 pruning flag"
         type: number
@@ -48,15 +48,15 @@ jobs:
     - name: Save PGN to file
       run: |
         mkdir -p input
-        cp -a pgn/${{ inputs.game_symbol }}.pgn input/game.pgn
+        cp -a pgn/chess.pgn input/game.pgn
 
-    - name: Run benchmarks ${{ inputs.game_symbol }}
+    - name: Run benchmarks chess ${{ inputs.c7flag }}
       run: |
-        bin/bench.sh ${{ matrix.depths }} ${{ inputs.game_symbol }} ${{ inputs.c7flag }}
+        bin/bench.sh ${{ matrix.depths }} chess ${{ inputs.c7flag }}
         
     - name: Upload analysis files
       uses: actions/upload-artifact@v4
       with:
-        name: analysis-${{ inputs.game_symbol }}-${{ matrix.depths }} 
-        path: ${{ inputs.game_symbol }}.d${{ matrix.depths }}.anl
+        name: analysis-chess-${{ matrix.depths }} 
+        path: chess.d${{ matrix.depths }}.anl
       
