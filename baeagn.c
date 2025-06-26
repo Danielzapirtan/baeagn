@@ -534,7 +534,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-    if (c7flag) {
+    if (c7flag > 0.0 && c7flag < 4.0) {
         newmax_index = 5;
         if (c7flag > 1.5 && c7flag < 3.0)
             newmax_index = 8;
@@ -543,11 +543,10 @@ skippvs:
         if (max_index > newmax_index)
             max_index = newmax_index;
     }
-#endif
-#ifdef _CAND250
     if (glevel)
+    if (c7flag > 4.0)
     for (curr_index = 0; curr_index < max_index; curr_index++)
-    if (valuelist[curr_index] < valuelist[0] - _CANDCUT) {
+    if (valuelist[curr_index] < valuelist[0] - (int) (100.0 / (c7flag - 4.0))) {
         max_index = curr_index;
         break;
     }
