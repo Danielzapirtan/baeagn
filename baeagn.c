@@ -29,7 +29,7 @@
 #define _SORT
 #define _PVSEARCH
 #define _SVP
-#undef _CAND7
+#define _CAND7
 #undef _CAND250
 #define _CANDCUT (7500)
 #undef _Q0BLK // For opening phase, block Queen's moves at node root
@@ -166,6 +166,7 @@ MOVE best_move;
 NODES nodes;
 TREE *treea;
 TREE *treeb;
+int c7flag;
 int maxdepth;
 int newpv;
 int pvsready;
@@ -533,6 +534,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
+    if (c7flag)
         newmax_index = 5;
     if (max_index > newmax_index)
         max_index = newmax_index;
@@ -1124,6 +1126,7 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     maxdepth = atoi(argv[1]);
+    c7flag = atoi(argv[2]);
     analysis();
     return (0);
 }
