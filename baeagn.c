@@ -166,7 +166,7 @@ MOVE best_move;
 NODES nodes;
 TREE *treea;
 TREE *treeb;
-int c7flag;
+double c7flag;
 int maxdepth;
 int newpv;
 int pvsready;
@@ -536,10 +536,10 @@ skippvs:
     if (glevel)
     if (c7flag) {
         newmax_index = 5;
-        if (c7flag == 2)
+        if (c7flag > 1.5 && c7flag < 3.0)
             newmax_index = 8;
-        if (c7flag == 3)
-            newmax_index = (int) (pow((double) max_index, 0.638));
+        if (c7flag > 3.0)
+            newmax_index = (int) (pow((double) max_index, (c7flag - 3.0)));
         if (max_index > newmax_index)
             max_index = newmax_index;
     }
@@ -1131,7 +1131,7 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     maxdepth = atoi(argv[1]);
-    c7flag = atoi(argv[2]);
+    sscanf("%lf", argv[2]);
     analysis();
     return (0);
 }
