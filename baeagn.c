@@ -546,7 +546,7 @@ skippvs:
     if (glevel)
     if (c7flag > 4.0)
     for (curr_index = 0; curr_index < max_index; curr_index++)
-    if (valuelist[curr_index] < valuelist[0] - (int) (100.0 / (c7flag - 4.0))) {
+    if (valuelist[curr_index] < valuelist[0] - (int) (25.0 / (c7flag - 4.0))) {
         max_index = curr_index;
         break;
     }
