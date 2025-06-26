@@ -5,7 +5,7 @@ on:
     inputs:
 #      game_symbol:
 #        description: "Game symbol"
-@        required: true
+#        required: true
 #        type: string
       c7flag:
         description: "c7 pruning flag"
