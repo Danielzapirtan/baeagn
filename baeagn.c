@@ -539,7 +539,7 @@ skippvs:
         if (c7flag == 2)
             newmax_index = 8;
         if (c7flag == 3)
-            newmax_index = (int) ((double) max_index * 0.638 + 0.55);
+            newmax_index = (int) (pow((double) max_index, 0.638));
         if (max_index > newmax_index)
             max_index = newmax_index;
     }
