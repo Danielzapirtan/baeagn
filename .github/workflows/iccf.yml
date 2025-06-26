@@ -50,7 +50,7 @@ jobs:
         mkdir -p input
         cp -a pgn/iccf.pgn input/game.pgn
 
-    - name: Run benchmarks iccf
+    - name: Run benchmarks iccf ${{ inputs.c7flag }}
       run: |
         bin/bench.sh ${{ matrix.depths }} iccf ${{ inputs.c7flag }}
         
