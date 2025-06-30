@@ -1,17 +1,14 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025-05-15"]
-[White "nickcadobson"]
+[Date "2025-06-11"]
+[White "SkynetGlobal"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1359"]
+[WhiteElo "1515"]
 [BlackElo "1382"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-30"]
-1. e4 e6 2. d4 c5 3. Nf3 cxd4 4. Nxd4 Nf6 5. Nc3 d6 6. Bb5+ Bd7 7. O-O a6 8.
-Bxd7+ Nfxd7 9. Nf3 Qb6 10. Ng5 Nc6 11. b3 Qd8 12. Qf3 Nde5 13. Qg3 Be7 14. f4
-Ng6 15. f5 Nf8 16. fxe6 Nxe6 17. Nxf7 Qb6+ 18. Be3 Qa5 19. Nxh8 Qxc3 20. Qh3 Kd7
-21. Nf7 Qxc2 22. Bg5 Bxg5 23. Nxg5 Qc5+ 24. Kh1 Qxg5 25. Qf5 Rh8 26. Qd5 Qg6 27.
-Rad1 Kc8 28. Qxd6 Rd8 29. Qg3 Rxd1 30. Rxd1 Qxe4 31. Re1 Qf5 32. Qe3 Ncd8 33.
-Rc1+ Nc7 34. a4 h6 35. Qc3 Qf4 36. Kg1 Ne6 37. Rf1 Qg4 38. Rc1 Kb8 39. b4 Qd4+
-40. Qxd4 Nxd4 41. Rd1 *
+1. e4 c5 2. Nc3 Nc6 3. f4 g6 4. Nf3 Bg7 5. Bb5 Nd4 6. O-O a6 7. Bc4 Nxf3+ 8.
+Qxf3 d6 9. d3 Qa5 10. Be3 Bxc3 11. bxc3 Qxc3 12. e5 dxe5 13. fxe5 Qxe5 14. Qxf7+
+Kd8 15. Qf8+ Kd7 16. Rae1 Qc3 17. Bxc5 Kc7 18. Qf4+ Kc6 19. Bd4 Qa3 20. Qe4+ Kd7
+21. Be6+ Ke8 22. Bf7+ Kd7 23. Qe6+ Kc7 24. Be5+ Qd6 25. Bxd6+ exd6 26. Qc4+ *
