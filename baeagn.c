@@ -1130,7 +1130,7 @@ void setup_board(BOARD board)
 int main(int argc, char *argv[])
 {
     maxdepth = atoi(argv[1]);
-    sscanf("%lf", argv[2]);
+    sscanf(argv[2], "%lf", &c7flag);
     analysis();
     return (0);
 }
