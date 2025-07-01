@@ -1,14 +1,13 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
 [Date "2025-06-11"]
-[White "SkynetGlobal"]
+[White "lateeshparmar"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1515"]
+[WhiteElo "1385"]
 [BlackElo "1382"]
 [TimeControl "1/259200"]
 [EndDate "2025-06-30"]
-1. e4 c5 2. Nc3 Nc6 3. f4 g6 4. Nf3 Bg7 5. Bb5 Nd4 6. O-O a6 7. Bc4 Nxf3+ 8.
-Qxf3 d6 9. d3 Qa5 10. Be3 Bxc3 11. bxc3 Qxc3 12. e5 dxe5 13. fxe5 Qxe5 14. Qxf7+
-Kd8 15. Qf8+ Kd7 16. Rae1 Qc3 17. Bxc5 Kc7 18. Qf4+ Kc6 19. Bd4 Qa3 20. Qe4+ Kd7
-21. Be6+ Ke8 22. Bf7+ Kd7 23. Qe6+ Kc7 24. Be5+ Qd6 25. Bxd6+ exd6 26. Qc4+ *
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. c3 dxc3 5. Nxc3 Nc6 6. Bb5 Bd7 7. Be3 Qa5 8.
+O-O a6 9. Ba4 Nf6 10. Bb3 h6 11. Qd3 Qh5 12. Nd5 Nxd5 13. exd5 Ne5 14. Nxe5 Qxe5
+15. Qc2 Rc8 16. Qd2 Ra8 17. Rfe1 Qf5 18. Qd4 e5 19. dxe6 Bxe6 20. Bxe6 *
