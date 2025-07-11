@@ -2,12 +2,14 @@
 [Site "Chess.com"]
 [Date "2025-06-11"]
 [White "AntoniuDanielZapirtan"]
-[Black "Dmacri7"]
+[Black "Ulises_Lima"]
 [Result "*"]
 [WhiteElo "1377"]
-[BlackElo "1334"]
+[BlackElo "1315"]
 [TimeControl "1/259200"]
 [EndDate "2025-07-10"]
-1. e4 d5 2. exd5 Qxd5 3. Nc3 Qe5+ 4. Qe2 Nc6 5. Nb5 Qxe2+ 6. Bxe2 Nb4 7. Nxc7+
-Kd8 8. Nxa8 Nxc2+ 9. Kf1 Nxa1 10. Bc4 e6 11. Nf3 b6 12. Ne5 Ke8 13. Bb5+ Ke7 14.
-Nc6+ Kd6 *
+1. e4 d5 2. exd5 Qxd5 3. Nc3 Qa5 4. d4 Nf6 5. Nf3 c6 6. Bc4 Bg4 7. h3 Bxf3 8.
+Qxf3 e6 9. O-O Be7 10. Ne2 O-O 11. Qc3 Qxc3 12. bxc3 Nbd7 13. Bf4 Nd5 14. Bg3
+Bf6 15. Bxd5 cxd5 16. Rfb1 b6 17. Rb4 Rac8 18. Ra4 a5 19. h4 e5 20. c4 dxc4 21.
+d5 Rfd8 22. Rd1 Nc5 23. Rxc4 b5 24. Rc3 Na4 25. Rxc8 Rxc8 26. c3 Nb2 27. Rb1 Nc4
+28. Rxb5 Rd8 29. Rc5 Nd6 30. Rxa5 Nc4 31. Rc5 Nd6 *
