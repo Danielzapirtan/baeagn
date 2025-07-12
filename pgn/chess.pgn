@@ -1,11 +1,17 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025-07-11"]
-[White "warbirds"]
-[Black "AntoniuDanielZapirtan"]
+[Date "2025-06-11"]
+[White "AntoniuDanielZapirtan"]
+[Black "Nayeem064"]
 [Result "*"]
-[WhiteElo "1333"]
-[BlackElo "1385"]
+[WhiteElo "1385"]
+[BlackElo "1449"]
 [TimeControl "1/259200"]
 [EndDate "2025-07-12"]
-1. e4 e6 2. d4 d5 3. e5 c5 4. Bb5+ *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Bc5 4. c3 Nge7 5. d4 exd4 6. cxd4 Bb4+ 7. Bd2 Bxd2+
+8. Qxd2 O-O 9. d5 Nb8 10. O-O d6 11. Bd3 Bg4 12. Nd4 Ng6 13. f4 Bd7 14. Nc3 a6
+15. f5 Ne7 16. Rf3 f6 17. Ne6 Bxe6 18. dxe6 c6 19. Be2 d5 20. Qd4 dxe4 21. Qxd8
+Rxd8 22. Nxe4 b6 23. Rg3 Nxf5 24. Nxf6+ Kf8 25. Nxh7+ Ke7 26. Rg6 c5 27. Bf3 Ra7
+28. Bg4 Ne3 29. Rxg7+ Kd6 30. Rxa7 Nc6 31. e7 Nxe7 32. Bf3 Rh8 33. Ng5 a5 34.
+Re1 N7f5 35. Nf7+ Ke6 36. Nxh8 Ke5 37. Kf2 Kd4 38. g4 Nxg4+ 39. Bxg4 Nh4 40. Ng6
+Nxg6 41. Rd7+ Kc4 *
