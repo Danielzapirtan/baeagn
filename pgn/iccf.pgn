@@ -3,12 +3,13 @@
 [Date "2025.06.15"]
 [Round "-"]
 [White "Zapirtan, Antoniu Daniel"]
-[Black "Vegjeleki, Adolf"]
+[Black "Stenvaag, Per-Christian"]
 [Result "*"]
 [WhiteElo "1485"]
-[BlackElo "2179"]
+[BlackElo "1842"]
 
 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 Ng4 7.Bg5 h6 8.Bh4 g5 9.Bg3 Bg7 10.Qd2 Nc6 
-11.Nxc6 bxc6 12.Nd1 Be6 13.a3 Nf6 14.Nc3 Nh5 15.h4 Nxg3 
-16.fxg3 gxh4 17.gxh4 Rb8 *
+6.Be3 e5 7.Nb3 Be6 8.f3 h5 9.Qd2 Nbd7 10.Nd5 Bxd5 
+11.exd5 g6 12.Be2 Bg7 13.O-O O-O 14.h3 Rc8 15.c4 b6 
+16.Bd3 a5 17.Qe2 b5 18.Nd2 bxc4 19.Bxc4 Nb6 20.Qd3 Nfd7 
+21.Bb5 Nc5 22.Bxc5 Rxc5 23.Bc6 Bh6 24.Ne4 Rc4 *
