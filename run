@@ -1,7 +1,1 @@
-export GAME=$1
-cp /sdcard/fen/$GAME.fen fen
-ln -sf fen/$GAME.fen start.fen
-cd bin
-ln -sf ../baeagn $GAME.so
-cd -
-(./bin/$GAME.so >anl/$GAME.anl &)
+(./baeagn >anl/start.anl &)
