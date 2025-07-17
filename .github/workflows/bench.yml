@@ -1,0 +1,16 @@
+name: Bench
+
+on:
+  workflow_dispatch:
+
+jobs:
+  steps:
+    name: Preparations
+    run: |
+      apt update
+      apt install git pgn-extract build-essential
+      sh build.sh
+    name: Execution
+      ulimit -t 3600
+      ./baeagn 2>&1 &
+
