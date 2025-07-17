@@ -179,3 +179,10 @@ Best variation: a7a6 Be3g5 Rd8e8 Rf1e1 h7h6 Bg5d2 Qc7c4 Bd2b4 b7b6 Qd1xd5
 Elapsed: 243.76
 NPS: 2459825
 
+Depth: 10
+Evaluation: -0.92
+Branching factor: 7.93
+Best variation: a7a6 Be3g5 Rd8e8 Rf1e1 h7h6 Bg5d2 Qc7c4 Bd2b4 b7b6 Qd1xd5 
+Elapsed: 390.24
+NPS: 2528659
+
