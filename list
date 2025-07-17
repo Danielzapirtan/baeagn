@@ -1,0 +1,6 @@
+game=$1
+while true; do
+	cat anl/$game.anl
+	top -bn1|grep $game.so
+	sleep 15
+done
