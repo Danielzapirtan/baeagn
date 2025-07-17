@@ -4,13 +4,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  steps:
-    name: Preparations
-    run: |
-      apt update
-      apt install git pgn-extract build-essential
-      sh build.sh
-    name: Execution
-      ulimit -t 3600
-      ./baeagn 2>&1 &
-
+  bench:
+    name: Bench Job
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Preparations
+        run: |
+          sudo apt update
+          sudo apt install -y git pgn-extract build-essential
+          sh build.sh
+      
+      - name: Execution
+        run: |
+          ulimit -t 3600
+          ./baeagn 2>&1 &
+          wait
