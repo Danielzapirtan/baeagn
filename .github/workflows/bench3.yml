@@ -1,0 +1,27 @@
+name: Bench2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bench:
+    name: Bench Job
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Preparations
+        run: |
+          sudo apt update
+          sudo apt install -y git pgn-extract build-essential
+          sh build.sh
+      
+      - name: Execution
+        run: |
+          ulimit -t 21300
+          ./baeagn 2>&1 &
+          wait
+
+
