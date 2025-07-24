@@ -1,19 +1,13 @@
-[Event "Let\\'s Play!"]
-[Site "Chess.com"]
-[Date "2025.06.10"]
-[Round "?"]
-[White "byte1000101"]
-[Black "AntoniuDanielZapirtan"]
+[Event "WSTT/SEA/68"]
+[Site "ICCF"]
+[Date "2025.06.15"]
+[Round "-"]
+[White "Belter, Edmund"]
+[Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[TimeControl "1/259200"]
-[WhiteElo "1530"]
-[BlackElo "1373"]
-[Termination "unterminated"]
-[ECO "B50"]
-[Link "https://www.chess.com/game/daily/825712708"]
+[WhiteElo "1468"]
+[BlackElo "1485"]
 
-1. e4 c5 2. Nf3 d6 3. Nc3 Nf6 4. d4 cxd4 5. Nxd4 a6 6. Bc4 e6 7. Bg5 Be7 8. O-O
-Nxe4 9. Nxe4 Bxg5 10. Nxg5 Qxg5 11. Qf3 Qc5 12. Qc3 Kf8 13. Rfe1 b5 14. Bb3 Qxc3
-15. bxc3 Nd7 16. Nc6 d5 17. f4 Bb7 18. Nd4 Rc8 19. Re3 g6 20. Rb1 h5 21. a4 bxa4
-22. Bxa4 Nc5 23. Bb3 Nxb3 24. cxb3 h4 25. h3 Rc5 26. Rxe6 Rxc3 27. Rb6 Bc8 28.
-Rb8 *
+1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
+6.Be3 e5 7.Nf3 Be7 8.h3 Be6 9.Qd2 b5 10.a3 
+*
