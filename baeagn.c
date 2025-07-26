@@ -24,8 +24,8 @@
 
 #define _ALPHA (-20000) // Adjusted as needed
 #define _BETA (20000)
-#define _OVERDEPTH (0)
-#define _S_DEPTH (3)
+#define _OVERDEPTH (1)
+#define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
@@ -515,7 +515,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 6;
+        newmax_index = 4;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
