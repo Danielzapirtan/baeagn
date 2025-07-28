@@ -1,15 +1,16 @@
-[Event "Let\\'s Play!"]
-[Site "Chess.com"]
-[Date "2025.07.22"]
-[Round "?"]
-[White "AntoniuDanielZapirtan"]
-[Black "rhhermoso"]
+[Event "WSTT/SEA/68"]
+[Site "ICCF"]
+[Date "2025.06.15"]
+[Round "-"]
+[White "Vegjeleki, Adolf"]
+[Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[TimeControl "1/259200"]
-[WhiteElo "1410"]
-[BlackElo "1390"]
-[Termination "unterminated"]
-[ECO "B28"]
-[Link "https://www.chess.com/game/daily/841582054"]
+[WhiteElo "2179"]
+[BlackElo "1485"]
 
-1. e4 c5 2. Nf3 a6 3. d4 cxd4 4. Nxd4 e5 5. Nf3 Nc6 *
+1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
+6.Be3 e5 7.Nf3 Be7 8.Bc4 O-O 9.O-O Be6 10.Bxe6 fxe6 
+11.Na4 Ng4 12.Qd3 Nc6 13.Qb3 Kh8 14.Qxe6 Nxe3 15.fxe3 Na5 
+16.Nc3 Rf6 17.Qd5 Qb6 18.Qd3 Qd8 19.Nd5 Rg6 20.Nd2 Rh6 
+21.Rf7 Bf6 22.b4 Nc4 23.Nxc4 Qe8 24.Nxd6 Qg8 25.Rxb7 Rf8 
+26.c4 Rg6 27.c5 Bg5 28.Qxa6 *
