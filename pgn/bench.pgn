@@ -1,23 +1,24 @@
-[Event "Spanish Torture by Ruy López de Segura (exchange variation) - Round 1"]
+[Event "Let\\'s Play!"]
 [Site "Chess.com"]
-[Date "2024.12.16"]
+[Date "2025.06.10"]
 [Round "?"]
-[White "Sebataladi"]
+[White "lateeshparmar"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[SetUp "1"]
-[FEN "r1bqkbnr/1ppp1ppp/p1B5/4p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 4"]
-[TimeControl "1/604800"]
-[WhiteElo "1367"]
-[BlackElo "1200"]
+[TimeControl "1/259200"]
+[WhiteElo "1395"]
+[BlackElo "1373"]
 [Termination "unterminated"]
-[ECO "C68"]
-[Link "https://www.chess.com/game/daily/743393865"]
+[ECO "B53"]
+[Link "https://www.chess.com/game/daily/825738254"]
 
-4... dxc6 5. Nc3 Bd6 6. h3 Be6 7. O-O c5 8. d3 h6 9. b3 Ke7 10. Bb2 Ke8 11. Qe2
-c6 12. Qe3 b5 13. Ne2 Qf6 14. Nh2 Ne7 15. f4 exf4 16. Qc1 Be5 17. Bxe5 Qxe5 18.
-Nxf4 Qd4+ 19. Kh1 Kd7 20. Nxe6 fxe6 21. c3 Qd6 22. Qe3 a5 23. Rf7 Ke8 24. Raf1
-Rg8 25. Qf2 Qe5 26. Rxe7+ Kxe7 27. Qf7+ Kd6 28. Ng4 Raf8 29. Nxe5 Rxf7 30. Nxf7+
-Ke7 31. Ne5 Kd6 32. Ng6 Rd8 33. Rf7 Rd7 34. e5+ Kc7 35. Rf3 b4 36. c4 Kd8 37.
-Kg1 Kc8 38. Kf2 Kd8 39. Ke3 Kc8 40. Rf8+ Rd8 41. Ne7+ Kd7 42. Rxd8+ Kxd8 43. Ng6
-Kd7 44. Kf3 Ke8 45. Kg4 Kd7 46. Kh5 *
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. c3 dxc3 5. Nxc3 Nc6 6. Bb5 Bd7 7. Be3 Qa5 8.
+O-O a6 9. Ba4 Nf6 10. Bb3 h6 11. Qd3 Qh5 12. Nd5 Nxd5 13. exd5 Ne5 14. Nxe5 Qxe5
+15. Qc2 Rc8 16. Qd2 Ra8 17. Rfe1 Qf5 18. Qd4 e5 19. dxe6 Bxe6 20. Bxe6 fxe6 21.
+Rac1 Qf7 22. Qb6 g5 23. Rc7 Be7 24. Qxb7 Rd8 25. Qxa6 O-O 26. a3 Rde8 27. Qe2
+Rc8 28. Ra7 Ra8 29. b4 Rxa7 30. Bxa7 Ra8 31. Qe3 Bf8 32. Bd4 e5 33. Bb6 Qa2 34.
+Qe4 Rxa3 35. Qg6+ Kh8 36. g3 Rf3 37. Kg2 Qa8 38. Re4 Rb3 39. Ba5 Rb2 40. Qf6+
+Bg7 41. Qf3 Rb3 42. Qe2 Ra3 43. f3 Ra1 44. g4 Ra4 45. Qb5 Ra2+ 46. Re2 Ra3 47.
+Rf2 e4 48. Qf5 exf3+ 49. Rxf3 Qxf3+ 50. Qxf3 Rxf3 51. Kxf3 Bc3 52. Ke3 Be5 53.
+h3 Kg7 54. b5 Kf6 55. b6 Ke6 56. b7 d5 57. Bc3 Bf4+ 58. Kd3 Kd7 59. Bg7 Kc7 60.
+Kd4 Kxb7 61. Kxd5 Bg3 62. Bxh6 Bh4 63. Ke5 *
