@@ -1,13 +1,25 @@
-[Event "WSTT/SEA/68"]
-[Site "ICCF"]
-[Date "2025.06.15"]
-[Round "-"]
-[White "Owens, Johnny"]
-[Black "Zapirtan, Antoniu Daniel"]
+[Event "Let\\'s Play!"]
+[Site "Chess.com"]
+[Date "2025.06.10"]
+[Round "?"]
+[White "lateeshparmar"]
+[Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "2371"]
-[BlackElo "1485"]
+[TimeControl "1/259200"]
+[WhiteElo "1395"]
+[BlackElo "1373"]
+[Termination "unterminated"]
+[ECO "B53"]
+[Link "https://www.chess.com/game/daily/825738254"]
 
-1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 e5 7.Nb3 Be6 8.Be2 Be7 9.O-O d5 10.Nxd5 Bxd5 
-11.exd5 g6 12.Bf3 e4 13.Bh6 *
+1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. c3 dxc3 5. Nxc3 Nc6 6. Bb5 Bd7 7. Be3 Qa5 8.
+O-O a6 9. Ba4 Nf6 10. Bb3 h6 11. Qd3 Qh5 12. Nd5 Nxd5 13. exd5 Ne5 14. Nxe5 Qxe5
+15. Qc2 Rc8 16. Qd2 Ra8 17. Rfe1 Qf5 18. Qd4 e5 19. dxe6 Bxe6 20. Bxe6 fxe6 21.
+Rac1 Qf7 22. Qb6 g5 23. Rc7 Be7 24. Qxb7 Rd8 25. Qxa6 O-O 26. a3 Rde8 27. Qe2
+Rc8 28. Ra7 Ra8 29. b4 Rxa7 30. Bxa7 Ra8 31. Qe3 Bf8 32. Bd4 e5 33. Bb6 Qa2 34.
+Qe4 Rxa3 35. Qg6+ Kh8 36. g3 Rf3 37. Kg2 Qa8 38. Re4 Rb3 39. Ba5 Rb2 40. Qf6+
+Bg7 41. Qf3 Rb3 42. Qe2 Ra3 43. f3 Ra1 44. g4 Ra4 45. Qb5 Ra2+ 46. Re2 Ra3 47.
+Rf2 e4 48. Qf5 exf3+ 49. Rxf3 Qxf3+ 50. Qxf3 Rxf3 51. Kxf3 Bc3 52. Ke3 Be5 53.
+h3 Kg7 54. b5 Kf6 55. b6 Ke6 56. b7 d5 57. Bc3 Bf4+ 58. Kd3 Kd7 59. Bg7 Kc7 60.
+Kd4 Kxb7 61. Kxd5 Bg3 62. Bxh6 Bh4 63. Ke5 Kc7 64. Kf5 Kd7 65. Bxg5 Bxg5 66.
+Kxg5 Ke8 67. Kg6 *
