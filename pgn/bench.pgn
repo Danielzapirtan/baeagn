@@ -2,12 +2,12 @@
 [Site "ICCF"]
 [Date "2025.06.15"]
 [Round "-"]
-[White "Zapirtan, Antoniu Daniel"]
-[Black "Belter, Edmund"]
+[White "Owens, Johnny"]
+[Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[WhiteElo "1485"]
-[BlackElo "1468"]
+[WhiteElo "2371"]
+[BlackElo "1485"]
 
 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 Ng4 7.Bg5 h6 8.Bh4 g5 9.Bg3 e5 10.Nb3 b5 
-11.Nxb5 axb5 12.Qd5 Ra7 *
+6.Be3 e5 7.Nb3 Be6 8.Be2 Be7 9.O-O d5 10.Nxd5 Bxd5 
+11.exd5 g6 12.Bf3 e4 13.Bh6 *
