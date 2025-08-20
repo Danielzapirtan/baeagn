@@ -1,18 +1,20 @@
 [Event "Let\\'s Play!"]
 [Site "Chess.com"]
-[Date "2025.07.22"]
+[Date "2025.07.11"]
 [Round "?"]
-[White "AntoniuDanielZapirtan"]
-[Black "rhhermoso"]
+[White "warbirds"]
+[Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1410"]
-[BlackElo "1390"]
+[WhiteElo "1333"]
+[BlackElo "1391"]
 [Termination "unterminated"]
-[ECO "B28"]
-[Link "https://www.chess.com/game/daily/841582054"]
+[ECO "C02"]
+[Link "https://www.chess.com/game/daily/837628688"]
 
-1. e4 c5 2. Nf3 a6 3. d4 cxd4 4. Nxd4 e5 5. Nf3 Nc6 6. a3 Nf6 7. Bd3 Bc5 8. b4
-Ba7 9. c4 O-O 10. c5 h6 11. Qd2 d6 12. Bb2 Re8 13. Bc3 dxc5 14. h3 cxb4 15. axb4
-b5 16. O-O Bb7 17. h4 Nd4 18. Qd1 Nxe4 19. Bxd4 exd4 20. Qc1 Rc8 21. Qa3 Nc3 22.
-Qb2 Qd5 23. Na3 Rc7 *
+1. e4 e6 2. d4 d5 3. e5 c5 4. Bb5+ Bd7 5. Bxd7+ Nxd7 6. Nf3 cxd4 7. Qxd4 Bc5 8.
+Qd1 Qb6 9. O-O O-O-O 10. Nc3 Ne7 11. a3 Ng6 12. Na4 Qc7 13. Nxc5 Qxc5 14. Be3
+Qc7 15. Rc1 Ngxe5 16. Bf4 Nxf3+ 17. Qxf3 e5 18. Bg3 Nf6 19. Qf5+ Qd7 20. Qxe5
+Qc6 21. Qb8+ Kd7 22. Qxa7 Rhe8 23. c4 Ra8 24. Qd4 Re4 25. Qd1 Rxc4 26. Rxc4 Qxc4
+27. Qc1 Ne4 28. Qxc4 dxc4 29. Re1 Nxg3 30. hxg3 Rc8 31. Re3 Rc5 32. Rc3 Ke6 33.
+b3 b5 34. Kf1 Kd5 35. Ke2 Rc6 36. f4 Ra6 37. Ke3 f6 38. Kd2 b4 39. bxc4+ *
