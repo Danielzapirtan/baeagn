@@ -1,20 +1,17 @@
-[Event "Let\\'s Play!"]
-[Site "Chess.com"]
-[Date "2025.07.11"]
-[Round "?"]
-[White "warbirds"]
-[Black "AntoniuDanielZapirtan"]
+[Event "WSTT/1/25/1"]
+[Site "ICCF"]
+[Date "2025.01.15"]
+[Round "-"]
+[White "Zapirtan, Antoniu Daniel"]
+[Black "Quigley, Daniel J."]
 [Result "*"]
-[TimeControl "1/259200"]
-[WhiteElo "1333"]
-[BlackElo "1391"]
-[Termination "unterminated"]
-[ECO "C02"]
-[Link "https://www.chess.com/game/daily/837628688"]
+[WhiteElo "1485"]
+[BlackElo "2003"]
 
-1. e4 e6 2. d4 d5 3. e5 c5 4. Bb5+ Bd7 5. Bxd7+ Nxd7 6. Nf3 cxd4 7. Qxd4 Bc5 8.
-Qd1 Qb6 9. O-O O-O-O 10. Nc3 Ne7 11. a3 Ng6 12. Na4 Qc7 13. Nxc5 Qxc5 14. Be3
-Qc7 15. Rc1 Ngxe5 16. Bf4 Nxf3+ 17. Qxf3 e5 18. Bg3 Nf6 19. Qf5+ Qd7 20. Qxe5
-Qc6 21. Qb8+ Kd7 22. Qxa7 Rhe8 23. c4 Ra8 24. Qd4 Re4 25. Qd1 Rxc4 26. Rxc4 Qxc4
-27. Qc1 Ne4 28. Qxc4 dxc4 29. Re1 Nxg3 30. hxg3 Rc8 31. Re3 Rc5 32. Rc3 Ke6 33.
-b3 b5 34. Kf1 Kd5 35. Ke2 Rc6 36. f4 Ra6 37. Ke3 f6 38. Kd2 b4 39. bxc4+ *
+1.Nc3 d5 2.d4 c5 3.Bf4 Nc6 4.e3 a6 5.Nf3 cxd4 
+6.Nxd4 Bd7 7.a3 Rc8 8.Nxc6 Bxc6 9.a4 e6 10.Bd3 Nf6 
+11.Be5 Nd7 12.Bg3 h5 13.Nb5 axb5 14.axb5 h4 15.Bf4 g5 
+16.bxc6 bxc6 17.Ba6 Ra8 18.Bb7 Rxa1 19.Qxa1 gxf4 20.Bxc6 Bd6 
+21.Qa4 h3 22.gxh3 Ke7 23.exf4 Nc5 24.Qa7+ Qc7 25.Qxc7+ Bxc7 
+26.f5 Rb8 27.b3 Kd6 28.fxe6 fxe6 29.Bxd5 exd5 30.Rg1 Ba5+ 
+31.Ke2 Re8+ 32.Kf3 Ne6 33.Rg6 Ke5 34.h4 Rf8+ *
