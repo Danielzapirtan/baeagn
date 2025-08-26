@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Baeagn Chess Engine Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        h1, h2 { text-align: center; }
+        pre { 
+            white-space: pre-wrap; 
+            font-family: monospace; 
+            background-color: #f4f4f4; 
+            padding: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            max-height: 400px; 
+            overflow-y: auto; 
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            text-align: left; 
+        }
+        th { background-color: #e0e0e0; }
+        #board { 
+            width: 400px; 
+            margin: 20px auto; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Baeagn Chess Engine Analysis</h1>
+    <h2>Position from bench.pgn</h2>
+    <div id="board"></div>
+    <h2>Raw Log Output</h2>
+    <pre id="raw-log"></pre>
+    <h2>Parsed Analysis</h2>
+    <table id="results">
+        <thead>
+            <tr>
+                <th>Depth</th>
+                <th>Evaluation</th>
+                <th>Best Variation</th>
+                <th>Branching Factor</th>
+                <th>NPS</th>
+                <th>Elapsed (s)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        // Initialize chessboard
+        const chess = new Chess();
+        const board = Chessboard('board', { draggable: false, position: 'start' });
+
+        // Load bench.pgn and set position (optional)
+        fetch('bench.pgn')
+            .then(response => response.text())
+            .then(pgn => {
+                const game = chess.load_pgn(pgn);
+                if (game) {
+                    board.position(chess.fen());
+                }
+            })
+            .catch(error => console.error('Error loading PGN:', error));
+
+        // Load and display raw log
+        fetch('log.txt')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('raw-log').textContent = data;
+
+                // Parse log into table
+                const tbody = document.querySelector('#results tbody');
+                const lines = data.split('\n');
+                let currentEntry = {};
+                lines.forEach(line => {
+                    // Match analysis lines (adjust regex as needed)
+                    const match = line.match(/Depth: (\d+\*?), Evaluation: ([+-]?\d+\.\d+), Best variation: ([^,]+), Branching factor: (\d+\.\d+), Elapsed: (\d+\.\d+), NPS: (\d+)/);
+                    if (match) {
+                        const row = `<tr>
+                            <td>${match[1]}</td>
+                            <td>${match[2]}</td>
+                            <td>${match[3]}</td>
+                            <td>${match[4]}</td>
+                            <td>${match[6]}</td>
+                            <td>${match[5]}</td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    }
+                });
+            })
+            .catch(error => alert('Error loading log:', error));
+    </script>
+</body>
+</html>
