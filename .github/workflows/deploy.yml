@@ -1,0 +1,51 @@
+name: Bench and Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  bench:
+    name: Bench and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Preparations
+        run: |
+          sudo apt update
+          sudo apt install -y git pgn-extract build-essential
+          sh build.sh
+
+      - name: Run bench and capture log
+        run: |
+          ulimit -t 3600
+          mkdir -p _site
+          ./baeagn bench.pgn > _site/log.txt 2> _site/error.txt || { cat _site/error.txt; exit 1; }
+
+      - name: Copy HTML and assets
+        run: |
+          cp index.html bench.pgn _site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: bench
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
