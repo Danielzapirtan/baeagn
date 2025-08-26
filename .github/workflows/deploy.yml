@@ -27,17 +27,7 @@ jobs:
       - name: Run bench and capture log
         run: |
           ulimit -t 21300
-          mkdir -p _site
-          ./baeagn > _site/log.txt 2> _site/error.txt || { cat _site/error.txt; exit 1; }
-
-      - name: Copy HTML and assets
-        run: |
-          cp index.html start.pgn _site/
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '_site'
+          ./baeagn > log.txt 2> error.txt || { cat error.txt; exit 1; }
 
   deploy:
     environment:
