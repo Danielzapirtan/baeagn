@@ -28,11 +28,11 @@ jobs:
         run: |
           ulimit -t 21300
           mkdir -p _site
-          ./baeagn bench.pgn > _site/log.txt 2> _site/error.txt || { cat _site/error.txt; exit 1; }
+          ./baeagn > _site/log.txt 2> _site/error.txt || { cat _site/error.txt; exit 1; }
 
       - name: Copy HTML and assets
         run: |
-          cp index.html bench.pgn _site/
+          cp index.html pgn/bench.pgn _site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
