@@ -1,18 +1,21 @@
-[Event "WSTT/SEA/68"]
-[Site "ICCF"]
-[Date "2025.06.15"]
-[Round "-"]
-[White "Vegjeleki, Adolf"]
-[Black "Zapirtan, Antoniu Daniel"]
+[Event "Let\\'s Play!"]
+[Site "Chess.com"]
+[Date "2025.06.10"]
+[Round "?"]
+[White "byte1000101"]
+[Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "2179"]
-[BlackElo "1485"]
+[TimeControl "1/259200"]
+[WhiteElo "1530"]
+[BlackElo "1373"]
+[Termination "unterminated"]
+[ECO "B50"]
+[Link "https://www.chess.com/game/daily/825712708"]
 
-1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 e5 7.Nf3 Be7 8.Bc4 O-O 9.O-O Be6 10.Bxe6 fxe6 
-11.Na4 Ng4 12.Qd3 Nc6 13.Qb3 Kh8 14.Qxe6 Nxe3 15.fxe3 Na5 
-16.Nc3 Rf6 17.Qd5 Qb6 18.Qd3 Qd8 19.Nd5 Rg6 20.Nd2 Rh6 
-21.Rf7 Bf6 22.b4 Nc4 23.Nxc4 Qe8 24.Nxd6 Qg8 25.Rxb7 Rf8 
-26.c4 Rg6 27.c5 Bg5 28.Qxa6 Qe6 29.Nf7+ Kg8 30.Nxg5 Qe8 
-31.Ne7+ Kh8 32.Nxg6+ Qxg6 33.Qxg6 hxg6 34.c6 Re8 35.c7 
-*
+1. e4 c5 2. Nf3 d6 3. Nc3 Nf6 4. d4 cxd4 5. Nxd4 a6 6. Bc4 e6 7. Bg5 Be7 8. O-O
+Nxe4 9. Nxe4 Bxg5 10. Nxg5 Qxg5 11. Qf3 Qc5 12. Qc3 Kf8 13. Rfe1 b5 14. Bb3 Qxc3
+15. bxc3 Nd7 16. Nc6 d5 17. f4 Bb7 18. Nd4 Rc8 19. Re3 g6 20. Rb1 h5 21. a4 bxa4
+22. Bxa4 Nc5 23. Bb3 Nxb3 24. cxb3 h4 25. h3 Rc5 26. Rxe6 Rxc3 27. Rb6 Bc8 28.
+Rb8 Ke8 29. Ra1 Kd7 30. Rxa6 Bxa6 31. Rxh8 Rd3 32. Nf3 Ke7 33. b4 Rd1+ 34. Kf2
+Rb1 35. Nd4 Bc4 36. Kf3 Re1 37. Rxh4 Re4 38. Nc6+ Kf6 39. g4 Be2+ 40. Kg3 Bb5
+41. g5+ Kg7 42. Ne7 d4 43. Nd5 d3 44. Kf3 Bc6 *
