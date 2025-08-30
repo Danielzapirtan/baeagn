@@ -1,13 +1,15 @@
-[Event "WSTT/SEA/68"]
-[Site "ICCF"]
-[Date "2025.06.15"]
-[Round "-"]
-[White "Owens, Johnny"]
-[Black "Zapirtan, Antoniu Daniel"]
+[Event "Let\\'s Play!"]
+[Site "Chess.com"]
+[Date "2025.08.28"]
+[Round "?"]
+[White "AntoniuDanielZapirtan"]
+[Black "Queenspawn49"]
 [Result "*"]
-[WhiteElo "2371"]
-[BlackElo "1485"]
+[TimeControl "1/259200"]
+[WhiteElo "1405"]
+[BlackElo "1316"]
+[Termination "unterminated"]
+[ECO "C60"]
+[Link "https://www.chess.com/game/daily/857319672"]
 
-1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
-6.Be3 e5 7.Nb3 Be6 8.Be2 Be7 9.O-O d5 10.Nxd5 Bxd5 
-11.exd5 g6 12.Bf3 e4 13.Bh6 exf3 14.Re1 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 *
