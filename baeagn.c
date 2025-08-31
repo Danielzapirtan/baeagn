@@ -1,4 +1,4 @@
-b9v8#define _GNU_SOURCE
+#define _GNU_SOURCE
 
 #include <assert.h>
 #include <math.h>
