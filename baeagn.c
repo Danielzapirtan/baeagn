@@ -1,4 +1,4 @@
-#define _GNU_SOURCE
+b9v8#define _GNU_SOURCE
 
 #include <assert.h>
 #include <math.h>
@@ -432,7 +432,7 @@ VALUE eval(BOARD board, LEVEL level)
     VALUE pvalue = 0;
     VALUE value;
     nodes++;
-    if (nodes > 12e9)
+    if (nodes > 2e9)
 	    exit(0);
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
@@ -440,7 +440,7 @@ VALUE eval(BOARD board, LEVEL level)
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
         if (board[y][x])
-            ivalue += ((board[y][x] / abs(board[y][x])*pcsq[abs(board[y][x]) - 1][y][x]);
+            ivalue += ((board[y][x] / abs(board[y][x]))*pcsq[abs(board[y][x]) - 1][y][x]);
         switch (board[y][x]) {
         case _WP:
             switch (y) {
