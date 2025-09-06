@@ -151,7 +151,7 @@ const VALUE _BETA_DFL     = (+20000);
 const VALUE _MAXVALUE     = (20000);
 const VALUE _PAWNUNIT     = (100);
 const VALUE _THRESHOLD    = (15000);
-const VALUE _VALUES[6]    = { 0, 100, 315, 325, 500, 980, };
+VALUE _VALUES[6];
 
 ELAPSED elapsed;
 LEVEL gdepth;
@@ -1186,9 +1186,25 @@ void setup_board(BOARD board)
 	}
 }
 
+void load_values(void)
+{
+	FILE *vf = fopen("start.bpf", "r");
+	if (!vf)
+		exit(1);
+	for (int i = 1; i < 6; i++) {
+		int j;
+		fscanf(vf, "%d", &j);
+		if (j != i)
+			exit(0);
+		fscanf(vf, "%d", &_VALUES[i - 1]);
+	}
+	fclose(vf);
+}
+
 int main(int argc, char *argv[])
 {
     gmode = 4;
+    load_values();
     analysis();
     return (0);
 }
