@@ -1196,8 +1196,9 @@ void load_values(void)
 		fscanf(vf, "%d", &j);
 		if (j != i)
 			exit(0);
-		fscanf(vf, "%d", &_VALUES[i - 1]);
+		fscanf(vf, "%d", &_VALUES[i]);
 	}
+	_VALUES[0] = 0;
 	fclose(vf);
 }
 
