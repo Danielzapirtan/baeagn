@@ -1,11 +1,12 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025-09-09"]
+[Date "2025-09-07"]
 [White "AntoniuDanielZapirtan"]
-[Black "angruiz"]
+[Black "omar_xalilov"]
 [Result "*"]
 [WhiteElo "1393"]
-[BlackElo "1291"]
+[BlackElo "1101"]
 [TimeControl "1/259200"]
 [EndDate "2025-09-10"]
-1. e4 e6 2. d4 d5 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O a6 5. Ba4 g6 6. d4 b5 7. Bb3 Bg7 8. Ng5
+O-O *
