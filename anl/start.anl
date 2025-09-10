@@ -137,3 +137,73 @@ Best variation: d5d4 Nf3xd4 Nd7b6 f2f4 Nb6c4 Qd1e2 h7h5 Nd4xe6 f7xe6
 Elapsed: 110.83
 NPS: 3222336
 
+Depth: 8
+Evaluation: 0.71
+Branching factor: 11.94
+Best variation: d5d4 Nf3xd4 Nd7b6 f2f4 Nb6c4 Qd1e2 h7h5 Nd4xe6 f7xe6 
+Elapsed: 126.97
+NPS: 3242604
+
+Depth: 9*
+Evaluation: -0.39
+Branching factor: 9.59
+Best variation: d5d4 Be3xd4 Nd7b8 g2g4 a7a5 c2c4 Nb8c6 h2h4 Ng6xe5 
+Elapsed: 207.01
+NPS: 3326551
+
+Depth: 9*
+Evaluation: -0.09
+Branching factor: 9.72
+Best variation: Ng6xe5 b2b3 Qc7c3 Nf3xe5 Qc3xe5 h2h4 b7b5 g2g4 f7f5 Qd1xd5 
+Elapsed: 231.31
+NPS: 3338110
+
+Depth: 9*
+Evaluation: -0.05
+Branching factor: 9.93
+Best variation: b7b5 c2c4 b5xc4 Qd1d4 Rh8f8 Rc1c3 Ng6h8 Qd4xa7 Nh8g6 
+Elapsed: 281.50
+NPS: 3346626
+
+Depth: 9
+Evaluation: -0.05
+Branching factor: 10.15
+Best variation: b7b5 c2c4 b5xc4 Qd1d4 Rh8f8 Rc1c3 Ng6h8 Qd4xa7 Nh8g6 
+Elapsed: 340.76
+NPS: 3360705
+
+Depth: 10*
+Evaluation: 0.19
+Branching factor: 8.43
+Best variation: b7b5 Nf3d4 a7a5 f2f4 Ng6xf4 Rf1xf4 g7g5 Nd4xe6 f7xe6 h2h4 
+Elapsed: 536.14
+NPS: 3385483
+
+Depth: 10*
+Evaluation: 0.42
+Branching factor: 8.52
+Best variation: Ng6xe5 h2h4 Ne5c4 Qd1d4 f7f6 b2b3 Qc7a5 Qd4xa7 Qa5xa7 Be3xa7 
+Elapsed: 592.32
+NPS: 3389957
+
+Depth: 10*
+Evaluation: 0.46
+Branching factor: 8.61
+Best variation: a7a6 b2b4 d5d4 Nf3xd4 Qc7c4 Qd1d3 Nd7b6 Qd3xc4+ Nb6xc4 Nd4xe6 f7xe6 
+Elapsed: 660.87
+NPS: 3395644
+
+Depth: 10*
+Evaluation: 0.81
+Branching factor: 8.71
+Best variation: d5d4 Nf3xd4 Qc7c4 b2b3 Qc4a6 c2c4 Nd7c5 b3b4 Nc5e4 h2h4 Rd8xd4 
+Elapsed: 742.36
+NPS: 3400452
+
+Depth: 10
+Evaluation: 0.81
+Branching factor: 8.87
+Best variation: d5d4 Nf3xd4 Qc7c4 b2b3 Qc4a6 c2c4 Nd7c5 b3b4 Nc5e4 h2h4 Rd8xd4 
+Elapsed: 879.18
+NPS: 3412082
+
