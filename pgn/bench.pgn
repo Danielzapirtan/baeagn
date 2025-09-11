@@ -3,14 +3,14 @@
 [Date "2025.09.07"]
 [Round "?"]
 [White "AntoniuDanielZapirtan"]
-[Black "omar_xalilov"]
+[Black "peontorre"]
 [Result "*"]
 [TimeControl "1/259200"]
 [WhiteElo "1393"]
-[BlackElo "1383"]
+[BlackElo "1444"]
 [Termination "unterminated"]
 [ECO "C60"]
-[Link "https://www.chess.com/game/daily/861336984"]
+[Link "https://www.chess.com/game/daily/861339148"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O a6 5. Ba4 g6 6. d4 b5 7. Bb3 Bg7 8. Ng5
-O-O 9. dxe5 Nxe5 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O g6 5. d4 exd4 6. Bxc6 Nxc6 7. Nxd4 Bg7 8.
+Nxc6 bxc6 *
