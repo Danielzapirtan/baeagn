@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baeagn Chess Engine Bench Results</title>
+    
+    <!-- PWA Manifest and Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Baeagn Chess">
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,6 +101,26 @@
             color: #7f8c8d;
             font-size: 0.9em;
         }
+        
+        /* PWA Install Button */
+        .install-prompt {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        .install-btn {
+            background-color: white;
+            color: #27ae60;
+            margin-left: 10px;
+        }
+        .install-btn:hover {
+            background-color: #ecf0f1;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -109,6 +138,13 @@
     </style>
 </head>
 <body>
+    <!-- PWA Install Prompt -->
+    <div class="install-prompt" id="install-prompt">
+        <span>Install this app for quick access to your chess engine results!</span>
+        <button class="install-btn" id="install-btn">Install App</button>
+        <button class="install-btn" id="dismiss-install" style="background-color: transparent; color: white;">Dismiss</button>
+    </div>
+
     <header>
         <h1>Baeagn Chess Engine Bench Results</h1>
         <p>Results from the latest benchmark run</p>
@@ -135,6 +171,44 @@
     </footer>
 
     <script>
+        // PWA Install functionality
+        let deferredPrompt;
+        const installPrompt = document.getElementById('install-prompt');
+        const installBtn = document.getElementById('install-btn');
+        const dismissBtn = document.getElementById('dismiss-install');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                installPrompt.style.display = 'none';
+            }
+        });
+
+        dismissBtn.addEventListener('click', () => {
+            installPrompt.style.display = 'none';
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const logContentElement = document.getElementById('log-content');
             const copyButton = document.getElementById('copy-btn');
