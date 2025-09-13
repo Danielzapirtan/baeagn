@@ -1,9 +1,8 @@
-const CACHE_NAME = 'chess-analysis-v1';
+const CACHE_NAME = 'baeagn-chess-v1';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json'
-  // Add your specific files here
 ];
 
 self.addEventListener('install', (event) => {
@@ -14,18 +13,21 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // For your analysis artifacts, always try network first
-  if (event.request.url.includes('analysis') || event.request.url.includes('artifact')) {
+  // For log.txt, always try network first to get latest results
+  if (event.request.url.endsWith('log.txt')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          // Cache the new analysis results
+          // Cache the new log file
           const responseClone = response.clone();
           caches.open(CACHE_NAME)
             .then((cache) => cache.put(event.request, responseClone));
           return response;
         })
-        .catch(() => caches.match(event.request)) // Fallback to cache if offline
+        .catch(() => {
+          // If network fails, try to serve from cache
+          return caches.match(event.request);
+        })
     );
   } else {
     // For other resources, cache first
