@@ -1,11 +1,11 @@
 {
-  "name": "My Chess Engine Analysis",
-  "short_name": "Chess Analysis",
-  "description": "Personal chess engine analysis dashboard",
+  "name": "Baeagn Chess Engine Bench Results",
+  "short_name": "Baeagn",
+  "description": "Personal chess engine benchmark results dashboard",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1a1a",
-  "theme_color": "#2d2d2d",
+  "background_color": "#f5f5f5",
+  "theme_color": "#2c3e50",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
