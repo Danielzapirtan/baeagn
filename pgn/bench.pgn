@@ -1,15 +1,12 @@
-[Event "Let\\'s Play!"]
+[Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025.09.09"]
-[Round "?"]
+[Date "2025-09-09"]
 [White "AntoniuDanielZapirtan"]
 [Black "angruiz"]
 [Result "*"]
-[TimeControl "1/259200"]
 [WhiteElo "1393"]
-[BlackElo "1309"]
-[Termination "unterminated"]
-[ECO "C11"]
-[Link "https://www.chess.com/game/daily/862451757"]
-
-1. e4 e6 2. d4 d5 3. Nc3 Nf6 4. Bg5 h6 5. Bxf6 Qxf6 6. a3 a6 7. exd5 Bd6 *
+[BlackElo "1292"]
+[TimeControl "1/259200"]
+[EndDate "2025-09-15"]
+1. e4 e6 2. d4 d5 3. Nc3 Nf6 4. Bg5 h6 5. Bxf6 Qxf6 6. a3 a6 7. exd5 Bd6 8. Bc4
+O-O 9. Ne4 Qe7 10. Qe2 exd5 11. Nxd6 Qxd6 12. Bb3 Bd7 *
