@@ -2,11 +2,12 @@
 [Site "Chess.com"]
 [Date "2025-09-07"]
 [White "AntoniuDanielZapirtan"]
-[Black "peontorre"]
+[Black "omar_xalilov"]
 [Result "*"]
 [WhiteElo "1393"]
-[BlackElo "1454"]
+[BlackElo "1121"]
 [TimeControl "1/259200"]
 [EndDate "2025-09-15"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O g6 5. d4 exd4 6. Bxc6 Nxc6 7. Nxd4 Bg7 8.
-Nxc6 bxc6 9. Qf3 O-O 10. Qg3 d5 11. Rd1 d4 12. Qd3 Be6 13. Nd2 c5 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. O-O a6 5. Ba4 g6 6. d4 b5 7. Bb3 Bg7 8. Ng5
+O-O 9. dxe5 Nxe5 10. f4 N5c6 11. Nf3 Re8 12. a4 bxa4 13. Rxa4 Bb7 14. Qe2 d5 15.
+exd5 Nxd5 *
