@@ -1,4 +1,4 @@
-const CACHE_NAME = 'baeagn-chess-v1';
+const CACHE_NAME = 'baeagn-chess-20250917-1815';
 const urlsToCache = [
   './',
   './index.html',
