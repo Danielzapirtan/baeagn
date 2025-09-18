@@ -520,6 +520,20 @@ VALUE eval(BOARD board, LEVEL level)
     if (board[6][2] == _BP)
 	    value += PENALTY_C2;
 #endif
+#ifdef _GAME_belb
+#define BONUS_KG1 (75)
+    if (board[0][6] == _WK)
+	    value += BONUS_KG1
+    if (board[7][6] == _BK)
+	    value -= BONUS_KG1
+    int sumqwp = 0;
+#define BONUS_QWP (65)
+    for (y = 1; y < 7; y++)
+    for (x = 0; x < 3; x++)
+    	sumqwp += ((board[y][x] == _WP) - \
+			(board[y][x] == _BP));
+    value += (BONUS_QWP * sumqwp);
+#endif
 #if 1
     if (treea[level].depth == 1) {
         copy_board(board, aux);
