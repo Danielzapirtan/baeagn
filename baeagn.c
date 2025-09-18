@@ -523,9 +523,9 @@ VALUE eval(BOARD board, LEVEL level)
 #ifdef _GAME_belb
 #define BONUS_KG1 (75)
     if (board[0][6] == _WK)
-	    value += BONUS_KG1
+	    value += BONUS_KG1;
     if (board[7][6] == _BK)
-	    value -= BONUS_KG1
+	    value -= BONUS_KG1;
 #define BONUS_QWP (65)
     int sumqwp = 0;
     for (y = 1; y < 7; y++)
