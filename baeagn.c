@@ -514,11 +514,11 @@ VALUE eval(BOARD board, LEVEL level)
     }
     value = ivalue + pvalue;
 #ifdef _GAME_angw
-#define PENALTY_C2 (89)
-    if (board[1][2] == _WP)
-	    value -= PENALTY_C2;
-    if (board[6][2] == _BP)
-	    value += PENALTY_C2;
+#define PENALTY_NE4 (430)
+    if (board[3][4] == _BN)
+	    value -= PENALTY_NE4;
+    if (board[4][4] == _WN)
+	    value += PENALTY_NE4;
 #endif
 #ifdef _GAME_belb
 #define BONUS_KG1 (75)
