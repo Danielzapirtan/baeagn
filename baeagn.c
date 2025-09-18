@@ -534,6 +534,13 @@ VALUE eval(BOARD board, LEVEL level)
 			(board[y][x] == _BP));
     value += (BONUS_QWP * sumqwp);
 #endif
+#ifdef _GAME_peow
+#define BONUS_D6 (170)
+    if (board[5][3] == _WP)
+	    value += BONUS_D6;
+    if (board[2][3] == _BP)
+	    value -= BONUS_D6;
+#endif
 #if 1
     if (treea[level].depth == 1) {
         copy_board(board, aux);
