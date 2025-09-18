@@ -420,6 +420,7 @@ int pcsq[6][8][8] = {
         {  20,  30,  10,   0,   0,  10,  30,  20 }
     }
 };
+
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 VALUE eval(BOARD board, LEVEL level)
