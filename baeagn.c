@@ -526,8 +526,8 @@ VALUE eval(BOARD board, LEVEL level)
 	    value += BONUS_KG1
     if (board[7][6] == _BK)
 	    value -= BONUS_KG1
-    int sumqwp = 0;
 #define BONUS_QWP (65)
+    int sumqwp = 0;
     for (y = 1; y < 7; y++)
     for (x = 0; x < 3; x++)
     	sumqwp += ((board[y][x] == _WP) - \
