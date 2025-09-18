@@ -6,4 +6,4 @@ gcc -o baeagn \
     -O4 \
     -march=native \
     -w \
-    -DGAME_ini || exit 2
+    -D_GAME_ini || exit 2

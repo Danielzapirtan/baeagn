@@ -534,6 +534,13 @@ VALUE eval(BOARD board, LEVEL level)
 			(board[y][x] == _BP));
     value += (BONUS_QWP * sumqwp);
 #endif
+#ifdef _GAME_omaw
+#define BONUS_F7 (430)
+    if (board[6][5] == _WP)
+	    value += BONUS_F7;
+    if (board[1][5] == _BP)
+	    value -= BONUS_F7;
+#endif
 #ifdef _GAME_peow
 #define BONUS_D6 (170)
     if (board[5][3] == _WP)
