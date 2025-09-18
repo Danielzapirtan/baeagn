@@ -513,6 +513,13 @@ VALUE eval(BOARD board, LEVEL level)
         return (-_MAXVALUE + level);
     }
     value = ivalue + pvalue;
+#ifdef _GAME_angw
+#define PENALTY_C2 (89)
+    if (board[1][2] == _WP)
+	    value -= PENALTY_C2;
+    if (board[6][2] == _BP)
+	    value += PENALTY_C2;
+#endif
 #if 1
     if (treea[level].depth == 1) {
         copy_board(board, aux);
