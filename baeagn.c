@@ -513,41 +513,6 @@ VALUE eval(BOARD board, LEVEL level)
         return (-_MAXVALUE + level);
     }
     value = ivalue + pvalue;
-#ifdef _GAME_angw
-#define PENALTY_NE4 (430)
-    if (board[3][4] == _BN)
-	    value -= PENALTY_NE4;
-    if (board[4][4] == _WN)
-	    value += PENALTY_NE4;
-#endif
-#ifdef _GAME_belb
-#define BONUS_KG1 (75)
-    if (board[0][6] == _WK)
-	    value += BONUS_KG1;
-    if (board[7][6] == _BK)
-	    value -= BONUS_KG1;
-#define BONUS_QWP (65)
-    int sumqwp = 0;
-    for (y = 1; y < 7; y++)
-    for (x = 0; x < 3; x++)
-    	sumqwp += ((board[y][x] == _WP) - \
-			(board[y][x] == _BP));
-    value += (BONUS_QWP * sumqwp);
-#endif
-#ifdef _GAME_omaw
-#define BONUS_F7 (430)
-    if (board[6][5] == _WP)
-	    value += BONUS_F7;
-    if (board[1][5] == _BP)
-	    value -= BONUS_F7;
-#endif
-#ifdef _GAME_peow
-#define BONUS_D6 (170)
-    if (board[5][3] == _WP)
-	    value += BONUS_D6;
-    if (board[2][3] == _BP)
-	    value -= BONUS_D6;
-#endif
 #if 1
     if (treea[level].depth == 1) {
         copy_board(board, aux);
