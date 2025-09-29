@@ -1,12 +1,11 @@
 [Event "Let's Play!"]
 [Site "Chess.com"]
 [Date "2025-09-27"]
-[White "Dmacri7"]
+[White "AbduramanBazarbaev"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
-[WhiteElo "1302"]
+[WhiteElo "1419"]
 [BlackElo "1397"]
 [TimeControl "1/259200"]
-[EndDate "2025-09-28"]
-1. d4 Nf6 2. e3 c5 3. Nf3 e6 4. Bd2 cxd4 5. exd4 Qb6 6. Qc1 Nc6 7. a3 Nxd4 8.
-Nxd4 Qxd4 9. Be3 *
+[EndDate "2025-09-29"]
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O *
