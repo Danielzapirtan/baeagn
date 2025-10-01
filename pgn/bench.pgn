@@ -1,17 +1,18 @@
 [Event "Let\\'s Play!"]
 [Site "Chess.com"]
-[Date "2025.09.25"]
+[Date "2025.09.20"]
 [Round "?"]
-[White "EHEHEH"]
+[White "chengetaidunduru"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1403"]
-[BlackElo "1407"]
+[WhiteElo "1324"]
+[BlackElo "1397"]
 [Termination "unterminated"]
-[ECO "A45"]
-[Link "https://www.chess.com/game/daily/868853329"]
+[ECO "B50"]
+[Link "https://www.chess.com/game/daily/866755749"]
 
-1. d4 Nf6 2. Bg5 c5 3. Nf3 Ne4 4. dxc5 Nc6 5. Qd5 Nxg5 6. Qxg5 Qa5+ 7. Nc3 g6 8.
-e4 Qb4 9. Rb1 Bg7 10. a3 Bxc3+ 11. Nd2 Bxd2+ 12. Qxd2 Qxd2+ 13. Kxd2 b6 14. cxb6
-axb6 15. Rd1 O-O 16. Kc1 e6 17. Bb5 f5 18. exf5 *
+1. e4 c5 2. Nf3 d6 3. h3 d5 4. exd5 Qxd5 5. b3 Qf5 6. Bd3 Qh5 7. Be2 Qg6 8. Nh4
+Qf6 9. d4 Qxh4 10. dxc5 Qb4+ 11. c3 Qxc5 12. O-O Bf5 13. Be3 Qc7 14. Bf3 Bg6 15.
+g3 Nc6 16. Bf4 Qd8 17. Qc1 Qd3 18. Bg4 Nf6 19. Rd1 Qe4 20. Nd2 Qd3 21. Nc4 Qc2
+22. Qe3 Qe4 23. Qc1 *
