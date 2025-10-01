@@ -2,14 +2,15 @@
 [Site "Chess.com"]
 [Date "2025.09.27"]
 [Round "?"]
-[White "AntoniuDanielZapirtan"]
-[Black "Riggachini"]
+[White "Dmacri7"]
+[Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1397"]
-[BlackElo "1471"]
+[WhiteElo "1302"]
+[BlackElo "1407"]
 [Termination "unterminated"]
-[ECO "B13"]
-[Link "https://www.chess.com/game/daily/869840789"]
+[ECO "A45"]
+[Link "https://www.chess.com/game/daily/869698861"]
 
-1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bb5+ Bd7 5. a4 Nf6 6. f4 Qb6 *
+1. d4 Nf6 2. e3 c5 3. Nf3 e6 4. Bd2 cxd4 5. exd4 Qb6 6. Qc1 Nc6 7. a3 Nxd4 8.
+Nxd4 Qxd4 9. Be3 Qa4 10. Nc3 Qc6 11. Qd2 *
