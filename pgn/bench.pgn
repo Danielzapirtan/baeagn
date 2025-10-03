@@ -1,12 +1,14 @@
-[Event "Let's Play!"]
-[Site "Chess.com"]
-[Date "2025-09-27"]
-[White "AbduramanBazarbaev"]
-[Black "AntoniuDanielZapirtan"]
+[Event "WSTT/SEA/68"]
+[Site "ICCF"]
+[Date "2025.06.15"]
+[Round "-"]
+[White "Zapirtan, Antoniu Daniel"]
+[Black "Belter, Edmund"]
 [Result "*"]
-[WhiteElo "1428"]
-[BlackElo "1397"]
-[TimeControl "1/259200"]
-[EndDate "2025-10-03"]
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O Be6 6. b3 h5 7. Bg5 f6 8. Bxe6
-fxg5 9. Qd2 *
+[WhiteElo "1485"]
+[BlackElo "1468"]
+
+1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
+6.Be3 Ng4 7.Bg5 h6 8.Bh4 g5 9.Bg3 e5 10.Nb3 b5 
+11.Nxb5 axb5 12.Qd5 Ra7 13.Qxb5+ Bd7 14.Qc4 Be6 15.Qb4 Nc6 
+16.Bb5 Rc7 17.Na5 Bd7 *
