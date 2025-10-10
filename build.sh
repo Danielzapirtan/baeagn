@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
-gcc -o baeagn \
-    baeagn.c \
+g++ -o baeagn \
+    baeagn.cpp \
     -lm \
     -O4 \
     -march=native \
