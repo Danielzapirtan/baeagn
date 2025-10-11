@@ -1,11 +1,12 @@
 [Event "1000-1200 - Round 3"]
 [Site "Chess.com"]
 [Date "2025-10-10"]
-[White "kaukasus1"]
-[Black "AntoniuDanielZapirtan"]
+[White "AntoniuDanielZapirtan"]
+[Black "RyanTHobbyist"]
 [Result "*"]
-[WhiteElo "1138"]
-[BlackElo "1395"]
+[WhiteElo "1395"]
+[BlackElo "1238"]
 [TimeControl "1/259200"]
 [EndDate "2025-10-11"]
-1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Qf6 5. Be3 *
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. c3 e6 7. Bd3 Bxd3 8.
+Qxd3 Nf6 9. Bg5 Nbd7 10. d5 exd5 11. N1e2 Be7 12. Nf5 Ne5 *
