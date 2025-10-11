@@ -1,1314 +1,678 @@
-#define _GNU_SOURCE
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <fstream>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <random>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
+// Constants
+constexpr int MAX_LEVEL = 253;
+constexpr int MAX_INDEX = 200;
+constexpr int FRAMES_PER_SEC = 32;
+constexpr int NPS = 3 << 18;
+constexpr int SKIP_FRAMES = NPS / FRAMES_PER_SEC;
+constexpr int ALPHA_DEFAULT = -20000;
+constexpr int BETA_DEFAULT = 20000;
+constexpr int MAX_VALUE = 20000;
+constexpr int PAWN_UNIT = 100;
+constexpr int THRESHOLD = 15000;
+constexpr int SEARCH_DEPTH = 4;
+constexpr int OVER_DEPTH = 1;
 
-#define _NOEDIT (1)
-#define _ALLOW_CASTLE (1)
-#define _DEBUG (0)
-#define _GAME_LOST (800)
-#ifndef _MAXINDEX
-#define _MAXINDEX (200)
-#endif
-#define _MAXLEVEL (253)
-#define _FRAMESPERSEC (32)
-#define _NPS (3 << 18)
-#define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
-#define _BRDFILE "start.brd"
-#define _FENFILE "start.fen"
+// Piece codes
+enum class Piece : int {
+    EMPTY = 0,
+    WHITE_PAWN = 1,
+    WHITE_KNIGHT = 2,
+    WHITE_BISHOP = 3,
+    WHITE_ROOK = 4,
+    WHITE_QUEEN = 5,
+    WHITE_KING = 6,
+    BLACK_PAWN = -1,
+    BLACK_KNIGHT = -2,
+    BLACK_BISHOP = -3,
+    BLACK_ROOK = -4,
+    BLACK_QUEEN = -5,
+    BLACK_KING = -6,
+    WHITE_M = 7,
+    BLACK_M = -7,
+    BS = -8
+};
 
-#define _ALPHA (-20000) // Adjusted as needed
-#define _BETA (20000)
-#define _OVERDEPTH (1)
-#define _S_DEPTH (4)
-#define _SORT
-#define _PVSEARCH
-#define _SVP
-#define _CAND7
-#undef _CAND250
-#define _CANDCUT (7500)
-#undef _Q0BLK // For opening phase, block Queen's moves at node root
+// Game modes
+enum class GameMode {
+    ANALYSIS,
+    PLAY,
+    SETUP
+};
 
-#ifndef _PIECE_CODES
-#define _PIECE_CODES (1)
-#define _WP (1)
-#define _WN (2)
-#define _WB (3)
-#define _WR (4)
-#define _WQ (5)
-#define _WK (6)
-#define _BP (-1)
-#define _BN (-2)
-#define _BB (-3)
-#define _BR (-4)
-#define _BQ (-5)
-#define _BK (-6)
-#define _WM (7)
-#define _BM (-7)
-#define _UO (0)
-#define _BS (-8)
-#endif
-
-typedef signed int s3;
-typedef signed int s4;
-typedef signed int s5;
-typedef signed long long s6;
-typedef unsigned int u3;
-typedef unsigned int u4;
-typedef unsigned int u5;
-typedef unsigned long long u6;
-
-typedef u6 NODES;
-typedef double TIME;
-typedef s3 MOVE[6];
-typedef MOVE MOVELIST[_MAXINDEX];
-typedef s3 BOARD[9][8];
-typedef s4 VALUE;
-typedef u4 LEVEL;
-typedef u4 MOVEINDEX;
-
-typedef struct {
-    int seconds;
-    int useconds;
-    clock_t clock0;
-    clock_t clock1;
-    int diffclock;
-} ELAPSED;
-
-typedef struct {
-    BOARD curr_board;
-    BOARD next_board;
-    LEVEL bl_len;
-    LEVEL depth;
-    LEVEL level;
-    MOVE best_line[_MAXLEVEL];
-    MOVE curr_move;
-    MOVEINDEX curr_index;
-    MOVEINDEX max_index;
-    MOVELIST legal_moves;
-    VALUE alpha;
-    VALUE best;
-    VALUE beta;
-    VALUE value;
-    VALUE valuelist[_MAXINDEX];
-} TREE;
-
-extern ELAPSED elapsed;
-extern LEVEL gdepth;
-extern LEVEL glevel;
-extern TREE *treea;
-extern TREE *treeb;
-extern MOVE best_move;
-extern NODES nodes;
-extern int newpv;
-extern int pvsready;
-extern s4 gmode;
-extern s4 stm;
-
-extern void init(ELAPSED *elapsed);
-extern void update(ELAPSED *elapsed);
-extern double dclock(ELAPSED *elapsed);
-extern void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void addprom(s5 y, s5 x, s5 y1, s5 x1, s5 to, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void analysis(void);
-extern VALUE search(TREE *tree_, LEVEL level, LEVEL depth);
-extern int board_cmp(BOARD src, BOARD dest);
-extern void copy_board(BOARD src, BOARD dest);
-extern void copy_move(MOVE src, MOVE dest);
-extern void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void warn(const char *msg);
-extern VALUE eval(BOARD board, LEVEL level);
-extern void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void genN(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void genB(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void genR(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth);
-extern MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth);
-extern MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL level);
-extern BOARD *get_init(void);
-extern void load(BOARD start);
-extern s4 in_check(BOARD board);
-extern s4 is_pv(LEVEL level);
-extern void makemove(BOARD src, MOVE move, BOARD dest);
-extern s4 move_cmp(MOVE src, MOVE dest);
-extern void nonslider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void show_move(MOVE move, BOARD board, u5 stm, char *buf);
-extern void slider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void show_board(BOARD board, FILE *f);
-extern void transpose(BOARD board);
-extern void setup_board(BOARD board);
-extern void parse_fen(BOARD board);
-extern void parse_pgn(void);
-extern void save(BOARD board);
-
-const VALUE _ALPHA_DFL    = (-20000);
-const VALUE _BETA_DFL     = (+20000);
-const VALUE _MAXVALUE     = (20000);
-const VALUE _PAWNUNIT     = (100);
-const VALUE _THRESHOLD    = (15000);
-VALUE _VALUES[6];
-
-ELAPSED elapsed;
-LEVEL gdepth;
-LEVEL glevel;
-MOVE best_move;
-NODES nodes;
-TREE *treea;
-TREE *treeb;
-int newpv;
-int pvsready;
-s4 gmode;
-s4 stm;
-
-void analysis(void)
-{
-    BOARD aux;
-    BOARD aux2;
-    BOARD start;
-    char buf[80];
-    LEVEL depth;
-    LEVEL i;
-    TREE *tree;
-    s4 ix = 0;
-#if _NOEDIT == 3
-    parse_pgn();
-    exit(0);
-#elif _NOEDIT == 2
-    parse_fen(start);
-    save(start);
-#elif _NOEDIT == 1
-    parse_pgn();
-    load(start);
-#else
-    load(start);
-//    setup_board(start);
-//    copy_board(*get_init(), start);
-//    save(start);
-#endif
-    show_board(start, stdout);
-    treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
-    if (!treea) {
-        warn("Out of memory!");
-    }
-    treeb = (TREE *) malloc(_MAXLEVEL * sizeof(TREE));
-    if (!treeb)
-        warn("Out of memory");
-    init(&elapsed);
-    nodes = 0LL;
-    pvsready = 0;
-    for (depth = _S_DEPTH + 1; depth < _MAXLEVEL; depth++) {
-        tree = &treea[0];
-        copy_board(start, tree->curr_board);
-        tree->level = 0;
-        tree->depth = depth + _OVERDEPTH;
-        gdepth = tree->depth;
-        tree->alpha = _ALPHA;
-        tree->beta = _BETA;
-        newpv = 0;
-        tree->best = search(treea, 0, 1);
-        pvsready = 1;
-        update(&elapsed);
-        double delapsed = dclock(&elapsed);
-        copy_board(start, aux);
-        fprintf(stdout, "Depth: %u\n", depth);
-        fprintf(stdout, "Evaluation: %.2lf\n", \
-            ((double) (tree->best) / (double) _PAWNUNIT));
-        fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
-        fprintf(stdout, "Best variation: ");
-        for (i = 0; i < tree->bl_len; i++) {
-            show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
-            makemove(aux, tree->best_line[i], aux2);
-            copy_board(aux2, aux);
-            fprintf(stdout, "%s ", buf);
-        }
-        fprintf(stdout, "\n");
-        if (tree->bl_len & 1)
-            transpose(aux);
-        fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
-        fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
-        fprintf(stdout, "\n");
-        fflush(stdout);
-    }
-    free(treea);
-    free(treeb);
-}
-
-VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
-// level means distance from root
-// depth means 1 if treea, 0 if treeb
-{
-    BOARD aux;
-    BOARD aux2;
-    char buf[80];
-    LEVEL bl_lev;
-    LEVEL i;
-    TREE *tree;
-    TREE *ntree;
-    VALUE value;
-    tree = &tree_[level];
-    value = eval(tree->curr_board, level);
-    if (newpv)
-	tree->bl_len = 0;
-    if (value < -_THRESHOLD) {
-        return (value);
-    }
-    if (tree->depth == 0) {
-        return (value);
-    }
-    if (tree->depth <= _OVERDEPTH)
-    if (value > -(_PAWNUNIT >> 1)) {
-        return (value);
-    }
-    if (depth)
-        glevel = level;
-    tree->max_index = gen(tree->curr_board, tree->legal_moves, depth);
-    if (tree->max_index == 0) {
-        return (-_MAXVALUE + level);
-    }
-    if (newpv)
-	tree->bl_len = 1;
-    tree->best = -_MAXVALUE;
-    for (tree->curr_index = 0; tree->curr_index < tree->max_index; (tree->curr_index)++) {
-        ntree = &tree_[level + 1];
-        copy_move(tree->legal_moves[tree->curr_index], tree->curr_move);
-        makemove(tree->curr_board, tree->curr_move, tree->next_board);
-        copy_board(tree->next_board, ntree->curr_board);
-#ifdef _SVP
-        if (depth)
-        if (level < 1)
-        if (tree->curr_index) {
-            ntree->level = tree->level + 1;
-            ntree->depth = tree->depth - 1;
-            ntree->alpha = -(tree->alpha) - 1;
-            ntree->beta = -(tree->alpha);
-            tree->value = -search(tree_, level + 1, depth);
-            if (tree->value <= tree->alpha)
-                continue;
-        }
-#endif
-        ntree->level = tree->level + 1;
-        ntree->depth = tree->depth - 1;
-        ntree->alpha = -(tree->beta);
-        ntree->beta = -(tree->alpha);
-        tree->value = -search(tree_, level + 1, depth);
-        if (!newpv)
-            ntree->bl_len = 0;
-        newpv = 1;
-        if (tree->value > tree->best) {
-            tree->best = tree->value;
-            tree->bl_len = ntree->bl_len + 1;
-            copy_move(tree->curr_move, tree->best_line[0]);
-            if (ntree->bl_len > 0)
-            for (bl_lev = 0; bl_lev < ntree->bl_len; bl_lev++)
-                copy_move(ntree->best_line[bl_lev], \
-                    tree->best_line[bl_lev + 1]);
-            if (level == 0 && depth == 1 && gmode == 4) {
-                update(&elapsed);
-                double delapsed = dclock(&elapsed);
-                copy_board(treea->curr_board, aux);
-                fprintf(stdout, "Depth: %u*\n", treea->depth - _OVERDEPTH);
-                fprintf(stdout, "Evaluation: %.2lf\n", \
-                    ((double) treea->best / (double) _PAWNUNIT));
-                fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
-                fprintf(stdout, "Best variation: ");
-                for (i = 0; i < treea->bl_len; i++) {
-                    show_move(treea->best_line[i], aux, (i + stm) % 2, buf);
-                    makemove(aux, treea->best_line[i], aux2);
-                    copy_board(aux2, aux);
-                    fprintf(stdout, "%s ", buf);
-                }
-                fprintf(stdout, "\n");
-                if (treea->bl_len & 1)
-                    transpose(aux);
-                fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
-		fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
-                fprintf(stdout, "\n");
-                fflush(stdout);
-            }
-            if (tree->best > tree->alpha)
-                tree->alpha = tree->best;
-            if (tree->alpha >= tree->beta)
-                return (tree->beta);
-        }
-    }
-    return (tree->best);
-}
-
-int pcsq[6][8][8] = {
-    // Pawn piece-square table
-    {
-        // Rank 8 (black perspective)
-        {   0,   0,   0,   0,   0,   0,   0,   0 },
-        // Rank 7
-        {  10,  10,  10,  10,  10,  10,  10,  10 },
-        // Rank 6
-        {  25,  25,  25,  25,  25,  25,  25,  25 },
-        // Rank 5
-        {  35,  35,  35,  40,  40,  35,  35,  35 },
-        // Rank 4
-        {  45,  45,  45,  50,  50,  45,  45,  45 },
-        // Rank 3
-        {  60,  60,  60,  65,  65,  60,  60,  60 },
-        // Rank 2
-        {  80,  80,  80,  85,  85,  80,  80,  80 },
-        // Rank 1 (white perspective)
-        {   0,   0,   0,   0,   0,   0,   0,   0 }
-    },
+// Move representation
+struct Move {
+    int from_y, from_x, to_y, to_x, promotion{0};
     
-    // Knight piece-square table
-    {
-        { -50, -40, -30, -30, -30, -30, -40, -50 },
-        { -40, -20,   0,   5,   5,   0, -20, -40 },
-        { -30,   0,  10,  15,  15,  10,   0, -30 },
-        { -30,   5,  15,  20,  20,  15,   5, -30 },
-        { -30,   0,  15,  20,  20,  15,   0, -30 },
-        { -30,   5,  10,  15,  15,  10,   5, -30 },
-        { -40, -20,   0,   0,   0,   0, -20, -40 },
-        { -50, -40, -30, -30, -30, -30, -40, -50 }
-    },
+    Move() = default;
+    Move(int fy, int fx, int ty, int tx, int prom = 0) 
+        : from_y(fy), from_x(fx), to_y(ty), to_x(tx), promotion(prom) {}
     
-    // Bishop piece-square table
-    {
-        { -20, -10, -10, -10, -10, -10, -10, -20 },
-        { -10,   0,   0,   0,   0,   0,   0, -10 },
-        { -10,   0,  10,  10,  10,  10,   0, -10 },
-        { -10,   5,   5,  10,  10,   5,   5, -10 },
-        { -10,   0,  10,  10,  10,  10,   0, -10 },
-        { -10,  10,  10,  10,  10,  10,  10, -10 },
-        { -10,   5,   0,   0,   0,   0,   5, -10 },
-        { -20, -10, -10, -10, -10, -10, -10, -20 }
-    },
+    bool operator==(const Move& other) const {
+        return from_y == other.from_y && from_x == other.from_x &&
+               to_y == other.to_y && to_x == other.to_x &&
+               promotion == other.promotion;
+    }
     
-    // Rook piece-square table
-    {
-        {   0,   0,   0,   5,   5,   0,   0,   0 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {   5,  10,  10,  10,  10,  10,  10,   5 },
-        {   0,   0,   0,   0,   0,   0,   0,   0 }
-    },
-    
-    // Queen piece-square table
-    {
-        { -20, -10, -10,  -5,  -5, -10, -10, -20 },
-        { -10,   0,   0,   0,   0,   0,   0, -10 },
-        { -10,   0,   5,   5,   5,   5,   0, -10 },
-        {  -5,   0,   5,   5,   5,   5,   0,  -5 },
-        {   0,   0,   5,   5,   5,   5,   0,  -5 },
-        { -10,   5,   5,   5,   5,   5,   0, -10 },
-        { -10,   0,   5,   0,   0,   0,   0, -10 },
-        { -20, -10, -10,  -5,  -5, -10, -10, -20 }
-    },
-    
-    // King piece-square table (middlegame)
-    {
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -20, -30, -30, -40, -40, -30, -30, -20 },
-        { -10, -20, -20, -20, -20, -20, -20, -10 },
-        {  20,  20,   0,   0,   0,   0,  20,  20 },
-        {  20,  30,  10,   0,   0,  10,  30,  20 }
+    bool operator!=(const Move& other) const {
+        return !(*this == other);
     }
 };
 
-#define abs(x) ((x > 0) ? (x) : ((-x)))
-#define min(x, y) (((x) < (y)) ? (x) : (y))
-VALUE eval(BOARD board, LEVEL level)
-{
-    BOARD aux;
-    int ivalue = 0;
-    int kings = 0;
-    u5 x;
-    u5 y;
-    VALUE pvalue = 0;
-    VALUE value;
-    nodes++;
-    if ((nodes % _SKIPFRAMES) == 0) {
-        update(&elapsed);
+// Board representation
+class ChessBoard {
+private:
+    std::array<std::array<Piece, 8>, 9> squares;
+    
+public:
+    ChessBoard() { clear(); }
+    
+    void clear() {
+        for (auto& row : squares) {
+            row.fill(Piece::EMPTY);
+        }
     }
-    for (y = 0; y < 8; y++)
-    for (x = 0; x < 8; x++) {
-        if (board[y][x] > 0)
-            ivalue += pcsq[board[y][x] - 1][y][x];
-        if (board[y][x] < 0)
-            ivalue -= pcsq[-board[y][x] - 1][7 - y][x];
-        switch (board[y][x]) {
-        case _WP:
-            switch (y) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                ivalue += 100;
-                break;
-            case 5:
-                ivalue += 200;
-                break;
-            case 6:
-                ivalue += 400;
-            default:;
+    
+    Piece& operator()(int y, int x) { return squares[y][x]; }
+    const Piece& operator()(int y, int x) const { return squares[y][x]; }
+    
+    std::array<std::array<Piece, 8>, 9>& getSquares() { return squares; }
+    const std::array<std::array<Piece, 8>, 9>& getSquares() const { return squares; }
+    
+    bool operator==(const ChessBoard& other) const {
+        return squares == other.squares;
+    }
+    
+    bool operator!=(const ChessBoard& other) const {
+        return !(*this == other);
+    }
+};
+
+// Timer for performance measurement
+class Timer {
+private:
+    clock_t clock_start, clock_end;
+    int seconds{0};
+    int useconds{0};
+    
+public:
+    void start() {
+        clock_start = clock();
+    }
+    
+    void update() {
+        clock_end = clock();
+        int diff = clock_end - clock_start;
+        if (diff < 0) diff = 0;
+        if (diff > 655360000) diff = 0;
+        
+        useconds += diff;
+        seconds += useconds / 1000000;
+        useconds %= 1000000;
+        clock_start = clock();
+    }
+    
+    double elapsed() const {
+        return seconds + useconds / 1000000.0;
+    }
+};
+
+// Evaluation component
+class Evaluator {
+private:
+    static constexpr std::array<std::array<std::array<int, 8>, 8>, 6> PIECE_SQUARE_TABLES = {{
+        // Pawn
+        {{
+            {0,   0,   0,   0,   0,   0,   0,   0},
+            {10,  10,  10,  10,  10,  10,  10,  10},
+            {25,  25,  25,  25,  25,  25,  25,  25},
+            {35,  35,  35,  40,  40,  35,  35,  35},
+            {45,  45,  45,  50,  50,  45,  45,  45},
+            {60,  60,  60,  65,  65,  60,  60,  60},
+            {80,  80,  80,  85,  85,  80,  80,  80},
+            {0,   0,   0,   0,   0,   0,   0,   0}
+        }},
+        // Knight
+        {{
+            {-50, -40, -30, -30, -30, -30, -40, -50},
+            {-40, -20,   0,   5,   5,   0, -20, -40},
+            {-30,   0,  10,  15,  15,  10,   0, -30},
+            {-30,   5,  15,  20,  20,  15,   5, -30},
+            {-30,   0,  15,  20,  20,  15,   0, -30},
+            {-30,   5,  10,  15,  15,  10,   5, -30},
+            {-40, -20,   0,   0,   0,   0, -20, -40},
+            {-50, -40, -30, -30, -30, -30, -40, -50}
+        }},
+        // Bishop
+        {{
+            {-20, -10, -10, -10, -10, -10, -10, -20},
+            {-10,   0,   0,   0,   0,   0,   0, -10},
+            {-10,   0,  10,  10,  10,  10,   0, -10},
+            {-10,   5,   5,  10,  10,   5,   5, -10},
+            {-10,   0,  10,  10,  10,  10,   0, -10},
+            {-10,  10,  10,  10,  10,  10,  10, -10},
+            {-10,   5,   0,   0,   0,   0,   5, -10},
+            {-20, -10, -10, -10, -10, -10, -10, -20}
+        }},
+        // Rook
+        {{
+            {0,   0,   0,   5,   5,   0,   0,   0},
+            {-5,   0,   0,   0,   0,   0,   0,  -5},
+            {-5,   0,   0,   0,   0,   0,   0,  -5},
+            {-5,   0,   0,   0,   0,   0,   0,  -5},
+            {-5,   0,   0,   0,   0,   0,   0,  -5},
+            {-5,   0,   0,   0,   0,   0,   0,  -5},
+            {5,  10,  10,  10,  10,  10,  10,   5},
+            {0,   0,   0,   0,   0,   0,   0,   0}
+        }},
+        // Queen
+        {{
+            {-20, -10, -10,  -5,  -5, -10, -10, -20},
+            {-10,   0,   0,   0,   0,   0,   0, -10},
+            {-10,   0,   5,   5,   5,   5,   0, -10},
+            {-5,   0,   5,   5,   5,   5,   0,  -5},
+            {0,   0,   5,   5,   5,   5,   0,  -5},
+            {-10,   5,   5,   5,   5,   5,   0, -10},
+            {-10,   0,   5,   0,   0,   0,   0, -10},
+            {-20, -10, -10,  -5,  -5, -10, -10, -20}
+        }},
+        // King
+        {{
+            {-30, -40, -40, -50, -50, -40, -40, -30},
+            {-30, -40, -40, -50, -50, -40, -40, -30},
+            {-30, -40, -40, -50, -50, -40, -40, -30},
+            {-30, -40, -40, -50, -50, -40, -40, -30},
+            {-20, -30, -30, -40, -40, -30, -30, -20},
+            {-10, -20, -20, -20, -20, -20, -20, -10},
+            {20,  20,   0,   0,   0,   0,  20,  20},
+            {20,  30,  10,   0,   0,  10,  30,  20}
+        }}
+    }};
+    
+    std::array<int, 6> pieceValues{0, 100, 320, 330, 500, 900};
+    std::mt19937 rng{std::random_device{}()};
+    
+public:
+    int evaluate(const ChessBoard& board, int level, int depth, int alpha) {
+        int materialScore = 0;
+        int positionalScore = 0;
+        int kingCount = 0;
+        
+        // Evaluate each square
+        for (int y = 0; y < 8; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                Piece piece = board(y, x);
+                if (piece == Piece::EMPTY) continue;
+                
+                int pieceType = static_cast<int>(piece);
+                bool isWhite = pieceType > 0;
+                int absType = std::abs(pieceType) - 1;
+                
+                // Material and piece-square tables
+                if (isWhite) {
+                    materialScore += pieceValues[absType];
+                    positionalScore += PIECE_SQUARE_TABLES[absType][y][x];
+                    
+                    // Pawn structure bonus
+                    if (piece == Piece::WHITE_PAWN) {
+                        switch (y) {
+                            case 1: case 2: case 3: case 4: materialScore += 100; break;
+                            case 5: materialScore += 200; break;
+                            case 6: materialScore += 400; break;
+                        }
+                    }
+                } else {
+                    materialScore -= pieceValues[absType];
+                    positionalScore -= PIECE_SQUARE_TABLES[absType][7 - y][x];
+                    
+                    // Pawn structure bonus
+                    if (piece == Piece::BLACK_PAWN) {
+                        switch (y) {
+                            case 6: case 5: case 4: case 3: materialScore -= 100; break;
+                            case 2: materialScore -= 200; break;
+                            case 1: materialScore -= 400; break;
+                        }
+                    }
+                }
+                
+                // King count for checkmate detection
+                if (piece == Piece::WHITE_KING) kingCount++;
+                if (piece == Piece::BLACK_KING) kingCount--;
             }
-            break;
-        case _WN:
-        case _WB:
-        case _WR:
-        case _WQ:
-            ivalue += _VALUES[(u5) board[y][x]];
-            break;
-        case _BP:
-            switch (y) {
-            case 6:
-            case 5:
-            case 4:
-            case 3:
-                ivalue -= 100;
-                break;
-            case 2:
-                ivalue -= 200;
-                break;
-            case 1:
-                ivalue -= 400;
-                break;
-            default:;
+        }
+        
+        // Check for checkmate
+        if (kingCount > 0) return MAX_VALUE - level;
+        if (kingCount < 0) return -MAX_VALUE + level;
+        
+        int totalScore = materialScore + positionalScore;
+        
+        // Add small random factor to avoid repetition
+        std::uniform_int_distribution<int> dist(-9, 9);
+        totalScore += dist(rng);
+        
+        return totalScore;
+    }
+};
+
+// Move generator
+class MoveGenerator {
+private:
+    std::vector<Move> moves;
+    
+    void addMove(int fromY, int fromX, int toY, int toX, int promotion = 0) {
+        if (moves.size() < MAX_INDEX) {
+            moves.emplace_back(fromY, fromX, toY, toX, promotion);
+        }
+    }
+    
+    void generatePawnMoves(const ChessBoard& board, int y, int x, bool isWhite) {
+        int direction = isWhite ? 1 : -1;
+        int startRank = isWhite ? 1 : 6;
+        int promotionRank = isWhite ? 6 : 1;
+        
+        // Forward move
+        if (board(y + direction, x) == Piece::EMPTY) {
+            if (y != promotionRank) {
+                addMove(y, x, y + direction, x);
+            } else {
+                // Promotions
+                for (int piece : {2, 3, 4, 5}) { // N, B, R, Q
+                    addMove(y, x, y + direction, x, piece);
+                }
             }
-            break;
-        case _BN:
-        case _BB:
-        case _BR:
-        case _BQ:
-            ivalue -= _VALUES[(u5) (-board[y][x])];
-            break;
-        case _WK: kings++; break;
-        case _BK: kings--; break;
-        default:;
+            
+            // Double move from starting position
+            if (y == startRank && board(y + 2 * direction, x) == Piece::EMPTY) {
+                addMove(y, x, y + 2 * direction, x);
+            }
+        }
+        
+        // Captures
+        for (int dx : {-1, 1}) {
+            if (x + dx >= 0 && x + dx < 8) {
+                Piece target = board(y + direction, x + dx);
+                if (target != Piece::EMPTY && 
+                    ((isWhite && static_cast<int>(target) < 0) || 
+                     (!isWhite && static_cast<int>(target) > 0))) {
+                    if (y != promotionRank) {
+                        addMove(y, x, y + direction, x + dx);
+                    } else {
+                        for (int piece : {2, 3, 4, 5}) {
+                            addMove(y, x, y + direction, x + dx, piece);
+                        }
+                    }
+                }
+            }
         }
     }
-    for (y = 0; y < 8; y++)
-    for (x = 0; x < 8; x++) {
-        u5 x1 = x;
-        u5 y1 = y;
-        if (x1 > 3) x1 = 7 - x1;
-        if (y1 > 3) y1 = 7 - y1;
-        if (board[y][x] < 0)
-            pvalue -= (1 + min(x1, y1));
-        else if (board[y][x] > 0)
-            pvalue += (1 + min(x1, y1));
-    }
-    if (kings) {
-    if (kings > 0)
-        return ( _MAXVALUE - level);
-    else
-        return (-_MAXVALUE + level);
-    }
-    value = ivalue + pvalue;
-#if 1
-    if (treea[level].depth == 1) {
-        copy_board(board, aux);
-        transpose(aux);
-        if (in_check(aux))
-            return (_MAXVALUE - (level + 1));
-    }
-    if (treea[level].depth / 2 == 1) {
-    if (in_check(board))
-        return (-2000 + value + level);
-    if (value > treea[level].alpha) {
-        value = value * 10;
-        if (value > 1500)
-            value = 2000 - level;
-        return (value);
+    
+    void generateKnightMoves(const ChessBoard& board, int y, int x, bool isWhite) {
+        const std::array<std::pair<int, int>, 8> offsets = {
+            {{2, -1}, {2, 1}, {1, 2}, {1, -2},
+            {-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}}
+        };
+        
+        for (const auto& [dy, dx] : offsets) {
+            int newY = y + dy;
+            int newX = x + dx;
+            if (newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                Piece target = board(newY, newX);
+                if (target == Piece::EMPTY || 
+                    (isWhite && static_cast<int>(target) < 0) ||
+                    (!isWhite && static_cast<int>(target) > 0)) {
+                    addMove(y, x, newY, newX);
+                }
+            }
         }
     }
-#endif
-    value += ((rand() % 19) - 9);
-    if (level > 1)
-        return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
-    return (value);
-}
-
-MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL depth)
-// depth means 1 if sortable, 0 otherwise
-// FIXME
-{
-    MOVEINDEX max_index = gendeep(board, movelist, 1);
-#ifdef _PVSEARCH
-    if (pvsready)
-    if (depth)
-    if (!newpv)
-    if (glevel < treea->bl_len) {
-        for (LEVEL level = 0; level < glevel; level++)
-        if (treea[level].curr_index) {
-            printf("Skip level %d\n", level);
-            fflush(stdout);
-            goto skippvs;
-        }
-        MOVE move;
-        MOVEINDEX curr_index;
-        copy_move(treea->best_line[glevel], move);
-        for (curr_index = 0; curr_index < max_index; curr_index++)
-        if (!move_cmp(move, movelist[curr_index]))
-            break;
-        copy_move(movelist[0], movelist[curr_index]);
-        copy_move(move, movelist[0]);
-        return max_index;
-    }
-skippvs:
-#endif
-    if (!depth)
-        return max_index;
-#ifdef _SORT
-    if (glevel < gdepth - _S_DEPTH - 1) {
-        MOVEINDEX curr_index;
-        MOVEINDEX ncurr_index;
-        VALUE valuelist[_MAXINDEX];
-        for (curr_index = 0; curr_index < max_index; curr_index++) {
-            BOARD aux;
-            MOVE move;
-            copy_move(movelist[curr_index], move);
-            makemove(board, move, aux);
-            copy_board(aux, treeb[0].curr_board);
-            treeb[0].level = 0;
-            LEVEL _s_depth = _S_DEPTH;
-            treeb[0].depth = _s_depth;
-            treeb[0].alpha = _ALPHA_DFL;
-            treeb[0].beta = _BETA_DFL;
-            valuelist[curr_index] = -search(treeb, 0, 0);
-        }
-        for (curr_index = 0; curr_index < max_index; curr_index++)
-        for (ncurr_index = curr_index + 1; ncurr_index < max_index; ncurr_index++) {
-            if (valuelist[ncurr_index] > valuelist[curr_index]) {
-            MOVE move;
-            VALUE value;
-            copy_move(movelist[ncurr_index], move);
-            copy_move(movelist[curr_index], movelist[ncurr_index]);
-            copy_move(move, movelist[curr_index]);
-            value = valuelist[ncurr_index];
-            valuelist[ncurr_index] = valuelist[curr_index];
-            valuelist[curr_index] = value;
+    
+    void generateSliderMoves(const ChessBoard& board, int y, int x, bool isWhite, 
+                           const std::vector<std::pair<int, int>>& directions) {
+        for (const auto& [dy, dx] : directions) {
+            for (int distance = 1; distance < 8; ++distance) {
+                int newY = y + dy * distance;
+                int newX = x + dx * distance;
+                if (newY < 0 || newY >= 8 || newX < 0 || newX >= 8) break;
+                
+                Piece target = board(newY, newX);
+                if (target == Piece::EMPTY) {
+                    addMove(y, x, newY, newX);
+                } else {
+                    if ((isWhite && static_cast<int>(target) < 0) ||
+                        (!isWhite && static_cast<int>(target) > 0)) {
+                        addMove(y, x, newY, newX);
+                    }
+                    break;
+                }
+            }
         }
     }
-#ifdef _CAND7
-    LEVEL newmax_index = max_index;
-    if (glevel)
-        newmax_index = 4;
-    if (max_index > newmax_index)
-        max_index = newmax_index;
-#endif
-#ifdef _CAND250
-    if (glevel)
-    for (curr_index = 0; curr_index < max_index; curr_index++)
-    if (valuelist[curr_index] < valuelist[0] - _CANDCUT) {
-        max_index = curr_index;
-        break;
-    }
-#endif
-    }
-#endif
-    return max_index;
-}
-
-void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    movelist[*curr_index][0] = y;
-    movelist[*curr_index][1] = x;
-    movelist[*curr_index][2] = y1;
-    movelist[*curr_index][3] = x1;
-    (*curr_index)++;
-    if (*curr_index >= _MAXINDEX)
-        warn("Index too big");
-}
-
-void addprom(s5 y, s5 x, s5 y1, s5 x1, s5 to, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    movelist[*curr_index][0] = y;
-    movelist[*curr_index][1] = x;
-    movelist[*curr_index][2] = y1;
-    movelist[*curr_index][3] = x1;
-    movelist[*curr_index][4] = to;
-    (*curr_index)++;
-    if (*curr_index >= _MAXINDEX)
-        warn("Index too big");
-}
-
-void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    BOARD aux;
-    if (y != 0) return;
-    if (x != 4) return;
-    if (board[y][x] != _WK)
-        return;
-    if (board[0][0] == _WR)
-    if (board[0][1] == 0)
-    if (board[0][2] == 0)
-    if (board[0][3] == 0)
-    if (board[8][0] == 1) {
-        copy_board(board, aux);
-        aux[0][2] = _WK;
-        aux[0][3] = _WK;
-        if (! in_check(aux))
-            addm(0, 4, 0, 2, curr_index, movelist);
-    }
-    if (board[0][7] == _WR)
-    if (board[0][6] == 0)
-    if (board[0][5] == 0)
-    if (board[8][1] == 1) {
-        copy_board(board, aux);
-        aux[0][5] = _WK;
-        aux[0][6] = _WK;
-        if (! in_check(aux))
-            addm(0, 4, 0, 6, curr_index, movelist);
-    }
-}
-
-void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    if (board[y + 1][x] == 0) {
-        if (y != 6)
-            addm(y, x, y + 1, x, curr_index, movelist);
-        if (y == 6) {
-            s5 to;
-            for (to = 5; to >= 2; to--)
-                addprom(y, x, y + 1, x, to, curr_index, movelist);
+    
+public:
+    std::vector<Move> generateMoves(const ChessBoard& board, bool whiteToMove) {
+        moves.clear();
+        
+        for (int y = 0; y < 8; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                Piece piece = board(y, x);
+                if (piece == Piece::EMPTY) continue;
+                
+                bool isWhite = static_cast<int>(piece) > 0;
+                if (isWhite != whiteToMove) continue;
+                
+                switch (piece) {
+                    case Piece::WHITE_PAWN:
+                    case Piece::BLACK_PAWN:
+                        generatePawnMoves(board, y, x, isWhite);
+                        break;
+                        
+                    case Piece::WHITE_KNIGHT:
+                    case Piece::BLACK_KNIGHT:
+                        generateKnightMoves(board, y, x, isWhite);
+                        break;
+                        
+                    case Piece::WHITE_BISHOP:
+                    case Piece::BLACK_BISHOP:
+                        generateSliderMoves(board, y, x, isWhite, 
+                                          {{1, -1}, {1, 1}, {-1, 1}, {-1, -1}});
+                        break;
+                        
+                    case Piece::WHITE_ROOK:
+                    case Piece::BLACK_ROOK:
+                        generateSliderMoves(board, y, x, isWhite,
+                                          {{1, 0}, {-1, 0}, {0, 1}, {0, -1}});
+                        break;
+                        
+                    case Piece::WHITE_QUEEN:
+                    case Piece::BLACK_QUEEN:
+                        generateSliderMoves(board, y, x, isWhite,
+                                          {{1, -1}, {1, 1}, {-1, 1}, {-1, -1},
+                                           {1, 0}, {-1, 0}, {0, 1}, {0, -1}});
+                        break;
+                        
+                    case Piece::WHITE_KING:
+                    case Piece::BLACK_KING:
+                        for (int dy = -1; dy <= 1; ++dy) {
+                            for (int dx = -1; dx <= 1; ++dx) {
+                                if (dy == 0 && dx == 0) continue;
+                                int newY = y + dy;
+                                int newX = x + dx;
+                                if (newY >= 0 && newY < 8 && newX >= 0 && newX < 8) {
+                                    Piece target = board(newY, newX);
+                                    if (target == Piece::EMPTY || 
+                                        (isWhite && static_cast<int>(target) < 0) ||
+                                        (!isWhite && static_cast<int>(target) > 0)) {
+                                        addMove(y, x, newY, newX);
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
         }
-        if (y == 1)
-        if (board[y + 2][x] == 0)
-            addm(y, x, y + 2, x, curr_index, movelist);
+        
+        return moves;
     }
-    if (x > 0)
-    if (board[y + 1][x - 1] < 0) {
-        if (y != 6)
-            addm(y, x, y + 1, x - 1, curr_index, movelist);
-        else {
-            s5 to;
-            for (to = 5; to >= 2; to--)
-                addprom(y, x, y + 1, x - 1, to, curr_index, movelist);
+};
+
+// Search tree node
+class SearchNode {
+public:
+    ChessBoard currentBoard;
+    ChessBoard nextBoard;
+    Move currentMove;
+    std::vector<Move> legalMoves;
+    std::vector<Move> bestLine;
+    int depth{0};
+    int level{0};
+    int alpha{ALPHA_DEFAULT};
+    int beta{BETA_DEFAULT};
+    int bestValue{-MAX_VALUE};
+    int currentValue{0};
+    
+    SearchNode() = default;
+};
+
+// Principal Variation Search
+class PVS {
+private:
+    std::vector<std::unique_ptr<SearchNode>> treeA;
+    std::vector<std::unique_ptr<SearchNode>> treeB;
+    MoveGenerator moveGen;
+    Evaluator evaluator;
+    Timer timer;
+    uint64_t nodes{0};
+    bool pvsReady{false};
+    bool newPV{false};
+    int globalDepth{0};
+    int globalLevel{0};
+    
+    int search(std::vector<std::unique_ptr<SearchNode>>& tree, int level, int depth) {
+        auto& node = tree[level];
+        int value = evaluator.evaluate(node->currentBoard, level, node->depth, node->alpha);
+        
+        if (newPV) {
+            node->bestLine.clear();
         }
-    }
-    if (x < 7)
-    if (board[y + 1][x + 1] < 0) {
-        if (y != 6)
-            addm(y, x, y + 1, x + 1, curr_index, movelist);
-        else {
-            s5 to;
-            for (to = 5; to >= 2; to--)
-                addprom(y, x, y + 1, x + 1, to, curr_index, movelist);
+        
+        if (value < -THRESHOLD || node->depth == 0) {
+            return value;
         }
+        
+        if (depth) {
+            globalLevel = level;
+        }
+        
+        node->legalMoves = moveGen.generateMoves(node->currentBoard, true); // Assuming white to move
+        
+        if (node->legalMoves.empty()) {
+            return -MAX_VALUE + level;
+        }
+        
+        if (newPV) {
+            node->bestLine.push_back(node->legalMoves[0]);
+        }
+        
+        node->bestValue = -MAX_VALUE;
+        
+        for (size_t i = 0; i < node->legalMoves.size(); ++i) {
+            node->currentMove = node->legalMoves[i];
+            auto& nextNode = tree[level + 1];
+            
+            // Make move
+            nextNode->currentBoard = node->currentBoard;
+            // TODO: Implement makeMove function
+            
+            nextNode->level = node->level + 1;
+            nextNode->depth = node->depth - 1;
+            nextNode->alpha = -node->beta;
+            nextNode->beta = -node->alpha;
+            
+            node->currentValue = -search(tree, level + 1, depth);
+            
+            if (!newPV) {
+                nextNode->bestLine.clear();
+            }
+            newPV = true;
+            
+            if (node->currentValue > node->bestValue) {
+                node->bestValue = node->currentValue;
+                node->bestLine = nextNode->bestLine;
+                node->bestLine.insert(node->bestLine.begin(), node->currentMove);
+                
+                if (node->bestValue > node->alpha) {
+                    node->alpha = node->bestValue;
+                }
+                if (node->alpha >= node->beta) {
+                    return node->beta;
+                }
+            }
+        }
+        
+        return node->bestValue;
     }
-}
-
-void genN(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    nonslider(board, y, x, +2, -1, curr_index, movelist);
-    nonslider(board, y, x, +2, +1, curr_index, movelist);
-    nonslider(board, y, x, +1, +2, curr_index, movelist);
-    nonslider(board, y, x, +1, -2, curr_index, movelist);
-    nonslider(board, y, x, -1, +2, curr_index, movelist);
-    nonslider(board, y, x, -1, -2, curr_index, movelist);
-    nonslider(board, y, x, -2, -1, curr_index, movelist);
-    nonslider(board, y, x, -2, +1, curr_index, movelist);
-}
-
-void genB(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    slider(board, y, x, +1, -1, curr_index, movelist);
-    slider(board, y, x, +1, +1, curr_index, movelist);
-    slider(board, y, x, -1, +1, curr_index, movelist);
-    slider(board, y, x, -1, -1, curr_index, movelist);
-}
-
-void genR(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    slider(board, y, x, +1,  0, curr_index, movelist);
-    slider(board, y, x,  0, -1, curr_index, movelist);
-    slider(board, y, x,  0, +1, curr_index, movelist);
-    slider(board, y, x, -1,  0, curr_index, movelist);
-}
-
-void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    genR(board, y, x, curr_index, movelist);
-    genB(board, y, x, curr_index, movelist);
-}
-
-void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth)
-{
-    nonslider(board, y, x, -1, -1, curr_index, movelist);
-    nonslider(board, y, x, -1,  0, curr_index, movelist);
-    nonslider(board, y, x, -1, +1, curr_index, movelist);
-    nonslider(board, y, x,  0, -1, curr_index, movelist);
-    nonslider(board, y, x,  0, +1, curr_index, movelist);
-    nonslider(board, y, x, +1, -1, curr_index, movelist);
-    nonslider(board, y, x, +1,  0, curr_index, movelist);
-    nonslider(board, y, x, +1, +1, curr_index, movelist);
-#ifdef _ALLOW_CASTLE
-    if (depth == 1)
-        castle(board, y, x, curr_index, movelist);
-#endif
-}
-
-MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth)
-{
-    MOVEINDEX curr_index = 0;
-    s5 x;
-    s5 y;
-    for (y = 7; y >= 0; y--)
-    for (x = 0; x < 8; x++) {
-        switch(board[y][x]) {
-        case _WP: genP(board, y, x, &curr_index, movelist); break;
-        case _WN: genN(board, y, x, &curr_index, movelist); break;
-        case _WB: genB(board, y, x, &curr_index, movelist); break;
-        case _WR: genR(board, y, x, &curr_index, movelist); break;
-        case _WQ:
-#ifdef _Q0BLK
-            if (glevel)
-#endif
-               genQ(board, y, x, &curr_index, movelist); break;
-        case _WK: genK(board, y, x, &curr_index, movelist, depth); break;
-        default:;
+    
+public:
+    PVS() {
+        // Initialize search trees
+        for (int i = 0; i < MAX_LEVEL; ++i) {
+            treeA.push_back(std::make_unique<SearchNode>());
+            treeB.push_back(std::make_unique<SearchNode>());
         }
     }
-    return (curr_index);
-}
-
-void nonslider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    if (y + dy < 0) return;
-    if (y + dy > 7) return;
-    if (x + dx < 0) return;
-    if (x + dx > 7) return;
-    if (board[y + dy][x + dx] <= 0)
-        addm(y, x, y + dy, x + dx, curr_index, movelist);
-}
-
-void slider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist)
-{
-    s5 y1 = y;
-    s5 x1 = x;
-    while (1) {
-        y1 += dy;
-        x1 += dx;
-        if (y1 < 0) return;
-        if (y1 > 7) return;
-        if (x1 < 0) return;
-        if (x1 > 7) return;
-        if (board[y1][x1] < 0) {
-            addm(y, x, y1, x1, curr_index, movelist);
-            return;
+    
+    void analyze(const ChessBoard& startPosition) {
+        timer.start();
+        nodes = 0;
+        pvsReady = false;
+        
+        for (int depth = SEARCH_DEPTH + 1; depth < MAX_LEVEL; ++depth) {
+            auto& root = treeA[0];
+            root->currentBoard = startPosition;
+            root->level = 0;
+            root->depth = depth + OVER_DEPTH;
+            globalDepth = root->depth;
+            root->alpha = ALPHA_DEFAULT;
+            root->beta = BETA_DEFAULT;
+            newPV = false;
+            
+            root->bestValue = search(treeA, 0, 1);
+            pvsReady = true;
+            
+            timer.update();
+            double elapsed = timer.elapsed();
+            
+            // Print results
+            std::cout << "Depth: " << depth << "\n";
+            std::cout << "Evaluation: " << std::fixed << std::setprecision(2) 
+                      << (static_cast<double>(root->bestValue) / PAWN_UNIT) << "\n";
+            std::cout << "Nodes: " << nodes << "\n";
+            std::cout << "Best variation: ";
+            
+            ChessBoard tempBoard = startPosition;
+            for (const auto& move : root->bestLine) {
+                // TODO: Implement move display and execution
+                std::cout << "[" << move.from_y << "," << move.from_x << "->" 
+                          << move.to_y << "," << move.to_x << "] ";
+            }
+            std::cout << "\n";
+            std::cout << "Elapsed: " << elapsed << "s\n";
+            std::cout << "NPS: " << static_cast<unsigned int>(nodes / elapsed) << "\n\n";
         }
-        if (board[y1][x1] > 0)
-            return;
-        addm(y, x, y1, x1, curr_index, movelist);
     }
-}
+};
 
-void init(ELAPSED *elapsed)
-{
-    elapsed->seconds = 0;
-    elapsed->useconds = 0;
-    elapsed->clock0 = clock();
-    elapsed->clock1 = clock();
-    elapsed->diffclock = 0;
-}
-
-void update(ELAPSED *elapsed)
-{
-    elapsed->clock1 = clock();
-    elapsed->diffclock = (elapsed->clock1 - elapsed->clock0);
-    if (elapsed->diffclock < 0)
-        elapsed->diffclock =0;
-    if (elapsed->diffclock > 655360000)
-        elapsed->diffclock = 0;
-    elapsed->useconds += elapsed->diffclock;
-    elapsed->seconds += (elapsed->useconds / 1000000);
-    elapsed->useconds = elapsed->useconds % 1000000;
-    elapsed->clock0 = clock();
-}
-
-double dclock(ELAPSED *elapsed)
-{
-    return (double) (elapsed->seconds) + (double) (elapsed->useconds) / 1000000.0;
-}
-
-int board_cmp(BOARD src, BOARD dest)
-{
-    u5 x;
-    u5 y;
-    for (y = 0; y < 9; y++)
-    for (x = 0; x < 8; x++)
-    if (dest[y][x] != src[y][x])
-        return (1);
-    return (0);
-}
-
-void copy_board(BOARD src, BOARD dest)
-{
-    u5 x;
-    u5 y;
-    for (y = 0; y < 9; y++)
-    for (x = 0; x < 8; x++)
-        dest[y][x] = src[y][x];
-}
-
-void copy_move(MOVE src, MOVE dest)
-{
-    u5 u;
-    for (u = 0; u < 6; u++)
-        dest[u] = src[u];
-}
-
-BOARD *get_init(void)
-{
-    static BOARD init = {
-        {_WR, _WN, _WB, _WQ, _WK, _WB, _WN, _WR, },
-        {_WP, _WP, _WP, _WP, _WP, _WP, _WP, _WP, },
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_UO, _UO, _UO, _UO, _UO, _UO, _UO, _UO, }, 
-        {_BP, _BP, _BP, _BP, _BP, _BP, _BP, _BP, },
-        {_BR, _BN, _BB, _BQ, _BK, _BB, _BN, _BR, },
-        { 1, 1, 1, 1, 0, 0, 0, 0, },
-    };
-    return (&init);
-}
-
-void load(BOARD board)
-{
-    FILE *f;
-    s5 pp;
-    u5 x;
-    u5 y;
-    f = fopen(_BRDFILE, "r");
-    if (!f)
-        warn("Cannot open .brd file for read");
-    for (y = 8; y > 0; y--)
-    for (x = 0; x < 8; x++) {
-        fscanf(f, "%d", &pp);
-        board[y - 1][x] = (s3) pp;
+// Main chess engine class
+class ChessEngine {
+private:
+    PVS searchEngine;
+    ChessBoard currentBoard;
+    GameMode mode{GameMode::ANALYSIS};
+    bool sideToMove{false}; // false = white, true = black
+    
+public:
+    void initialize() {
+        setupInitialPosition();
     }
-    for (x = 0; x < 8; x++)
-        board[8][x] = (x < 4);
-    fscanf(f, "%d", &stm);
-    fclose(f);
-    show_board(board, stdout);
-    if (stm)
-        transpose(board);
-}
-
-void save(BOARD board)
-{
-    FILE *f;
-    s5 pp;
-    s5 x;
-    s5 y;
-    f = fopen(_BRDFILE, "w");
-    if (!f)
-        warn("Cannot open .brd file for write");
-    for (y = 8; y > 0; y--) {
-    for (x = 0; x < 8; x++) {
-	pp = (s5) board[y - 1][x];
-	fprintf(f, "%2d ", pp);
-    }
-	fprintf(f, "\n");
-    }
-    fprintf(f, "%d\n", stm);
-    fflush(stdout);
-    fclose(f);
-    if (stm)
-        transpose(board);
-}
-
-s4 in_check(BOARD board)
-{
-    BOARD aux;
-    MOVE curr_move;
-    MOVEINDEX curr_index;
-    MOVEINDEX max_index;
-    MOVELIST movelist;
-    copy_board(board, aux);
-    transpose(aux);
-    max_index = gendeep(aux, movelist, 0);
-    for (curr_index = 0; curr_index < max_index; curr_index++) {
-        copy_move(movelist[curr_index], curr_move);
-        if (aux[(u5) curr_move[2]][(u5) curr_move[3]] == _BK)
-        return (1);
-    }
-    return (0);
-}
-
-void makemove(BOARD src, MOVE move, BOARD dest)
-{
-    copy_board(src, dest);
-    if (dest[(u5) move[0]][(u5) move[1]] == _WK) {
-        if (move[0] == 0)
-        if (move[2] == 0)
-        if (move[1] == 4) {
-        if (move[3] == 2) {
-            dest[0][0] = 0;
-            dest[0][3] = _WR;
+    
+    void setupInitialPosition() {
+        currentBoard.clear();
+        
+        // Set up initial position (simplified)
+        // White pieces
+        currentBoard(0, 0) = Piece::WHITE_ROOK;
+        currentBoard(0, 1) = Piece::WHITE_KNIGHT;
+        currentBoard(0, 2) = Piece::WHITE_BISHOP;
+        currentBoard(0, 3) = Piece::WHITE_QUEEN;
+        currentBoard(0, 4) = Piece::WHITE_KING;
+        currentBoard(0, 5) = Piece::WHITE_BISHOP;
+        currentBoard(0, 6) = Piece::WHITE_KNIGHT;
+        currentBoard(0, 7) = Piece::WHITE_ROOK;
+        
+        for (int x = 0; x < 8; ++x) {
+            currentBoard(1, x) = Piece::WHITE_PAWN;
         }
-        if (move[3] == 6) {
-            dest[0][7] = 0;
-            dest[0][5] = _WR;
+        
+        // Black pieces
+        currentBoard(7, 0) = Piece::BLACK_ROOK;
+        currentBoard(7, 1) = Piece::BLACK_KNIGHT;
+        currentBoard(7, 2) = Piece::BLACK_BISHOP;
+        currentBoard(7, 3) = Piece::BLACK_QUEEN;
+        currentBoard(7, 4) = Piece::BLACK_KING;
+        currentBoard(7, 5) = Piece::BLACK_BISHOP;
+        currentBoard(7, 6) = Piece::BLACK_KNIGHT;
+        currentBoard(7, 7) = Piece::BLACK_ROOK;
+        
+        for (int x = 0; x < 8; ++x) {
+            currentBoard(6, x) = Piece::BLACK_PAWN;
         }
+        
+        sideToMove = false;
+    }
+    
+    void displayBoard() const {
+        std::cout << "\n  a b c d e f g h\n";
+        for (int y = 7; y >= 0; --y) {
+            std::cout << (y + 1) << " ";
+            for (int x = 0; x < 8; ++x) {
+                char symbol = '.';
+                switch (currentBoard(y, x)) {
+                    case Piece::WHITE_PAWN: symbol = 'P'; break;
+                    case Piece::WHITE_KNIGHT: symbol = 'N'; break;
+                    case Piece::WHITE_BISHOP: symbol = 'B'; break;
+                    case Piece::WHITE_ROOK: symbol = 'R'; break;
+                    case Piece::WHITE_QUEEN: symbol = 'Q'; break;
+                    case Piece::WHITE_KING: symbol = 'K'; break;
+                    case Piece::BLACK_PAWN: symbol = 'p'; break;
+                    case Piece::BLACK_KNIGHT: symbol = 'n'; break;
+                    case Piece::BLACK_BISHOP: symbol = 'b'; break;
+                    case Piece::BLACK_ROOK: symbol = 'r'; break;
+                    case Piece::BLACK_QUEEN: symbol = 'q'; break;
+                    case Piece::BLACK_KING: symbol = 'k'; break;
+                    default: symbol = '.';
+                }
+                std::cout << symbol << " ";
+            }
+            std::cout << (y + 1) << "\n";
         }
-        dest[8][0] = 0;
-        dest[8][1] = 0;
+        std::cout << "  a b c d e f g h\n\n";
+        std::cout << (sideToMove ? "Black" : "White") << " to move\n";
     }
-    if (dest[(u5) move[0]][(u5) move[1]] == _WR)
-    if (move[0] == 0) {
-        if (move[1] == 0)
-        dest[8][0] = 0;
-        if (move[1] == 7)
-        dest[8][1] = 0;
+    
+    void runAnalysis() {
+        std::cout << "Starting chess engine analysis...\n";
+        displayBoard();
+        searchEngine.analyze(currentBoard);
     }
-    if (dest[(u5) move[0]][(u5) move[1]] == _WP)
-    if (move[0] == 6) {
-        dest[(u5) move[2]][(u5) move[3]] = move[4] ? (u5) move[4] : _WQ;
-        dest[(u5) move[0]][(u5) move[1]] = 0;
-        transpose(dest);
-        goto end;
+};
+
+int main() {
+    try {
+        ChessEngine engine;
+        engine.initialize();
+        engine.runAnalysis();
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
     }
-    if (dest[(u5) move[0]][(u5) move[1]] == _WP)
-    if (move[0] == 4)
-    if (move[1] != move[3])
-    if (dest[(u5) move[0]][(u5) move[3]] == _BP)
-        dest[(u5) move[0]][(u5) move[3]] = 0;
-    dest[(u5) move[2]][(u5) move[3]] = dest[(u5) move[0]][(u5) move[1]];
-    dest[(u5) move[0]][(u5) move[1]] = 0;
-    transpose(dest);
-end:    ;
-}
-
-s4 move_cmp(MOVE src, MOVE dest)
-{
-    u5 u;
-    for (u = 0; u < 4; u++)
-    if (src[u] != dest[u])
-        return (u + 1);
-    return (0);
-}
-
-void show_move(MOVE move, BOARD board, u5 stm, char *buf)
-/*
- * FIXME
- * What about promotions?!
- */
-{
-    BOARD aux;
-    char *p;
-    p = buf;
-    switch (board[(u5) move[0]][(u5) move[1]]) {
-    case 2: p += sprintf(p, "N"); break;
-    case 3: p += sprintf(p, "B"); break;
-    case 4: p += sprintf(p, "R"); break;
-    case 5: p += sprintf(p, "Q"); break;
-    case 6: if ((move[1] == 4) && ((move[3] == 6) || (move[3] == 2))) {
-        switch (move[3]) {
-        case 6: p += sprintf(p, "O-O"); break;
-        case 2: p += sprintf(p, "O-O-O"); break;
-        default:;
-        }
-        return;
-    } else p += sprintf(p, "K"); break;
-    default:;
-    }
-    p += sprintf(p, "%c", 97 + move[1]);
-    if (stm)
-        p += sprintf(p, "%d", 9 - (move[0] + 1));
-    else
-        p += sprintf(p, "%d", move[0] + 1);
-    if (((board[(u5) move[0]][(u5) move[1]] == 1) && \
-        (move[1] != move[3])) || \
-        ((board[(u5) move[0]][(u5) move[1]] > 1) && \
-        (board[(u5) move[2]][(u5) move[3]] < 0)))
-        p += sprintf(p, "x");
-    p += sprintf(p, "%c", 97 + move[3]);
-    if (stm)
-        p += sprintf(p, "%d", 9 - (move[2] + 1));
-    else
-        p += sprintf(p, "%d", move[2] + 1);
-    makemove(board, move, aux);
-    if (in_check(aux))
-        p += sprintf(p, "+");
-    (*p) = 0;
-}
-
-void show_board(BOARD board, FILE *f)
-{
-    s3 piece_symbol[80];
-    wchar_t c;
-    s3 s;
-    s3 t;
-    u5 x;
-    u5 y;
-    for (y = 0; y < 8; y++) {
-        fprintf(f, "%d", (int) (8 - y));
-    for (x = 0; x < 8; x++) {
-        t = board[7 - y][x];
-	s5 bg = 4 - 3 * ((x ^ y) & 1);
-	s5 fg = 7 * (t > 0);
-	switch (t) {
-		case 0: fprintf(f, " . "); break;
-		case 1: fprintf(f, " P "); break;
-		case 2: fprintf(f, " N "); break;
-		case 3: fprintf(f, " B "); break;
-		case 4: fprintf(f, " R "); break;
-		case 5: fprintf(f, " Q "); break;
-		case 6: fprintf(f, " K "); break;
-		case -1: fprintf(f, " p "); break;
-		case -2: fprintf(f, " n "); break;
-		case -3: fprintf(f, " b "); break;
-		case -4: fprintf(f, " r "); break;
-		case -5: fprintf(f, " q "); break;
-		case -6: fprintf(f, " k "); break;
-		default: warn("Wrong piece code");
-	}
-    }
-        fprintf(f, "\n");
-    }
-    fprintf(f, "  a  b  c  d  e  f  g  h\n");
-    fprintf(f, "\n");
-    fflush(f);
-}
-
-void transpose(BOARD board)
-{
-    s3 t;
-    u5 x;
-    u5 y;
-    for (y = 0; y < 4; y++)
-    for (x = 0; x < 8; x++) {
-        t = board[y][x];
-        board[y][x] = board[7 - y][x];
-        board[7 - y][x] = t;
-    }
-    for (y = 0; y < 8; y++)
-    for (x = 0; x < 8; x++)
-        board[y][x] = -board[y][x];
-    t = board[8][0];
-    board[8][0] = board[8][2];
-    board[8][2] = t;
-    t = board[8][1];
-    board[8][1] = board[8][3];
-    board[8][3] = t;
-}
-
-void setup_board(BOARD board)
-{
-	s5 x = 3;
-	s5 y = 3;
-	unsigned int symbol = 0;
-	parse_fen(board);
-	while (1) {
-		printf("\033[2J");
-		printf("\033[1;1H");
-		show_board(board, stdout);
-		system("cat start.fen");
-		printf("enter square %d %c%d\n",
-			stm, x + 97, y + 1);
-		fflush(stdout);
-		scanf("%u", &symbol);
-		fflush(stdin);
-		switch(symbol) {
-			case 4: 
-				return;
-				break;
-			case 20: board[y][x] = 0; break;
-			case 31: 
-			case 32:
-			case 33:
-			case 34:
-			case 35:
-			case 36:
-				board[y][x] = symbol - 30;
-				break;
-			case 41:
-			case 42:
-			case 43:
-			case 44:
-			case 45:
-			case 46:
-				board[y][x] = 40 - symbol;
-				break;
-			case 51:
-			case 52:
-			case 53:
-			case 54:
-			case 55:
-			case 56:
-			case 57:
-			case 58:
-				x = symbol - 51;
-				break;
-			case 61:
-			case 62:
-			case 63:
-			case 64:
-			case 65:
-			case 66:
-			case 67:
-			case 68:
-				y = symbol - 61;
-				break;
-			case 70:
-				copy_board(*get_init(), board);
-				break;
-			case 71:
-				load(board);
-				break;
-			case 72:
-				save(board);
-				break;
-			case 73:
-				stm = 1 - stm;
-				board[8][4] = stm;
-				break;
-			case 74:
-				exit(0);
-				break;
-			case 75:
-				transpose(board);
-				break;
-			case 76:
-				parse_fen(board);
-				break;
-			default:;
-		}
-	}
-}
-
-void load_values(void)
-{
-	FILE *vf = fopen("start.bpf", "r");
-	if (!vf)
-		exit(1);
-	for (int i = 1; i < 6; i++) {
-		int j;
-		fscanf(vf, "%d", &j);
-		if (j != i)
-			exit(0);
-		fscanf(vf, "%d", &_VALUES[i]);
-	}
-	_VALUES[0] = 0;
-	fclose(vf);
-}
-
-int main(int argc, char *argv[])
-{
-    gmode = 4;
-    load_values();
-    analysis();
-    return (0);
-}
-
-void warn(const char *msg)
-{
-    fprintf(stderr, "\nwarn %s\n", msg);
-}
-
-void parse_fen(BOARD board) {
-  FILE *f;
-  int x = 1;
-  int y = 8;
-  int ch;
-  int pp;
-  f = fopen("start.fen", "r");
-  if (!f)
-    warn("warn in parse_fen"); // Make sure 'warn' is defined
-  while ((ch = fgetc(f)) != EOF && ch != ' ') {
-    pp = 0;
-    if ((ch >= '1') && (ch <= '8')) {
-      while (ch > '0') {
-        board[y - 1][x - 1] = 0;
-        x++;
-        ch--;
-      }
-      if (x == 9) {
-        x = 1;
-        y--;
-        if (!y) {
-	  ch = fgetc(f);
-          goto end;
-	}
-        continue;
-      }
-    } else if (ch != '/') {
-      switch (ch) {
-        case 'p': pp = -1; break;
-        case 'n': pp = -2; break;
-        case 'b': pp = -3; break;
-        case 'r': pp = -4; break;
-        case 'q': pp = -5; break;
-        case 'k': pp = -6; break;
-        case 'P': pp = 1; break;
-        case 'N': pp = 2; break;
-        case 'B': pp = 3; break;
-        case 'R': pp = 4; break;
-        case 'Q': pp = 5; break;
-        case 'K': pp = 6; break;
-        default: pp = -8;
-      }
-      if (pp > -8)
-        board[y - 1][x - 1] = pp;
-      x++;
-      if (x == 9) {
-        x = 1;
-        y--;
-        if (!y) {
-          ch = fgetc(f);
-          goto end;
-        }
-      }
-    }
-  }
-
-end:
-  ch = fgetc(f);
-  fclose(f);
-  // Update stm based on the character read from FEN
-  if (ch == 'w')
-    stm = 0;
-  else if (ch == 'b')
-    stm = 1;
-  else {
-      warn("Cannot set `stm' variable");
-  }
-}
-
-void parse_pgn(void)
-{
-    if (system("pgn-extract -F start.pgn > pf") != 0) {
-        // Handle error when pgn-extract fails
-        fprintf(stderr, "Error running pgn-extract\n");
-        return;
-    }
-    FILE *f = fopen("pf", "r");
-    FILE *g = fopen("start.fen", "w");
-    if (!f || !g) {
-        fprintf(stderr, "Error opening files\n");
-        if (f) fclose(f);
-        if (g) fclose(g);
-        return;
-    }
-    int ch;
-    BOARD board;
-    copy_board(*get_init(), board);
-    while ((ch = fgetc(f)) != '{') {}
-    while ((ch = fgetc(f)) != '"') {}
-    while ((ch = fgetc(f)) != '"') fputc(ch, g);
-    fclose(f);
-    fclose(g);
-    parse_fen(board);
-    save(board);
 }
