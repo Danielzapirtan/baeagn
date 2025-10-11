@@ -545,7 +545,7 @@ public:
         nodes = 0;
         pvsReady = false;
         
-        for (int depth = SEARCH_DEPTH + 1; depth < MAX_LEVEL; ++depth) {
+        for (int depth = SEARCH_DEPTH + 1; depth < 10; ++depth) {
             auto& root = treeA[0];
             root->currentBoard = startPosition;
             root->level = 0;
