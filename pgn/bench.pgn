@@ -1,11 +1,15 @@
-[Event "1000-1200 - Round 3"]
+[Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025-10-10"]
-[White "kaukasus1"]
-[Black "AntoniuDanielZapirtan"]
+[Date "2025-09-25"]
+[White "AntoniuDanielZapirtan"]
+[Black "Six0fDiamonds"]
 [Result "*"]
-[WhiteElo "1138"]
-[BlackElo "1395"]
+[WhiteElo "1395"]
+[BlackElo "1338"]
 [TimeControl "1/259200"]
 [EndDate "2025-10-11"]
-1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Qf6 5. Be3 Nxd4 6. Bxd4 Qe6 7. Bd3 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O d6 6. Bxc6+ bxc6 7. a3 Nxe4 8.
+c3 Bg4 9. d4 Be7 10. dxe5 dxe5 11. Qxd8+ Rxd8 12. Nxe5 Bd7 13. Bf4 O-O 14. Nd2
+Nf6 15. Rae1 Bd6 16. Nxd7 Rxd7 17. Bxd6 cxd6 18. f4 Re8 19. Rxe8+ Nxe8 20. Re1
+Nf6 21. Ne4 Nxe4 22. Rxe4 Kf8 23. Rb4 Ke7 24. Rb6 Ra7 25. a4 Kd7 26. a5 Kc7 27.
+Kf2 f5 28. h3 h5 29. Kf3 c5 30. Kg3 Kd7 31. Kh4 Ke6 *
