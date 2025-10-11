@@ -15,7 +15,7 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (253)
+#define _MAXLEVEL (29)
 #define _FRAMESPERSEC (32)
 #define _NPS (3 << 18)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
