@@ -1,19 +1,15 @@
-[Event "1000-1200 - Round 3"]
+[Event "Let's Play!"]
 [Site "Chess.com"]
-[Date "2025.10.09"]
-[Round "?"]
-[White "RyanTHobbyist"]
+[Date "2025-09-27"]
+[White "AbduramanBazarbaev"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
+[WhiteElo "1428"]
+[BlackElo "1426"]
 [TimeControl "1/259200"]
-[WhiteElo "1238"]
-[BlackElo "1405"]
-[Termination "unterminated"]
-[ECO "B23"]
-[Link "https://www.chess.com/game/daily/874935215"]
-
-1. e4 c5 2. Nc3 Nc6 3. Bc4 a5 4. a4 e6 5. Bb5 Nf6 6. d3 d5 7. Bg5 Be7 8. Bxc6+
-bxc6 9. e5 Nd7 10. Bxe7 Qxe7 11. Qg4 f5 12. Qh5+ g6 13. Qe2 Ba6 14. Nf3 d4 15.
-Nb1 Qg7 16. O-O g5 17. Re1 g4 18. Nfd2 Rb8 19. b3 Kf7 20. Na3 h5 21. Nac4 h4 22.
-Nxa5 h3 23. g3 Rbc8 24. Nac4 Kg8 25. Nd6 Qf8 26. Nxc8 Qxc8 27. Nc4 Bxc4 28. bxc4
-Kh7 29. a5 Rd8 30. Qd2 Re8 31. a6 Rg8 32. a7 *
+[EndDate "2025-10-15"]
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. O-O Be6 6. b3 h5 7. Bg5 f6 8. Bxe6
+fxg5 9. Qd2 g4 10. Ng5 Nh6 11. Nc3 Bb4 12. Rae1 Bxc3 13. Qxc3 Qxg5 14. Bd5 Kd7
+15. Bc4 Ne7 16. a4 c5 17. b4 g3 18. bxc5 gxh2+ 19. Kh1 dxc5 20. Bd5 Nxd5 21.
+exd5 b6 22. Rxe5 Qf6 23. d4 Ng4 24. Qg3 Nxe5 25. dxe5 Qf5 26. Qxg7+ Kc8 27.
+Qxh8+ Kb7 28. Qg7+ Ka6 29. a5 *
