@@ -579,6 +579,7 @@ skippvs:
             treeb[0].level = 0;
             LEVEL _s_depth = _S_DEPTH;
             if (glevel == 1)
+            if (glevel < gdepth - _S_DEPTH - 3)
                 _s_depth = _S_DEPTH + 1;
             treeb[0].depth = _s_depth;
             treeb[0].alpha = _ALPHA_DFL;
