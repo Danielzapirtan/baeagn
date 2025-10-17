@@ -578,7 +578,8 @@ skippvs:
             copy_board(aux, treeb[0].curr_board);
             treeb[0].level = 0;
             LEVEL _s_depth = _S_DEPTH - 1;
-            if (glevel == 1)
+            if (glevel)
+            if (glevel < 4)
             if (glevel < gdepth - _S_DEPTH - 3)
                 _s_depth = _S_DEPTH;
             treeb[0].depth = _s_depth;
