@@ -25,7 +25,7 @@
 #define _ALPHA (-20000) // Adjusted as needed
 #define _BETA (20000)
 #define _OVERDEPTH (1)
-#define _S_DEPTH (3)
+#define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
@@ -578,8 +578,7 @@ skippvs:
             copy_board(aux, treeb[0].curr_board);
             treeb[0].level = 0;
             LEVEL _s_depth = _S_DEPTH;
-            if (glevel >= 4)
-            if (glevel >= gdepth - _S_DEPTH - (gdepth >> 3))
+            if (glevel >= 4 || glevel >= gdepth - _S_DEPTH - (gdepth >> 3))
                 _s_depth = _S_DEPTH - 1;
             treeb[0].depth = _s_depth;
             treeb[0].alpha = _ALPHA_DFL;
