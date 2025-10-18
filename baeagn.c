@@ -25,7 +25,7 @@
 #define _ALPHA (-20000) // Adjusted as needed
 #define _BETA (20000)
 #define _OVERDEPTH (1)
-#define _S_DEPTH (5)
+#define _S_DEPTH (3)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
