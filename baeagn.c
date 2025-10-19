@@ -1208,6 +1208,7 @@ void load_values(void)
 int main(int argc, char *argv[])
 {
     gmode = 4;
+    srand(time(NULL));
     load_values();
     analysis();
     return (0);
