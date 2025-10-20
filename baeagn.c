@@ -22,15 +22,15 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-20000) // Adjusted as needed
-#define _BETA (20000)
-#define _OVERDEPTH (2)
-#define _S_DEPTH (5)
+#define _ALPHA (-50) // Adjusted as needed
+#define _BETA (50)
+#define _OVERDEPTH (1)
+#define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
 #define _CAND7
-#define _CAND250
+#undef _CAND250
 #define _CANDCUT (200)
 #undef _Q0BLK // For opening phase, block Queen's moves at node root
 
@@ -582,8 +582,8 @@ skippvs:
             copy_board(aux, treeb[0].curr_board);
             treeb[0].level = 0;
             LEVEL _s_depth = _S_DEPTH;
-            if (glevel >= 4 || glevel >= gdepth - _S_DEPTH - (gdepth >> 3))
-                _s_depth = _S_DEPTH - 1;
+            /*if (glevel >= 4 || glevel >= gdepth - _S_DEPTH - (gdepth >> 3))
+                _s_depth = _S_DEPTH - 1;*/
             treeb[0].depth = _s_depth;
             treeb[0].alpha = _ALPHA_DFL;
             treeb[0].beta = _BETA_DFL;
@@ -605,7 +605,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 7;
+        newmax_index = 5;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
