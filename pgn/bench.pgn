@@ -2,9 +2,9 @@
 [Site "Chess.com"]
 [Date "2025-10-20"]
 [White "AntoniuDanielZapirtan"]
-[Black "Brooksd07"]
+[Black "Veppro"]
 [Result "*"]
 [WhiteElo "1411"]
-[BlackElo "1493"]
-[TimeControl "1/172800"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Bc4 Nxf3+ *
+[BlackElo "1605"]
+[TimeControl "1/259200"]
+1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Bxc6 dxc6 5. Nxe5 Qd4 *
