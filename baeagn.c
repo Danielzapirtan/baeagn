@@ -448,14 +448,16 @@ VALUE eval(BOARD board, LEVEL level)
             case 1:
             case 2:
             case 3:
-            case 4:
                 ivalue += 100;
                 break;
+            case 4:
+                ivalue += 120;
+                break;
             case 5:
-                ivalue += 200;
+                ivalue += 250;
                 break;
             case 6:
-                ivalue += 400;
+                ivalue += 500;
             default:;
             }
             break;
@@ -470,14 +472,16 @@ VALUE eval(BOARD board, LEVEL level)
             case 6:
             case 5:
             case 4:
-            case 3:
                 ivalue -= 100;
                 break;
+            case 3:
+                ivalue -= 120;
+                break;
             case 2:
-                ivalue -= 200;
+                ivalue -= 250;
                 break;
             case 1:
-                ivalue -= 400;
+                ivalue -= 500;
                 break;
             default:;
             }
