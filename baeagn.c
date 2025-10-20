@@ -24,14 +24,14 @@
 
 #define _ALPHA (-20000) // Adjusted as needed
 #define _BETA (20000)
-#define _OVERDEPTH (1)
+#define _OVERDEPTH (2)
 #define _S_DEPTH (5)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
 #define _CAND7
-#undef _CAND250
-#define _CANDCUT (150)
+#define _CAND250
+#define _CANDCUT (200)
 #undef _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
@@ -529,7 +529,7 @@ VALUE eval(BOARD board, LEVEL level)
         }
     }
 #endif
-    value += ((rand() % 19) - 9);
+    value += ((rand() % 7) - 3);
     if (level > 1)
         return (value + (treea[level - 2].max_index - treea[level - 1].max_index));
     return (value);
@@ -601,7 +601,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 4;
+        newmax_index = 7;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
