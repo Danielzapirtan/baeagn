@@ -15,9 +15,9 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (29)
+#define _MAXLEVEL (32)
 #define _FRAMESPERSEC (32)
-#define _NPS (3 << 18)
+#define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
@@ -454,10 +454,10 @@ VALUE eval(BOARD board, LEVEL level)
                 ivalue += 120;
                 break;
             case 5:
-                ivalue += 250;
+                ivalue += 200;
                 break;
             case 6:
-                ivalue += 500;
+                ivalue += 400;
             default:;
             }
             break;
@@ -478,10 +478,10 @@ VALUE eval(BOARD board, LEVEL level)
                 ivalue -= 120;
                 break;
             case 2:
-                ivalue -= 250;
+                ivalue -= 200;
                 break;
             case 1:
-                ivalue -= 500;
+                ivalue -= 400;
                 break;
             default:;
             }
@@ -582,8 +582,6 @@ skippvs:
             copy_board(aux, treeb[0].curr_board);
             treeb[0].level = 0;
             LEVEL _s_depth = _S_DEPTH;
-            /*if (glevel >= 4 || glevel >= gdepth - _S_DEPTH - (gdepth >> 3))
-                _s_depth = _S_DEPTH - 1;*/
             treeb[0].depth = _s_depth;
             treeb[0].alpha = _ALPHA_DFL;
             treeb[0].beta = _BETA_DFL;
@@ -605,7 +603,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 5;
+        newmax_index = 4;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
