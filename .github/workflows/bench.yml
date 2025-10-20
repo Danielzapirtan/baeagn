@@ -1,4 +1,4 @@
-name: Bench 1
+name: Bench1
 
 on:
   workflow_dispatch:
