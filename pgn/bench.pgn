@@ -2,12 +2,12 @@
 [Site "Chess.com"]
 [Date "2025-10-20"]
 [White "AntoniuDanielZapirtan"]
-[Black "Veppro"]
+[Black "BigDSwed"]
 [Result "*"]
 [WhiteElo "1421"]
-[BlackElo "1605"]
+[BlackElo "1433"]
 [TimeControl "1/259200"]
 [EndDate "2025-10-21"]
-1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Bxc6 dxc6 5. Nxe5 Qd4 6. Nd3 fxe4 7. Nf4 Bc5 8.
-Qh5+ g6 9. Qe2 Nf6 10. a3 O-O 11. c3 Qd6 12. d4 exd3 13. Qxd3 Nd5 14. Nxd5 Bxf2+
-15. Kf1 cxd5 16. Nd2 Bh4+ 17. Nf3 Bg4 18. Kg1 Bxf3 19. gxf3 Rae8 20. a4 Qb6+ *
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h5 7. c3 e6 8. Bf4
+Bd6 9. Nh3 Bxf4 10. Nxf4 Qf6 11. Nfxh5 Bxh5 12. Nxh5 Qh6 13. Be2 Nd7 14. Qd3
+Ngf6 15. g4 Nxh5 16. gxh5 Nf6 17. Qh3 Nxh5 *
