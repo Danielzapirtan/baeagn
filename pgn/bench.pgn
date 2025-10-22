@@ -3,14 +3,14 @@
 [Date "2025.10.19"]
 [Round "?"]
 [White "AntoniuDanielZapirtan"]
-[Black "Livingdreams"]
+[Black "Brooksd07"]
 [Result "*"]
-[TimeControl "1/259200"]
+[TimeControl "1/172800"]
 [WhiteElo "1411"]
-[BlackElo "1394"]
+[BlackElo "1493"]
 [Termination "unterminated"]
-[ECO "C70"]
-[Link "https://www.chess.com/game/daily/879147923?utm_source=fcm&utm_medium=push&utm_campaign=game_move_made"]
+[ECO "C61"]
+[Link "https://www.chess.com/game/daily/879129925"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Bc5 6. c4 Nf6 7. cxb5 axb5 8. d3
-h6 9. g3 O-O 10. Qc2 Bb6 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Bc4 Nxf3+ 5. Qxf3 Qf6 6. d3 Qxf3 7. gxf3 Bc5
+8. Be3 Bb6 9. a3 d6 10. f4 Bd7 *
