@@ -1,11 +1,15 @@
-[Event "1000-1200 - Round 3"]
-[Site "Chess.com"]
-[Date "2025-10-10"]
-[White "AntoniuDanielZapirtan"]
-[Black "SectumSempraX"]
+[Event "WSTT/SEA/68"]
+[Site "ICCF"]
+[Date "2025.06.15"]
+[Round "-"]
+[White "Belter, Edmund"]
+[Black "Zapirtan, Antoniu Daniel"]
 [Result "*"]
-[WhiteElo "1421"]
-[BlackElo "1245"]
-[TimeControl "1/259200"]
-[EndDate "2025-10-22"]
-1. e4 c5 2. Nf3 e6 3. d4 cxd4 4. Nxd4 Nc6 5. a4 Nf6 *
+[WhiteElo "1468"]
+[BlackElo "1485"]
+
+1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 
+6.Be3 e5 7.Nf3 Be7 8.h3 Be6 9.Qd2 b5 10.a3 Nc6 
+11.b4 h6 12.Ne2 Qd7 13.Ng3 Rb8 14.Be2 d5 15.c3 dxe4 
+16.Qxd7+ Kxd7 17.Nd2 Nd5 18.Ndxe4 f5 19.Nc5+ Bxc5 20.Bxc5 Nxc3 
+21.O-O Rbd8 22.Bf3 Na4 23.Rad1+ *
