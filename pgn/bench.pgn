@@ -2,14 +2,15 @@
 [Site "Chess.com"]
 [Date "2025.10.19"]
 [Round "?"]
-[White "Harryfeli1"]
+[White "Kingkiller_PawntiusPilate"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1391"]
+[WhiteElo "1413"]
 [BlackElo "1411"]
 [Termination "unterminated"]
-[ECO "C50"]
-[Link "https://www.chess.com/game/daily/879166223"]
+[ECO "A45"]
+[Link "https://www.chess.com/game/daily/879138877"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. O-O a6 5. a4 Nf6 6. d3 h6 7. c3 O-O 8. h3 *
+1. d4 Nf6 2. Bf4 h6 3. Nc3 c5 4. Nf3 h5 5. e3 Qb6 6. Bc4 h4 7. Nb5 d6 8. Qd3 a6
+9. Nc3 Be6 10. Bxe6 fxe6 11. b3 Nc6 12. Qg6+ *
