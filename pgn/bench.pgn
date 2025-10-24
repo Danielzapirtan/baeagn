@@ -1,19 +1,18 @@
-[Event "Let\\'s Play!"]
+[Event "1000-1200 - Round 3"]
 [Site "Chess.com"]
-[Date "2025.10.19"]
+[Date "2025.10.09"]
 [Round "?"]
-[White "Yutori15"]
-[Black "AntoniuDanielZapirtan"]
+[White "AntoniuDanielZapirtan"]
+[Black "Bigbluecats"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1402"]
-[BlackElo "1411"]
+[WhiteElo "1405"]
+[BlackElo "1145"]
 [Termination "unterminated"]
-[ECO "C50"]
-[Link "https://www.chess.com/game/daily/879148403"]
+[ECO "C77"]
+[Link "https://www.chess.com/game/daily/874935209"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 a6 5. a4 d6 6. h3 h5 7. c3 Be6 8. Bd5 Bb6
-9. Bxc6+ bxc6 10. Ng5 Qf6 11. O-O a5 12. Qe2 Ne7 13. Kh2 h4 14. f4 Kd7 15. c4
-Bd4 16. f5 Nxf5 17. exf5 Bxf5 18. Ne4 Qe6 19. Be3 Bxe4 20. Bxd4 exd4 21. Qxe4
-Qxe4 22. dxe4 f6 23. Nd2 Rh7 24. Rab1 d5 25. exd5 cxd5 26. cxd5 Rah8 27. Rf4 c5
-28. dxc6+ *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Nxe4 6. d4 exd4 7. Nxd4 Nxd4 8.
+Qxd4 Nf6 9. Re1+ Be7 10. Bb3 d5 11. Bg5 O-O 12. Qc3 c6 13. Qd3 g6 14. Nd2 Bf5
+15. Qf3 Kg7 16. a4 h6 17. Bh4 Ne4 18. Bxe7 Qxe7 19. Qe3 Rae8 20. Qd4+ Kh7 21.
+Nxe4 dxe4 *
