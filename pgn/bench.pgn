@@ -1,16 +1,16 @@
 [Event "Let\\'s Play!"]
 [Site "Chess.com"]
-[Date "2025.10.19"]
+[Date "2025.10.13"]
 [Round "?"]
-[White "PepeCoki"]
-[Black "AntoniuDanielZapirtan"]
+[White "AntoniuDanielZapirtan"]
+[Black "Dmacri7"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1426"]
-[BlackElo "1411"]
+[WhiteElo "1418"]
+[BlackElo "1287"]
 [Termination "unterminated"]
-[ECO "B50"]
-[Link "https://www.chess.com/game/daily/879146529"]
+[ECO "C10"]
+[Link "https://www.chess.com/game/daily/876520233"]
 
-1. e4 c5 2. Nf3 d6 3. Bc4 a6 4. d3 f5 5. Ng5 e5 6. Nf7 Qb6 7. Nxh8 Nf6 8. Nf7
-Qc6 9. a4 b5 10. axb5 *
+1. e4 e6 2. d4 d5 3. Nc3 Nc6 4. e5 Bb4 5. a3 Ba5 6. b4 Bb6 7. Bb5 Bd7 8. Bxc6
+Bxc6 9. h4 f6 10. h5 fxe5 11. dxe5 d4 12. Nce2 Bxg2 13. Rh2 Qd5 14. Bb2 O-O-O *
