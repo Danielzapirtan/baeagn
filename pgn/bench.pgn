@@ -2,17 +2,17 @@
 [Site "Chess.com"]
 [Date "2025.10.09"]
 [Round "?"]
-[White "Bigbluecats"]
-[Black "AntoniuDanielZapirtan"]
+[White "AntoniuDanielZapirtan"]
+[Black "Bigbluecats"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1145"]
-[BlackElo "1405"]
+[WhiteElo "1405"]
+[BlackElo "1145"]
 [Termination "unterminated"]
-[ECO "C47"]
-[Link "https://www.chess.com/game/daily/874935233"]
+[ECO "C77"]
+[Link "https://www.chess.com/game/daily/874935209"]
 
-1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. h3 d5 5. exd5 Nxd5 6. Nxd5 Qxd5 7. a3 e4 8.
-Nh2 Bd6 9. c3 Ne5 10. d4 Nd3+ 11. Bxd3 exd3 12. f3 Bg3+ 13. Kf1 Qe6 14. Bd2 Qa6
-15. Be1 d2+ 16. Qe2+ Qxe2+ 17. Kxe2 dxe1=Q+ 18. Raxe1 Bxe1 19. Rxe1 O-O 20. Kd1
-Bf5 21. Re7 Rac8 22. Re5 Bd7 23. Nf1 *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Nxe4 6. d4 exd4 7. Nxd4 Nxd4 8.
+Qxd4 Nf6 9. Re1+ Be7 10. Bb3 d5 11. Bg5 O-O 12. Qc3 c6 13. Qd3 g6 14. Nd2 Bf5
+15. Qf3 Kg7 16. a4 h6 17. Bh4 Ne4 18. Bxe7 Qxe7 19. Qe3 Rae8 20. Qd4+ Kh7 21.
+Nxe4 dxe4 22. f3 c5 *
