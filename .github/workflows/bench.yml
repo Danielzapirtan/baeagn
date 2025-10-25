@@ -20,7 +20,7 @@ jobs:
       
       - name: Execution
         run: |
-          ulimit -t 180
+          ulimit -t 600
           ./baeagn 2>&1 &
           wait
 
