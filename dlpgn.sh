@@ -14,8 +14,6 @@ fi
 
 echo 1
 myurl=$(jq -c .games[0].url /tmp/games1.txt)
-jq -c .games[0].white /tmp/games1.txt >~/white
-jq -c .games[0].black /tmp/games1.txt >~/black
 
 echo 2
 n=0
@@ -26,6 +24,8 @@ while true; do
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-]\+ " \
 			>>/tmp/mygame.pgn
 		        echo "*" >>/tmp/mygame.pgn
+	jq -c .games[$n].white /tmp/games.txt >~/white
+	jq -c .games[$n].black /tmp/games.txt >~/black
 		exit 0
 	fi
 	n=$(($n + 1))
