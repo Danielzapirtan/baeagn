@@ -2,15 +2,18 @@
 [Site "Chess.com"]
 [Date "2025.10.19"]
 [Round "?"]
-[White "AntoniuDanielZapirtan"]
-[Black "Livingdreams"]
+[White "Yutori15"]
+[Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1411"]
-[BlackElo "1394"]
+[WhiteElo "1402"]
+[BlackElo "1411"]
 [Termination "unterminated"]
-[ECO "C70"]
-[Link "https://www.chess.com/game/daily/879147923"]
+[ECO "C50"]
+[Link "https://www.chess.com/game/daily/879148403"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 b5 5. Bb3 Bc5 6. c4 Nf6 7. cxb5 axb5 8. d3
-h6 9. g3 O-O 10. Qc2 Bb6 11. O-O d5 12. Qxc6 Bh3 13. exd5 Bxf1 * 
+1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 a6 5. a4 d6 6. h3 h5 7. c3 Be6 8. Bd5 Bb6
+9. Bxc6+ bxc6 10. Ng5 Qf6 11. O-O a5 12. Qe2 Ne7 13. Kh2 h4 14. f4 Kd7 15. c4
+Bd4 16. f5 Nxf5 17. exf5 Bxf5 18. Ne4 Qe6 19. Be3 Bxe4 20. Bxd4 exd4 21. Qxe4
+Qxe4 22. dxe4 f6 23. Nd2 Rh7 24. Rab1 d5 25. exd5 cxd5 26. cxd5 Rah8 27. Rf4 c5
+28. dxc6+ Kxc6 29. Rxd4 g5 30. Rc1+ *
