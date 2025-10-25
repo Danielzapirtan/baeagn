@@ -1,19 +1,17 @@
-[Event "1000-1200 - Round 3"]
+[Event "Let\\'s Play!"]
 [Site "Chess.com"]
-[Date "2025.10.09"]
+[Date "2025.10.19"]
 [Round "?"]
-[White "kaukasus1"]
+[White "Kingkiller_PawntiusPilate"]
 [Black "AntoniuDanielZapirtan"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1138"]
-[BlackElo "1405"]
+[WhiteElo "1413"]
+[BlackElo "1411"]
 [Termination "unterminated"]
-[ECO "C45"]
-[Link "https://www.chess.com/game/daily/874935213"]
+[ECO "A45"]
+[Link "https://www.chess.com/game/daily/879138877"]
 
-1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Nxd4 Qf6 5. Be3 Nxd4 6. Bxd4 Qe6 7. Bd3 c5 8.
-Be3 c4 9. Be2 Nf6 10. f3 Be7 11. c3 d5 12. Bd4 O-O 13. e5 Nd7 14. f4 f6 15. h3
-Nxe5 16. fxe5 fxe5 17. Bg4 Bh4+ 18. Kd2 Qg6 19. Bc5 Bg5+ 20. Ke1 Bh4+ 21. Kd2
-Bg5+ 22. Be3 Qd3+ 23. Kc1 Bxe3+ 24. Nd2 Rf2 25. Qc2 Qxc2+ 26. Kxc2 Rxd2+ 27. Kc1
-Rxg2+ 28. Kb1 Bxg4 29. hxg4 Bd2 30. Rd1 *
+1. d4 Nf6 2. Bf4 h6 3. Nc3 c5 4. Nf3 h5 5. e3 Qb6 6. Bc4 h4 7. Nb5 d6 8. Qd3 a6
+9. Nc3 Be6 10. Bxe6 fxe6 11. b3 Nc6 12. Qg6+ Kd8 13. Ng5 Qa5 14. Nf7+ Kc7 15.
+Nxh8 Qxc3+ 16. Ke2 cxd4 17. Qd3 *
