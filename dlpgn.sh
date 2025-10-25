@@ -12,8 +12,12 @@ curl -s $url1 >/tmp/games1.txt
 curl -s $url >/tmp/games.txt
 fi
 
+echo 1
 myurl=$(jq -c .games[0].url /tmp/games1.txt)
-echo $myurl
+jq -c .games[0].white /tmp/games1.txt >~/white
+jq -c .games[0].black /tmp/games1.txt >~/black
+
+echo 2
 n=0
 while true; do
 	myurlc=$(jq -c .games[$n].url /tmp/games.txt)
