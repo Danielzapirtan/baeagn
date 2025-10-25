@@ -24,8 +24,8 @@ while true; do
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-]\+ " \
 			>>/tmp/mygame.pgn
 		        echo "*" >>pgn/bench.pgn
-	jq -c .games[$n].white /tmp/games.txt >~/white
-	jq -c .games[$n].black /tmp/games.txt >~/black
+		jq -c .games[$n].white /tmp/games.txt
+		jq -c .games[$n].black /tmp/games.txt
 		exit 0
 	fi
 	n=$(($n + 1))
