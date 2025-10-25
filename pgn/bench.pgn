@@ -1,21 +1,2 @@
-[Event "Let\\'s Play!"]
-[Site "Chess.com"]
-[Date "2025.10.19"]
-[Round "?"]
-[White "Yutori15"]
-[Black "AntoniuDanielZapirtan"]
-[Result "*"]
-[TimeControl "1/259200"]
-[WhiteElo "1402"]
-[BlackElo "1411"]
-[Termination "unterminated"]
-[ECO "C50"]
-[Link "https://www.chess.com/game/daily/879148403"]
-
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 a6 5. a4 d6 6. h3 h5 7. c3 Be6 8. Bd5 Bb6
-9. Bxc6+ bxc6 10. Ng5 Qf6 11. O-O a5 12. Qe2 Ne7 13. Kh2 h4 14. f4 Kd7 15. c4
-Bd4 16. f5 Nxf5 17. exf5 Bxf5 18. Ne4 Qe6 19. Be3 Bxe4 20. Bxd4 exd4 21. Qxe4
-Qxe4 22. dxe4 f6 23. Nd2 Rh7 24. Rab1 d5 25. exd5 cxd5 26. cxd5 Rah8 27. Rf4 c5
-28. dxc6+ Kxc6 29. Rxd4 g5 30. Rc1+ Kb6 31. Rd6+ Ka7 32. Rxf6 Rd8 33. Rc2 Rd4
-34. b3 Rd3 35. Rb2 Rc3 36. Rf5 Re3 37. Rxa5+ Kb8 38. Rxg5 Rd3 39. Nf3 Rc3 40.
-Rg4 Ka7 41. Rxh4 Rf7 42. b4 *
+"[Event \"Let's Play!\"]\n[Site \"Chess.com\"]\n[Date \"2025.10.19\"]\n[Round \"2\"]\n[White \"Yutori15\"]\n[Black \"AntoniuDanielZapirtan\"]\n[Result \"*\"]\n[CurrentPosition \"8/k4r2/8/8/PP5R/2r2N1P/1R4PK/8 b - - 0 42\"]\n[Timezone \"UTC\"]\n[ECO \"C50\"]\n[ECOUrl \"https://www.chess.com/openings/Giuoco-Piano-Game-Giuoco-Pianissimo-Variation\"]\n[UTCDate \"2025.10.19\"]\n[UTCTime \"23:34:50\"]\n[WhiteElo \"1420\"]\n[BlackElo \"1431\"]\n[TimeControl \"1/259200\"]\n[StartTime \"23:34:50\"]\n[Link \"https://www.chess.com/game/daily/879148403\"]\n\n1. e4 {[%clk 71:59:55]} 1... e5 {[%clk 71:59:49]} 2. Nf3 {[%clk 71:56:02]} 2... Nc6 {[%clk 71:58:05]} 3. Bc4 {[%clk 71:58:22]} 3... Bc5 {[%clk 71:31:43]} 4. d3 {[%clk 71:26:37]} 4... a6 {[%clk 71:31:25]} 5. a4 {[%clk 71:58:55]} 5... d6 {[%clk 71:31:10]} 6. h3 {[%clk 71:58:43]} 6... h5 {[%clk 71:21:23]} 7. c3 {[%clk 70:20:45]} 7... Be6 {[%clk 71:29:53]} 8. Bd5 {[%clk 71:51:40]} 8... Bb6 {[%clk 66:01:06]} 9. Bxc6+ {[%clk 67:46:29]} 9... bxc6 {[%clk 68:50:37]} 10. Ng5 {[%clk 71:39:22]} 10... Qf6 {[%clk 71:43:09]} 11. O-O {[%clk 71:52:10]} 11... a5 {[%clk 71:48:12]} 12. Qe2 {[%clk 71:55:32]} 12... Ne7 {[%clk 71:49:29]} 13. Kh2 {[%clk 71:59:10]} 13... h4 {[%clk 71:52:50]} 14. f4 {[%clk 71:53:33]} 14... Kd7 {[%clk 71:52:46]} 15. c4 {[%clk 71:56:48]} 15... Bd4 {[%clk 71:50:25]} 16. f5 {[%clk 67:14:20]} 16... Nxf5 {[%clk 57:35:30]} 17. exf5 {[%clk 71:59:14]} 17... Bxf5 {[%clk 70:35:06]} 18. Ne4 {[%clk 71:57:00]} 18... Qe6 {[%clk 69:46:13]} 19. Be3 {[%clk 71:18:00]} 19... Bxe4 {[%clk 71:20:30]} 20. Bxd4 {[%clk 71:43:47]} 20... exd4 {[%clk 70:35:00]} 21. Qxe4 {[%clk 71:48:51]} 21... Qxe4 {[%clk 70:27:11]} 22. dxe4 {[%clk 71:58:54]} 22... f6 {[%clk 66:40:04]} 23. Nd2 {[%clk 71:24:17]} 23... Rh7 {[%clk 66:54:49]} 24. Rab1 {[%clk 69:53:03]} 24... d5 {[%clk 66:45:05]} 25. exd5 {[%clk 71:58:07]} 25... cxd5 {[%clk 71:50:09]} 26. cxd5 {[%clk 71:57:35]} 26... Rah8 {[%clk 70:39:26]} 27. Rf4 {[%clk 71:58:41]} 27... c5 {[%clk 71:56:52]} 28. dxc6+ {[%clk 71:39:38]} 28... Kxc6 {[%clk 37:27:20]} 29. Rxd4 {[%clk 64:30:46]} 29... g5 {[%clk 52:40:02]} 30. Rc1+ {[%clk 71:56:48]} 30... Kb6 {[%clk 67:50:00]} 31. Rd6+ {[%clk 71:16:23]} 31... Ka7 {[%clk 71:51:29]} 32. Rxf6 {[%clk 71:58:33]} 32... Rd8 {[%clk 71:49:03]} 33. Rc2 {[%clk 71:57:11]} 33... Rd4 {[%clk 71:52:02]} 34. b3 {[%clk 71:57:12]} 34... Rd3 {[%clk 71:49:46]} 35. Rb2 {[%clk 71:59:43]} 35... Rc3 {[%clk 71:44:00]} 36. Rf5 {[%clk 71:59:21]} 36... Re3 {[%clk 71:43:59]} 37. Rxa5+ {[%clk 71:57:43]} 37... Kb8 {[%clk 71:35:05]} 38. Rxg5 {[%clk 71:42:47]} 38... Rd3 {[%clk 71:44:47]} 39. Nf3 {[%clk 71:57:16]} 39... Rc3 {[%clk 71:42:53]} 40. Rg4 {[%clk 71:54:12]} 40... Ka7 {[%clk 71:40:08]} 41. Rxh4 {[%clk 71:30:22]} 41... Rf7 {[%clk 71:38:44]} 42. b4 {[%clk 71:36:38]} *\n"
+*
