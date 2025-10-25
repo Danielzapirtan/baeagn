@@ -3,7 +3,6 @@
 set -e
 
 clear
-sh dlpgn.sh
 git add .
 git commit -m yaccg
 git push
