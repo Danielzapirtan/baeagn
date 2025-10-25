@@ -7,8 +7,8 @@ cat - >pgn/bench.pgn
 git add .
 git commit -m yaccg
 git push
-sleep 35
 gh workflow run bench1
+sleep 35
 export wfid=$(gh run list --workflow bench1 |head -n 1 |cut -f 7)
 export jid=$(gh run view -v $wfid|grep -o "ID.*)"|grep -o "[[:digit:]]\+")
 gh run watch $wfid || true
