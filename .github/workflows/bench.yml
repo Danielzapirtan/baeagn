@@ -21,7 +21,8 @@ jobs:
       - name: Execution
         run: |
           sh dlpgn.sh
-          ulimit -t 180
+          cat pgn/bench.pgn
+          ulimit -t 20
           ./baeagn 2>&1 &
           wait
 
