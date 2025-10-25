@@ -8,7 +8,7 @@ cp /tmp/mygame.pgn pgn/bench.pgn
 git add .
 git commit -m yaccg
 git push
-gh workflow run bench1
+gh workflow run --workflow bench.yml
 sleep 90
 export wfid=$(gh run list --workflow bench1 |head -n 1 |cut -f 7)
 export jid=$(gh run view -v $wfid|grep -o "ID.*)"|grep -o "[[:digit:]]\+")
