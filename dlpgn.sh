@@ -23,7 +23,7 @@ while true; do
 		jq -c .games[$n].pgn /tmp/games.txt | \
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-]\+ " \
 			>>/tmp/mygame.pgn
-		        echo "*" >>/tmp/mygame.pgn
+		        echo "*" >>pgn/bench.pgn
 	jq -c .games[$n].white /tmp/games.txt >~/white
 	jq -c .games[$n].black /tmp/games.txt >~/black
 		exit 0
