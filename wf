@@ -12,6 +12,6 @@ export wfid=$(gh run list --workflow bench1 |head -n 1 |cut -f 7)
 export jid=$(gh run view -v $wfid|grep -o "ID.*)"|grep -o "[[:digit:]]\+")
 gh run watch $wfid || true
 gh run view --log --job $jid|grep Zapirtan
-gh run view --log --job $jid|grep -i variation|tail -n 1|grep -o "tion \<.*\> "|cut -f 2
+gh run view --log --job $jid|grep -i variation|tail -n 1
 
 
