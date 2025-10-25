@@ -2,18 +2,19 @@
 [Site "Chess.com"]
 [Date "2025.10.19"]
 [Round "?"]
-[White "Yutori15"]
-[Black "AntoniuDanielZapirtan"]
+[White "AntoniuDanielZapirtan"]
+[Black "Veppro"]
 [Result "*"]
 [TimeControl "1/259200"]
-[WhiteElo "1402"]
-[BlackElo "1411"]
+[WhiteElo "1411"]
+[BlackElo "1605"]
 [Termination "unterminated"]
-[ECO "C50"]
-[Link "https://www.chess.com/game/daily/879148403"]
+[ECO "C63"]
+[Link "https://www.chess.com/game/daily/879137637"]
 
-1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 a6 5. a4 d6 6. h3 h5 7. c3 Be6 8. Bd5 Bb6
-9. Bxc6+ bxc6 10. Ng5 Qf6 11. O-O a5 12. Qe2 Ne7 13. Kh2 h4 14. f4 Kd7 15. c4
-Bd4 16. f5 Nxf5 17. exf5 Bxf5 18. Ne4 Qe6 19. Be3 Bxe4 20. Bxd4 exd4 21. Qxe4
-Qxe4 22. dxe4 f6 23. Nd2 Rh7 24. Rab1 d5 25. exd5 cxd5 26. cxd5 Rah8 27. Rf4 c5
-28. dxc6+ Kxc6 29. Rxd4 g5 30. Rc1+ Kb6 31. Rd6+ *
+1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Bxc6 dxc6 5. Nxe5 Qd4 6. Nd3 fxe4 7. Nf4 Bc5 8.
+Qh5+ g6 9. Qe2 Nf6 10. a3 O-O 11. c3 Qd6 12. d4 exd3 13. Qxd3 Nd5 14. Nxd5 Bxf2+
+15. Kf1 cxd5 16. Nd2 Bh4+ 17. Nf3 Bg4 18. Kg1 Bxf3 19. gxf3 Rae8 20. a4 Qb6+ 21.
+Qd4 Qxd4+ 22. cxd4 Rxf3 23. Kg2 Rd3 24. Rf1 Re2+ 25. Kh1 Rxd4 26. Bh6 Be7 27.
+Rf3 Rh4 28. Bf4 Bd6 29. Bxd6 cxd6 30. h3 Rxb2 31. a5 Rhb4 32. Rf6 Rb1+ 33. Rxb1
+Rxb1+ 34. Kg2 Ra1 *
