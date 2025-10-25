@@ -3,7 +3,6 @@
 set -e
 
 clear
-sh dlpgn.sh
 cp /tmp/mygame.pgn pgn/bench.pgn
 git add .
 git commit -m yaccg
