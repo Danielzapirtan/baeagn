@@ -5,7 +5,7 @@ set -e
 clear
 git add .
 git commit -m yaccg
-git push
+git push || true
 gh workflow run bench1
 sleep 90
 export wfid=$(gh run list --workflow bench1 |head -n 1 |cut -f 7)
