@@ -21,7 +21,7 @@ while true; do
 	myurlc=$(jq -c .games[$n].url /tmp/games.txt)
 	if [ x"$myurl" = x"$myurlc" ]; then
 		jq -c .games[$n].pgn /tmp/games.txt | \
-			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-]\+ " \
+			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-=]\+ " \
 			>pgn/bench.pgn
 		        echo "*" >>pgn/bench.pgn
 		jq -c .games[$n].white /tmp/games.txt
