@@ -4,7 +4,7 @@ set -e
 
 clear
 git add .
-git commit -m yaccg
+git commit -m yaccg || true
 git push || true
 gh workflow run bench1
 sleep 90
