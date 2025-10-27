@@ -1,6 +1,7 @@
 #! /bin/bash
 
 user=antoniudanielzapirtan
+GN=$1
 
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 url="https://api.chess.com/pub/player/$user/games"
@@ -13,7 +14,7 @@ curl -s $url >/tmp/games.txt
 fi
 
 echo 1
-myurl=$(jq -c .games[0].url /tmp/games1.txt)
+myurl=$(jq -c .games[$GN].url /tmp/games1.txt)
 
 echo 2
 n=0
