@@ -3,79 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChessBoard with FEN Support</title>
+    <title>FEN Chess Board Viewer</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e6e6e6;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
+            background-color: #f5f5f5;
         }
         
-        .container {
-            max-width: 1200px;
-            width: 100%;
+        .controls {
+            margin-bottom: 20px;
             display: flex;
+            gap: 10px;
             flex-wrap: wrap;
-            gap: 20px;
             justify-content: center;
         }
         
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
+        button {
+            padding: 8px 16px;
+            background-color: #4a5568;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #f0c040;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        button:hover {
+            background-color: #2d3748;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            color: #a0a0c0;
-            margin-bottom: 20px;
+        #fen-input {
+            width: 400px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         
-        .chess-section {
-            flex: 1;
-            min-width: 500px;
+        .board-container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         
-        .controls-section {
-            flex: 1;
-            min-width: 500px;
-            background: rgba(30, 30, 50, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-        
-        .chessboard {
-            width: 500px;
-            height: 500px;
+        .board {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            grid-template-rows: repeat(8, 1fr);
-            border: 2px solid #444;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            margin-bottom: 20px;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+            border: 2px solid #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .square {
@@ -83,835 +61,225 @@
             justify-content: center;
             align-items: center;
             font-size: 40px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-        
-        .square:hover {
-            filter: brightness(1.2);
-        }
-        
-        .square.white {
-            background-color: #55aaaa;
-        }
-        
-        .square.black {
-            background-color: #55aa55;
-        }
-        
-        .square.selected {
-            background-color: #aec6cf;
-        }
-        
-        .square.valid-move::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: rgba(0, 128, 0, 0.5);
-        }
-        
-        .square.valid-capture::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 0, 0, 0.5);
-            box-sizing: border-box;
-        }
-        
-        .file-label, .rank-label {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #888;
             font-weight: bold;
-        }
-        
-        .file-label {
-            height: 25px;
-        }
-        
-        .rank-label {
-            width: 25px;
-        }
-        
-        .board-container {
-            display: flex;
-        }
-        
-        .ranks {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .files {
-            display: flex;
-            margin-left: 25px;
-        }
-        
-        .move-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        button {
-            padding: 10px 20px;
-            background: #4a4a6e;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            background: #5a5a8e;
-            transform: translateY(-2px);
-        }
-        
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        button:disabled {
-            background: #3a3a5e;
-            color: #777;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .fen-input {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .fen-input input {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #555;
-            background: #2a2a4a;
-            color: white;
-            width: 100%;
-        }
-        
-        .fen-input button {
-            width: 100%;
-        }
-        
-        .move-list {
-            max-height: 300px;
-            overflow-y: auto;
-            background: #2a2a4a;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .move-item {
-            padding: 8px 12px;
-            border-bottom: 1px solid #444;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .move-item:hover {
-            background: #3a3a5a;
-        }
-        
-        .move-item.active {
-            background: #4a4a7a;
-            font-weight: bold;
-        }
-        
-        .annotation-input {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .annotation-input textarea {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #555;
-            background: #2a2a4a;
-            color: white;
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .status-bar {
-            margin-top: 20px;
-            padding: 10px;
-            background: #2a2a4a;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .piece {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            cursor: default;
             user-select: none;
         }
         
-        .preset-positions {
-            margin-bottom: 20px;
+        .light {
+            background-color: cyan;
         }
         
-        .preset-buttons {
+        .dark {
+            background-color: green;
+        }
+        
+        .coordinates {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            width: 480px;
+            justify-content: space-between;
             margin-top: 10px;
         }
         
-        .preset-buttons button {
-            flex: 1;
-            min-width: 120px;
-            padding: 8px 12px;
-            font-size: 0.9rem;
+        .file-coordinates, .rank-coordinates {
+            display: flex;
+            font-weight: bold;
         }
         
-        @media (max-width: 1100px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .chess-section, .controls-section {
-                min-width: 100%;
-            }
-            
-            .chessboard {
-                width: 400px;
-                height: 400px;
-            }
+        .file-coordinates div, .rank-coordinates div {
+            width: 60px;
+            text-align: center;
         }
         
-        @media (max-width: 500px) {
-            .chessboard {
-                width: 320px;
-                height: 320px;
-            }
-            
-            .piece {
-                font-size: 30px;
-            }
-            
-            .preset-buttons {
-                flex-direction: column;
-            }
+        .white-piece {
+            color: red;
+        }
+        
+        .black-piece {
+            color: blue;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ChessBoard with FEN Support</h1>
-        <p class="subtitle">Load FEN positions, make legal moves, undo/redo, and annotate moves</p>
-    </header>
+    <h1>FEN Chess Board Viewer</h1>
     
-    <div class="container">
-        <section class="chess-section">
-            <div class="board-container">
-                <div class="ranks">
-                    <div class="rank-label"></div>
-                    <div class="rank-label">8</div>
-                    <div class="rank-label">7</div>
-                    <div class="rank-label">6</div>
-                    <div class="rank-label">5</div>
-                    <div class="rank-label">4</div>
-                    <div class="rank-label">3</div>
-                    <div class="rank-label">2</div>
-                    <div class="rank-label">1</div>
-                </div>
-                <div>
-                    <div class="chessboard" id="chessboard">
-                        <!-- Chessboard squares will be generated by JavaScript -->
-                    </div>
-                    <div class="files">
-                        <div class="file-label"></div>
-                        <div class="file-label">a</div>
-                        <div class="file-label">b</div>
-                        <div class="file-label">c</div>
-                        <div class="file-label">d</div>
-                        <div class="file-label">e</div>
-                        <div class="file-label">f</div>
-                        <div class="file-label">g</div>
-                        <div class="file-label">h</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="move-controls">
-                <button id="undoBtn">Undo</button>
-                <button id="redoBtn">Redo</button>
-                <button id="resetBtn">Reset Board</button>
-            </div>
-            
-            <div class="status-bar" id="statusBar">
-                White to move
-            </div>
-        </section>
+    <div class="controls">
+        <input type="text" id="fen-input" placeholder="Paste FEN notation here">
+        <button id="load-fen">Load FEN</button>
+        <button id="reset-board">Reset to Initial Position</button>
+        <button id="flip-board">Flip Board</button>
+    </div>
+    
+    <div class="board-container">
+        <div class="coordinates file-coordinates" id="file-coordinates">
+            <div>a</div><div>b</div><div>c</div><div>d</div><div>e</div><div>f</div><div>g</div><div>h</div>
+        </div>
         
-        <section class="controls-section">
-            <div class="fen-input">
-                <h2>Load FEN Position</h2>
-                <input type="text" id="fenInput" placeholder="Enter FEN string...">
-                <button id="loadFenBtn">Load FEN</button>
-                <div class="preset-positions">
-                    <h3>Preset Positions</h3>
-                    <div class="preset-buttons">
-                        <button id="startPosBtn">Starting Position</button>
-                        <button id="emptyBoardBtn">Empty Board</button>
-                        <button id="kingsOnlyBtn">Kings Only</button>
-                        <button id="queenEndgameBtn">Queen Endgame</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="move-list-container">
-                <h2>Move History</h2>
-                <div class="move-list" id="moveList">
-                    <!-- Move list will be populated by JavaScript -->
-                </div>
-            </div>
-            
-            <div class="annotation-input">
-                <h2>Annotate Move</h2>
-                <textarea id="annotationText" placeholder="Add your annotation here..."></textarea>
-                <button id="saveAnnotationBtn">Save Annotation</button>
-            </div>
-        </section>
+        <div class="board" id="chess-board">
+            <!-- Board squares will be generated by JavaScript -->
+        </div>
+        
+        <div class="coordinates rank-coordinates" id="rank-coordinates">
+            <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div>
+        </div>
+    </div>
+    
+    <div class="status" id="status">
+        Ready to load FEN notation.
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Chess pieces in Unicode
-            const pieces = {
-                'P': '♙', 'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔',
-                'p': '♟', 'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚'
-            };
+        // Initial FEN for standard chess starting position
+        const INITIAL_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        
+        // Piece symbols to Unicode characters
+        const PIECE_SYMBOLS = {
+            'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'N': '♘', 'P': '♙',
+            'k': '♚', 'q': '♛', 'r': '♜', 'b': '♝', 'n': '♞', 'p': '♟'
+        };
+        
+        let currentFen = INITIAL_FEN;
+        let boardFlipped = false;
+        
+        // DOM elements
+        const boardElement = document.getElementById('chess-board');
+        const fenInput = document.getElementById('fen-input');
+        const loadFenButton = document.getElementById('load-fen');
+        const resetBoardButton = document.getElementById('reset-board');
+        const flipBoardButton = document.getElementById('flip-board');
+        const statusElement = document.getElementById('status');
+        const fileCoordinates = document.getElementById('file-coordinates');
+        const rankCoordinates = document.getElementById('rank-coordinates');
+        
+        // Initialize the board
+        function initializeBoard() {
+            boardElement.innerHTML = '';
             
-            // FEN for starting position
-            const startFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-            
-            // Initial board setup
-            let boardState = Array(8).fill().map(() => Array(8).fill(''));
-            let moveHistory = [];
-            let currentMoveIndex = -1;
-            let selectedSquare = null;
-            let validMoves = [];
-            let isWhiteTurn = true;
-            let annotations = {};
-            let currentFEN = startFEN;
-            
-            // Create the chessboard
-            const chessboard = document.getElementById('chessboard');
-            const moveList = document.getElementById('moveList');
-            const statusBar = document.getElementById('statusBar');
-            const annotationText = document.getElementById('annotationText');
-            const fenInput = document.getElementById('fenInput');
-            
-            // Initialize the board with starting position
-            function initializeBoard() {
-                loadFEN(startFEN);
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
+            // Create 64 squares
+            for (let i = 0; i < 64; i++) {
+                const square = document.createElement('div');
+                square.className = 'square';
+                square.id = `square-${i}`;
+                
+                // Determine if square is light or dark
+                const row = Math.floor(i / 8);
+                const col = i % 8;
+                const isLight = (row + col) % 2 === 0;
+                
+                square.classList.add(isLight ? 'light' : 'dark');
+                boardElement.appendChild(square);
             }
             
-            // Load a FEN string
-            function loadFEN(fen) {
-                const fenParts = fen.split(' ');
+            updateBoard();
+        }
+        
+        // Parse FEN and update the board
+        function updateBoard() {
+            try {
+                // Parse FEN string
+                const fenParts = currentFen.split(' ');
                 const position = fenParts[0];
-                const activeColor = fenParts[1];
                 
-                // Clear the board
-                boardState = Array(8).fill().map(() => Array(8).fill(''));
+                // Clear all squares
+                for (let i = 0; i < 64; i++) {
+                    const square = document.getElementById(`square-${i}`);
+                    square.textContent = '';
+                    square.classList.remove('white-piece', 'black-piece');
+                }
                 
-                // Parse the position part of FEN
-                let row = 0;
-                let col = 0;
+                // Place pieces on the board
+                let rank = 7; // FEN starts from rank 8 (top)
+                let file = 0;
                 
                 for (let i = 0; i < position.length; i++) {
                     const char = position[i];
                     
                     if (char === '/') {
-                        row++;
-                        col = 0;
+                        // Move to next rank
+                        rank--;
+                        file = 0;
                     } else if (isNaN(char)) {
                         // It's a piece
-                        boardState[row][col] = char;
-                        col++;
+                        const squareIndex = boardFlipped ? 
+                            (7 - rank) * 8 + (7 - file) : 
+                            rank * 8 + file;
+                        
+                        const square = document.getElementById(`square-${squareIndex}`);
+                        square.textContent = PIECE_SYMBOLS[char] || char;
+                        
+                        // Set piece color
+                        if (char === char.toUpperCase()) {
+                            square.classList.add('white-piece');
+                        } else {
+                            square.classList.add('black-piece');
+                        }
+                        
+                        file++;
                     } else {
                         // It's a number (empty squares)
-                        col += parseInt(char);
+                        file += parseInt(char);
                     }
                 }
                 
-                // Set active color
-                isWhiteTurn = activeColor === 'w';
-                
-                // Reset move history
-                moveHistory = [];
-                currentMoveIndex = -1;
-                selectedSquare = null;
-                validMoves = [];
-                annotations = {};
-                annotationText.value = '';
-                
-                // Update FEN input field
-                fenInput.value = fen;
-                currentFEN = fen;
+                statusElement.textContent = 'Board updated successfully.';
+            } catch (error) {
+                statusElement.textContent = 'Error parsing FEN: ' + error.message;
+            }
+        }
+        
+        // Flip the board view
+        function flipBoard() {
+            boardFlipped = !boardFlipped;
+            
+            // Update file coordinates
+            const files = boardFlipped ? ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'] : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            const fileElements = fileCoordinates.children;
+            for (let i = 0; i < fileElements.length; i++) {
+                fileElements[i].textContent = files[i];
             }
             
-            // Convert board to FEN string
-            function boardToFEN() {
-                let fen = '';
-                
-                for (let row = 0; row < 8; row++) {
-                    let emptyCount = 0;
-                    
-                    for (let col = 0; col < 8; col++) {
-                        const piece = boardState[row][col];
-                        
-                        if (piece === '') {
-                            emptyCount++;
-                        } else {
-                            if (emptyCount > 0) {
-                                fen += emptyCount;
-                                emptyCount = 0;
-                            }
-                            fen += piece;
-                        }
-                    }
-                    
-                    if (emptyCount > 0) {
-                        fen += emptyCount;
-                    }
-                    
-                    if (row < 7) {
-                        fen += '/';
-                    }
-                }
-                
-                fen += isWhiteTurn ? ' w' : ' b';
-                fen += ' KQkq - 0 1'; // Simplified castling, en passant, halfmove, fullmove
-                
-                return fen;
+            // Update rank coordinates
+            const ranks = boardFlipped ? ['1', '2', '3', '4', '5', '6', '7', '8'] : ['8', '7', '6', '5', '4', '3', '2', '1'];
+            const rankElements = rankCoordinates.children;
+            for (let i = 0; i < rankElements.length; i++) {
+                rankElements[i].textContent = ranks[i];
             }
             
-            // Create the chessboard
-            function createBoard() {
-                chessboard.innerHTML = '';
-                
-                for (let row = 0; row < 8; row++) {
-                    for (let col = 0; col < 8; col++) {
-                        const square = document.createElement('div');
-                        square.className = `square ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
-                        square.dataset.row = row;
-                        square.dataset.col = col;
-                        
-                        const piece = boardState[row][col];
-                        if (piece) {
-                            const pieceElement = document.createElement('div');
-                            pieceElement.className = 'piece';
-                            pieceElement.textContent = pieces[piece];
-                            square.appendChild(pieceElement);
-                        }
-                        
-                        square.addEventListener('click', () => handleSquareClick(row, col));
-                        chessboard.appendChild(square);
-                    }
-                }
-            }
-            
-            // Handle square clicks
-            function handleSquareClick(row, col) {
-                const piece = boardState[row][col];
-                
-                // If a square is already selected
-                if (selectedSquare) {
-                    const [selectedRow, selectedCol] = selectedSquare;
-                    
-                    // Check if the clicked square is a valid move
-                    const isValidMove = validMoves.some(move => 
-                        move.row === row && move.col === col
-                    );
-                    
-                    if (isValidMove) {
-                        // Make the move
-                        makeMove(selectedRow, selectedCol, row, col);
-                        selectedSquare = null;
-                        validMoves = [];
-                        updateBoard();
-                    } else if (piece && 
-                              ((isWhiteTurn && piece === piece.toUpperCase()) || 
-                               (!isWhiteTurn && piece === piece.toLowerCase()))) {
-                        // Select a different piece of the same color
-                        selectedSquare = [row, col];
-                        validMoves = calculateValidMoves(row, col);
-                        updateBoard();
-                    } else {
-                        // Deselect if clicking on an invalid square
-                        selectedSquare = null;
-                        validMoves = [];
-                        updateBoard();
-                    }
-                } else if (piece && 
-                          ((isWhiteTurn && piece === piece.toUpperCase()) || 
-                           (!isWhiteTurn && piece === piece.toLowerCase()))) {
-                    // Select a piece
-                    selectedSquare = [row, col];
-                    validMoves = calculateValidMoves(row, col);
-                    updateBoard();
-                }
-            }
-            
-            // Calculate valid moves for a piece
-            function calculateValidMoves(row, col) {
-                const piece = boardState[row][col];
-                if (!piece) return [];
-                
-                const moves = [];
-                const isWhite = piece === piece.toUpperCase();
-                const type = isWhite ? piece : piece.toUpperCase();
-                
-                // Simplified movement rules
-                switch(type) {
-                    case 'P': // Pawn
-                        const direction = isWhite ? -1 : 1;
-                        const startRow = isWhite ? 6 : 1;
-                        
-                        // Move forward
-                        if (isInBounds(row + direction, col) && !boardState[row + direction][col]) {
-                            moves.push({row: row + direction, col: col, capture: false});
-                            
-                            // Initial double move
-                            if (row === startRow && !boardState[row + 2 * direction][col]) {
-                                moves.push({row: row + 2 * direction, col: col, capture: false});
-                            }
-                        }
-                        
-                        // Capture diagonally
-                        for (let dc of [-1, 1]) {
-                            const newRow = row + direction;
-                            const newCol = col + dc;
-                            if (isInBounds(newRow, newCol) && 
-                                boardState[newRow][newCol] && 
-                                isOpponent(piece, boardState[newRow][newCol])) {
-                                moves.push({row: newRow, col: newCol, capture: true});
-                            }
-                        }
-                        break;
-                        
-                    case 'R': // Rook
-                        addLinearMoves(moves, row, col, [[-1, 0], [1, 0], [0, -1], [0, 1]], piece);
-                        break;
-                        
-                    case 'N': // Knight
-                        const knightMoves = [
-                            [-2, -1], [-2, 1], [-1, -2], [-1, 2],
-                            [1, -2], [1, 2], [2, -1], [2, 1]
-                        ];
-                        addDiscreteMoves(moves, row, col, knightMoves, piece);
-                        break;
-                        
-                    case 'B': // Bishop
-                        addLinearMoves(moves, row, col, [[-1, -1], [-1, 1], [1, -1], [1, 1]], piece);
-                        break;
-                        
-                    case 'Q': // Queen
-                        addLinearMoves(moves, row, col, 
-                            [[-1, 0], [1, 0], [0, -1], [0, 1], 
-                             [-1, -1], [-1, 1], [1, -1], [1, 1]], piece);
-                        break;
-                        
-                    case 'K': // King
-                        const kingMoves = [
-                            [-1, -1], [-1, 0], [-1, 1],
-                            [0, -1],           [0, 1],
-                            [1, -1],  [1, 0],  [1, 1]
-                        ];
-                        addDiscreteMoves(moves, row, col, kingMoves, piece);
-                        break;
-                }
-                
-                return moves;
-            }
-            
-            // Helper function for linear moves (rook, bishop, queen)
-            function addLinearMoves(moves, row, col, directions, piece) {
-                for (const [dr, dc] of directions) {
-                    let r = row + dr;
-                    let c = col + dc;
-                    
-                    while (isInBounds(r, c)) {
-                        if (!boardState[r][c]) {
-                            moves.push({row: r, col: c, capture: false});
-                        } else {
-                            if (isOpponent(piece, boardState[r][c])) {
-                                moves.push({row: r, col: c, capture: true});
-                            }
-                            break;
-                        }
-                        r += dr;
-                        c += dc;
-                    }
-                }
-            }
-            
-            // Helper function for discrete moves (knight, king)
-            function addDiscreteMoves(moves, row, col, moveSet, piece) {
-                for (const [dr, dc] of moveSet) {
-                    const r = row + dr;
-                    const c = col + dc;
-                    
-                    if (isInBounds(r, c)) {
-                        if (!boardState[r][c]) {
-                            moves.push({row: r, col: c, capture: false});
-                        } else if (isOpponent(piece, boardState[r][c])) {
-                            moves.push({row: r, col: c, capture: true});
-                        }
-                    }
-                }
-            }
-            
-            // Check if two pieces are opponents
-            function isOpponent(piece1, piece2) {
-                if (!piece1 || !piece2) return false;
-                return (piece1 === piece1.toUpperCase()) !== (piece2 === piece2.toUpperCase());
-            }
-            
-            // Check if coordinates are within the board
-            function isInBounds(row, col) {
-                return row >= 0 && row < 8 && col >= 0 && col < 8;
-            }
-            
-            // Make a move
-            function makeMove(fromRow, fromCol, toRow, toCol) {
-                const piece = boardState[fromRow][fromCol];
-                const capturedPiece = boardState[toRow][toCol];
-                
-                // Record the move
-                const move = {
-                    from: { row: fromRow, col: fromCol },
-                    to: { row: toRow, col: toCol },
-                    piece: piece,
-                    captured: capturedPiece,
-                    turn: isWhiteTurn ? 'white' : 'black'
-                };
-                
-                // Update move history
-                if (currentMoveIndex < moveHistory.length - 1) {
-                    moveHistory = moveHistory.slice(0, currentMoveIndex + 1);
-                }
-                
-                moveHistory.push(move);
-                currentMoveIndex = moveHistory.length - 1;
-                
-                // Update board state
-                boardState[toRow][toCol] = piece;
-                boardState[fromRow][fromCol] = '';
-                
-                // Switch turns
-                isWhiteTurn = !isWhiteTurn;
-                
-                // Update FEN
-                currentFEN = boardToFEN();
-                fenInput.value = currentFEN;
-                
-                updateMoveList();
-                updateStatusBar();
-            }
-            
-            // Update the board display
-            function updateBoard() {
-                createBoard();
-                
-                // Mark selected square and valid moves
-                if (selectedSquare) {
-                    const [row, col] = selectedSquare;
-                    const square = document.querySelector(`.square[data-row="${row}"][data-col="${col}"]`);
-                    if (square) square.classList.add('selected');
-                    
-                    validMoves.forEach(move => {
-                        const moveSquare = document.querySelector(`.square[data-row="${move.row}"][data-col="${move.col}"]`);
-                        if (moveSquare) {
-                            if (move.capture) {
-                                moveSquare.classList.add('valid-capture');
-                            } else {
-                                moveSquare.classList.add('valid-move');
-                            }
-                        }
-                    });
-                }
-            }
-            
-            // Update the move list display
-            function updateMoveList() {
-                moveList.innerHTML = '';
-                
-                for (let i = 0; i < moveHistory.length; i++) {
-                    const move = moveHistory[i];
-                    const moveItem = document.createElement('div');
-                    moveItem.className = `move-item ${i === currentMoveIndex ? 'active' : ''}`;
-                    
-                    const fromSquare = `${String.fromCharCode(97 + move.from.col)}${8 - move.from.row}`;
-                    const toSquare = `${String.fromCharCode(97 + move.to.col)}${8 - move.to.row}`;
-                    const pieceSymbol = move.piece === move.piece.toUpperCase() ? move.piece : move.piece.toUpperCase();
-                    
-                    moveItem.innerHTML = `
-                        <span>${i + 1}. ${fromSquare} → ${toSquare}</span>
-                        <span>${pieceSymbol}</span>
-                    `;
-                    
-                    if (annotations[i]) {
-                        const annotationIcon = document.createElement('span');
-                        annotationIcon.textContent = '📝';
-                        annotationIcon.title = annotations[i];
-                        moveItem.appendChild(annotationIcon);
-                    }
-                    
-                    moveItem.addEventListener('click', () => {
-                        goToMove(i);
-                    });
-                    
-                    moveList.appendChild(moveItem);
-                }
-                
-                // Scroll to the bottom
-                if (moveList.scrollHeight > moveList.clientHeight) {
-                    moveList.scrollTop = moveList.scrollHeight;
-                }
-            }
-            
-            // Update the status bar
-            function updateStatusBar() {
-                statusBar.textContent = `${isWhiteTurn ? 'White' : 'Black'} to move`;
-            }
-            
-            // Go to a specific move in history
-            function goToMove(index) {
-                // Reset board to initial state
-                loadFEN(startFEN);
-                
-                // Replay moves up to the selected index
-                for (let i = 0; i <= index; i++) {
-                    const move = moveHistory[i];
-                    boardState[move.to.row][move.to.col] = move.piece;
-                    boardState[move.from.row][move.from.col] = '';
-                }
-                
-                currentMoveIndex = index;
-                isWhiteTurn = (index + 1) % 2 === 0; // White moves on even indices
-                
+            updateBoard();
+        }
+        
+        // Event listeners
+        loadFenButton.addEventListener('click', () => {
+            const fen = fenInput.value.trim();
+            if (fen) {
+                currentFen = fen;
                 updateBoard();
-                updateMoveList();
-                updateStatusBar();
-                
-                // Update FEN
-                currentFEN = boardToFEN();
-                fenInput.value = currentFEN;
-                
-                // Update annotation text if there's an annotation for this move
-                if (annotations[index]) {
-                    annotationText.value = annotations[index];
-                } else {
-                    annotationText.value = '';
-                }
+                statusElement.textContent = 'FEN loaded successfully.';
+            } else {
+                statusElement.textContent = 'Please enter a FEN string.';
             }
-            
-            // Button event listeners
-            document.getElementById('undoBtn').addEventListener('click', () => {
-                if (currentMoveIndex >= 0) {
-                    goToMove(currentMoveIndex - 1);
-                }
-            });
-            
-            document.getElementById('redoBtn').addEventListener('click', () => {
-                if (currentMoveIndex < moveHistory.length - 1) {
-                    goToMove(currentMoveIndex + 1);
-                }
-            });
-            
-            document.getElementById('resetBtn').addEventListener('click', () => {
-                loadFEN(startFEN);
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
-            });
-            
-            document.getElementById('saveAnnotationBtn').addEventListener('click', () => {
-                if (currentMoveIndex >= 0) {
-                    annotations[currentMoveIndex] = annotationText.value;
-                    updateMoveList();
-                } else {
-                    alert('Please make a move first before adding an annotation.');
-                }
-            });
-            
-            // FEN loading
-            document.getElementById('loadFenBtn').addEventListener('click', () => {
-                const fen = fenInput.value.trim();
-                if (fen) {
-                    try {
-                        loadFEN(fen);
-                        updateBoard();
-                        updateMoveList();
-                        updateStatusBar();
-                    } catch (e) {
-                        alert('Invalid FEN string. Please check the format.');
-                    }
-                } else {
-                    alert('Please enter a FEN string.');
-                }
-            });
-            
-            // Preset positions
-            document.getElementById('startPosBtn').addEventListener('click', () => {
-                loadFEN(startFEN);
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
-            });
-            
-            document.getElementById('emptyBoardBtn').addEventListener('click', () => {
-                loadFEN("8/8/8/8/8/8/8/8 w - - 0 1");
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
-            });
-            
-            document.getElementById('kingsOnlyBtn').addEventListener('click', () => {
-                loadFEN("4k3/8/8/8/8/8/8/4K3 w - - 0 1");
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
-            });
-            
-            document.getElementById('queenEndgameBtn').addEventListener('click', () => {
-                loadFEN("4k3/8/8/8/8/8/3Q4/4K3 w - - 0 1");
-                updateBoard();
-                updateMoveList();
-                updateStatusBar();
-            });
-            
-            // Initialize the board
-            initializeBoard();
         });
+        
+        resetBoardButton.addEventListener('click', () => {
+            currentFen = INITIAL_FEN;
+            fenInput.value = currentFen;
+            updateBoard();
+            statusElement.textContent = 'Board reset to initial position.';
+        });
+        
+        flipBoardButton.addEventListener('click', flipBoard);
+        
+        // Initialize the application
+        fenInput.value = INITIAL_FEN;
+        initializeBoard();
     </script>
 </body>
 </html>
