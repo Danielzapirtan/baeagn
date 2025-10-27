@@ -196,7 +196,7 @@
                 }
                 
                 // Place pieces on the board
-                let rank = 7; // FEN starts from rank 8 (top)
+                let rank = 0; // FEN starts from rank 8 (top)
                 let file = 0;
                 
                 for (let i = 0; i < position.length; i++) {
@@ -204,7 +204,7 @@
                     
                     if (char === '/') {
                         // Move to next rank
-                        rank--;
+                        rank++;
                         file = 0;
                     } else if (isNaN(char)) {
                         // It's a piece
