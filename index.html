@@ -48,10 +48,13 @@
             align-items: center;
         }
         
+        .board-row {
+            display: flex;
+        }
+        
         .board {
-            display: grid;
-            grid-template-columns: repeat(8, 40px);
-            grid-template-rows: repeat(8, 40px);
+            display: flex;
+            flex-direction: column;
             border: 2px solid #333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -64,6 +67,8 @@
             font-weight: bold;
             cursor: default;
             user-select: none;
+            width: 40px;
+            height: 40px;
         }
         
         .light {
@@ -105,6 +110,15 @@
             background-color: white;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rank-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            font-weight: bold;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -159,23 +173,52 @@
         const fileCoordinates = document.getElementById('file-coordinates');
         const rankCoordinates = document.getElementById('rank-coordinates');
         
+        // Load FEN from localStorage if available
+        function loadFenFromStorage() {
+            const savedFen = localStorage.getItem('chessBoardFen');
+            if (savedFen) {
+                currentFen = savedFen;
+                fenInput.value = currentFen;
+                statusElement.textContent = 'Loaded FEN from localStorage.';
+            }
+        }
+        
+        // Save FEN to localStorage
+        function saveFenToStorage() {
+            localStorage.setItem('chessBoardFen', currentFen);
+        }
+        
         // Initialize the board
         function initializeBoard() {
             boardElement.innerHTML = '';
             
-            // Create 64 squares
-            for (let i = 0; i < 64; i++) {
-                const square = document.createElement('div');
-                square.className = 'square';
-                square.id = `square-${i}`;
+            // Create 8 rows
+            for (let row = 0; row < 8; row++) {
+                const boardRow = document.createElement('div');
+                boardRow.className = 'board-row';
                 
-                // Determine if square is light or dark
-                const row = Math.floor(i / 8);
-                const col = i % 8;
-                const isLight = (row + col) % 2 === 0;
+                // Add rank label
+                const rankLabel = document.createElement('div');
+                rankLabel.className = 'rank-label';
+                const rankNumber = boardFlipped ? (row + 1) : (8 - row);
+                rankLabel.textContent = rankNumber;
+                boardRow.appendChild(rankLabel);
                 
-                square.classList.add(isLight ? 'light' : 'dark');
-                boardElement.appendChild(square);
+                // Create 8 squares for this row
+                for (let col = 0; col < 8; col++) {
+                    const square = document.createElement('div');
+                    square.className = 'square';
+                    const squareIndex = row * 8 + col;
+                    square.id = `square-${squareIndex}`;
+                    
+                    // Determine if square is light or dark
+                    const isLight = (row + col) % 2 === 0;
+                    
+                    square.classList.add(isLight ? 'light' : 'dark');
+                    boardRow.appendChild(square);
+                }
+                
+                boardElement.appendChild(boardRow);
             }
             
             updateBoard();
@@ -191,8 +234,10 @@
                 // Clear all squares
                 for (let i = 0; i < 64; i++) {
                     const square = document.getElementById(`square-${i}`);
-                    square.textContent = '';
-                    square.classList.remove('white-piece', 'black-piece');
+                    if (square) {
+                        square.textContent = '';
+                        square.classList.remove('white-piece', 'black-piece');
+                    }
                 }
                 
                 // Place pieces on the board
@@ -213,13 +258,15 @@
                             rank * 8 + file;
                         
                         const square = document.getElementById(`square-${squareIndex}`);
-                        square.textContent = PIECE_SYMBOLS[char] || char;
-                        
-                        // Set piece color
-                        if (char === char.toUpperCase()) {
-                            square.classList.add('white-piece');
-                        } else {
-                            square.classList.add('black-piece');
+                        if (square) {
+                            square.textContent = PIECE_SYMBOLS[char] || char;
+                            
+                            // Set piece color
+                            if (char === char.toUpperCase()) {
+                                square.classList.add('white-piece');
+                            } else {
+                                square.classList.add('black-piece');
+                            }
                         }
                         
                         file++;
@@ -230,6 +277,7 @@
                 }
                 
                 statusElement.textContent = 'Board updated successfully.';
+                saveFenToStorage();
             } catch (error) {
                 statusElement.textContent = 'Error parsing FEN: ' + error.message;
             }
@@ -253,7 +301,7 @@
                 rankElements[i].textContent = ranks[i];
             }
             
-            updateBoard();
+            initializeBoard();
         }
         
         // Event listeners
@@ -278,7 +326,8 @@
         flipBoardButton.addEventListener('click', flipBoard);
         
         // Initialize the application
-        fenInput.value = INITIAL_FEN;
+        loadFenFromStorage();
+        fenInput.value = currentFen;
         initializeBoard();
     </script>
 </body>
