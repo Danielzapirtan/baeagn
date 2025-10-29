@@ -6,8 +6,6 @@ GN=$1
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 url="https://api.chess.com/pub/player/$user/games"
 
-set -e
-
 if true; then
 curl -s $url1 >/tmp/games1.txt
 curl -s $url >/tmp/games.txt
