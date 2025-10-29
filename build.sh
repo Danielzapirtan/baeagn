@@ -6,5 +6,6 @@ gcc -o baeagn \
     -O4 \
     -march=native \
     -w \
+    -D_CHESS960=$_CHESS960 \
     -D_NOEDIT=$_NOEDIT \
     -D_GAME_ini || exit 3

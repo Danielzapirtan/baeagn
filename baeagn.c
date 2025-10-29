@@ -683,7 +683,7 @@ void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
     if (board[y][x] != _WK)
         return;
     
-#ifndef _CHESS960
+#if _CHESS960==0
     // Standard chess castling
     if (board[0][0] == _WR)
     if (board[0][1] == 0)
