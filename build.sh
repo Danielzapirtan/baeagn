@@ -6,5 +6,5 @@ gcc -o baeagn \
     -O4 \
     -march=native \
     -w \
-    -D_NOEDIT $_NOEDIT
+    -D_NOEDIT=$_NOEDIT
     -D_GAME_ini || exit 2
