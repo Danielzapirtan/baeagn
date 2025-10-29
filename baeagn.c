@@ -178,7 +178,7 @@ void analysis(void)
 #if _NOEDIT == 3
     parse_pgn();
     exit(0);
-#elif _NOEDIT == 2
+#elif _NOEDIT == 1
     parse_fen(start);
     save(start);
 #elif _NOEDIT == 1
