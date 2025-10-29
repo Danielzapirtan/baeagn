@@ -1,5 +1,6 @@
 #! /usr/bin/bash
 
+_NOEDIT=1
 gcc -o baeagn \
     baeagn.c \
     -lm \
