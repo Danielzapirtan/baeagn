@@ -8,7 +8,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#ifndef
+#ifndef _NOEDIT
 #define _NOEDIT (1)
 #endif
 #define _ALLOW_CASTLE (1)
