@@ -1,12 +1,14 @@
 #! /bin/bash
 
+BN=$1
+
 set -e
 
 clear
 git add .
 git commit -m yaccg || true
 git push || true
-gh workflow run bench1
+gh workflow run bench$BN
 sleep 50
 export wfid=$(gh run list --workflow bench1 |head -n 1 |cut -f 7)
 export jid=$(gh run view -v $wfid|grep -o "ID.*)"|grep -o "[[:digit:]]\+")
