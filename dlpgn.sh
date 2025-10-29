@@ -1,5 +1,6 @@
 #! /bin/bash
 
+fisher=false
 user=antoniudanielzapirtan
 GN=$1
 
@@ -22,10 +23,10 @@ while true; do
 	myurlc=$(jq -c .games[$n].url /tmp/games.txt)
 	if [ x"$myurl" = x"$myurlc" ]; then
 		fen=$(jq -r .games[$n].fen /tmp/games.txt)
-		if [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
+		if $fisher [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
 			echo "[FEN \"$fen\"]" >pgn/bench.pgn
 		else
-			rm -rf pgn/bench.pgn
+			: > pgn/bench.pgn
 		fi
 		jq -c .games[$n].pgn /tmp/games.txt | \
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-=]\+ " \
