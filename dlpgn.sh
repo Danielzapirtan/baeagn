@@ -25,7 +25,7 @@ while true; do
 		if [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
 			echo "[FEN \"$fen\"]" >pgn/bench.pgn
 		else
-			>pgn/bench.pgn
+			: >pgn/bench.pgn
 		fi
 		jq -c .games[$n].pgn /tmp/games.txt | \
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-=]\+ " \
