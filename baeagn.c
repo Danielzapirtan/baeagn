@@ -645,7 +645,7 @@ void addprom(s5 y, s5 x, s5 y1, s5 x1, s5 to, MOVEINDEX *curr_index, MOVELIST mo
         warn("Index too big");
 }
 
-void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
+/*void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
 {
     BOARD aux;
     if (y != 0) return;
@@ -673,6 +673,85 @@ void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
         if (! in_check(aux))
             addm(0, 4, 0, 6, curr_index, movelist);
     }
+}*/
+
+void castle(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
+{
+    BOARD aux;
+    if (y != 0) return;
+    if (x != 4) return;
+    if (board[y][x] != _WK)
+        return;
+    
+#ifndef _CHESS960
+    // Standard chess castling
+    if (board[0][0] == _WR)
+    if (board[0][1] == 0)
+    if (board[0][2] == 0)
+    if (board[0][3] == 0)
+    if (board[8][0] == 1) {
+        copy_board(board, aux);
+        aux[0][2] = _WK;
+        aux[0][3] = _WK;
+        if (! in_check(aux))
+            addm(0, 4, 0, 2, curr_index, movelist);
+    }
+    if (board[0][7] == _WR)
+    if (board[0][6] == 0)
+    if (board[0][5] == 0)
+    if (board[8][1] == 1) {
+        copy_board(board, aux);
+        aux[0][5] = _WK;
+        aux[0][6] = _WK;
+        if (! in_check(aux))
+            addm(0, 4, 0, 6, curr_index, movelist);
+    }
+#else
+    // Chess960 castling logic
+    s5 i, rook_x;
+    
+    // Queenside castling (left)
+    for (rook_x = 0; rook_x < 4; rook_x++) {
+        if (board[0][rook_x] == _WR && board[8][0] == 1) {
+            // Check if all squares between king and rook are empty
+            int empty = 1;
+            for (i = rook_x + 1; i < 4; i++) {
+                if (board[0][i] != 0) {
+                    empty = 0;
+                    break;
+                }
+            }
+            if (empty) {
+                copy_board(board, aux);
+                aux[0][2] = _WK;  // King moves to c1
+                aux[0][3] = _WK;  // Rook moves to d1
+                if (! in_check(aux))
+                    addm(0, 4, 0, 2, curr_index, movelist);
+            }
+        }
+    }
+    
+    // Kingside castling (right)
+    for (rook_x = 5; rook_x < 8; rook_x++) {
+        if (board[0][rook_x] == _WR && board[8][1] == 1) {
+            // Check if all squares between king and rook are empty
+            int empty = 1;
+            for (i = 5; i < rook_x; i++) {
+                if (board[0][i] != 0) {
+                    empty = 0;
+                    break;
+                }
+            }
+            if (empty) {
+                copy_board(board, aux);
+                aux[0][5] = _WK;  // King moves to f1
+                aux[0][6] = _WK;  // Rook moves to g1
+                if (! in_check(aux))
+                    addm(0, 4, 0, 6, curr_index, movelist);
+            }
+        }
+    }
+#endif
 }
 
 void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
