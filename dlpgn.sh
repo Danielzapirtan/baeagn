@@ -1,6 +1,5 @@
 #! /bin/bash
 
-fisher=false
 user=antoniudanielzapirtan
 GN=$1
 

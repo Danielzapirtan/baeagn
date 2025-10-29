@@ -20,6 +20,9 @@ jobs:
       
       - name: Execution
         run: |
+          GN=0
+          LTG=180
+          fisher=true sh dlpgn.sh $GN
           ulimit -t 180
           ./baeagn 2>&1 &
           wait

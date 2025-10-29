@@ -22,7 +22,7 @@ jobs:
         run: |
           GN=0
           LTG=180
-          sh dlpgn.sh $GN
+          fisher=false sh dlpgn.sh $GN
           cat pgn/bench.pgn
           ulimit -t $LTG
           ./baeagn 2>&1 &
