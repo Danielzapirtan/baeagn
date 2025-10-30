@@ -22,7 +22,7 @@ while true; do
 	myurlc=$(jq -c .games[$n].url /tmp/games.txt)
 	if [ x"$myurl" = x"$myurlc" ]; then
 		fen=$(jq -r .games[$n].fen /tmp/games.txt)
-		if $fisher && [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
+		if [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
 			echo $fen >start.fen
 			exit 0
 		fi
