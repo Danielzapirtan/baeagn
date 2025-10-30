@@ -23,9 +23,8 @@ while true; do
 	if [ x"$myurl" = x"$myurlc" ]; then
 		fen=$(jq -r .games[$n].fen /tmp/games.txt)
 		if $fisher && [ x"$fen" != x"null" ] && [ x"$fen" != x"" ]; then
-			echo "[FEN \"$fen\"]" >pgn/bench.pgn
-		else
-			: > pgn/bench.pgn
+			echo $fen >start.fen
+			exit 0
 		fi
 		jq -c .games[$n].pgn /tmp/games.txt | \
 			grep -o "[[:digit:]]\+\.\+ [[:alnum:]+-=]\+ " \
