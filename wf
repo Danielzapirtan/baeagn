@@ -13,8 +13,10 @@ sleep 50
 export wfid=$(gh run list --workflow bench$BN |head -n 1 |cut -f 7)
 export jid=$(gh run view $wfid|grep -o "ID.*)"|grep -o "[[:digit:]]\+")
 gh run watch $wfid || true
+if [ x$BN = x1 ]; then
 gh run view --log --job $jid|grep -i player
 gh run view --log --job $jid|grep -i valuation|tail -n 1
+fi
 gh run view --log --job $jid|grep -i variation|tail -n 1
 
 
