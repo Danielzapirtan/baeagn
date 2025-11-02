@@ -20,7 +20,7 @@ jobs:
       
       - name: Execution
         run: |
-          GN=3
+          GN=2
           LTG=300
           fisher=false sh dlpgn.sh $GN
           ulimit -t $LTG
