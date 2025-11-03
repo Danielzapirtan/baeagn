@@ -20,8 +20,8 @@ jobs:
       
       - name: Execution
         run: |
-          GN=2
-          LTG=3300
+          GN=3
+          LTG=1500
           fisher=false sh dlpgn.sh $GN
           ulimit -t $LTG
           ./baeagn 2>&1 &
