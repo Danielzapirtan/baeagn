@@ -1,0 +1,7 @@
+modules = ["c-clang14", "web", "bash", "python-3.11"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["gcc", "gnumake"]
