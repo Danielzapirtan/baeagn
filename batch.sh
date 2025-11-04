@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 
 COUNT=$1
 
@@ -7,9 +7,10 @@ for n in $(seq 1 $COUNT); do
 	cat bench.yml \
 		| sed -e "s/mygn/$mygn/g" \
 		>.github/workflows/bench.yml
-		date=$(date -d "+28 minutes" +%Y%m%d-%H%M)
-		(sh wf 1 &>~/$date.txt &)
-		sleep 120
+	date=$(date +%Y%m%d-%H%M)
+	echo $date
+	sh wf 1 &>~/$date.txt &
+	sleep 120
 done
 echo "All workflows triggered"
 
