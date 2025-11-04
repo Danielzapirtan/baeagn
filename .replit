@@ -37,3 +37,8 @@ externalPort = 80
 [[ports]]
 localPort = 33431
 externalPort = 3000
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["python3", "server.py"]
+build = ["bash", "-c", "_CHESS960=0 _NOEDIT=0 ./build.sh"]
