@@ -116,3 +116,17 @@ Best variation: a2a4 Ke8f7 c2c4 Rh8a8 b2b3 Kf7g7 f2f3 Bc5e3+ Kc1c2 Rd7xd5
 Elapsed: 130.31
 NPS: 2198986
 
+Depth: 9*
+Evaluation: 2.49
+Branching factor: 8.81
+Best variation: a2a3 Bc5d4 b2b4 Ke8f8 c2c4 Rd7a7 d5d6 Ra7xa3 Bg3h2 Bd4xf2 
+Elapsed: 144.48
+NPS: 2210964
+
+Depth: 9*
+Evaluation: 2.58
+Branching factor: 8.88
+Best variation: c2c3 Bc5b6 a2a4 Ke8f7 b2b4 Rh8c8 Kc1b2 Kf7g7 a4a5 Rd7xd5 
+Elapsed: 154.94
+NPS: 2212767
+
