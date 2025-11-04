@@ -9,7 +9,7 @@ for n in $(seq 1 $COUNT); do
 		>.github/workflows/bench.yml
 	date=$(date +%Y%m%d-%H%M)
 	echo $date
-	sh wf 1 &>~/$date.txt &
+	sh wf 1 >~/$date.txt 2>&1 &
 	sleep 120
 done
 echo "All workflows triggered"
