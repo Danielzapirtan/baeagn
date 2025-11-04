@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["gcc", "gnumake", "vim-full"]
+packages = ["gcc", "gnumake", "vim-full", "gh"]
 
 [workflows]
 runButton = "Project"
