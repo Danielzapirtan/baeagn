@@ -1,0 +1,104 @@
+8 .  .  .  .  k  .  .  r 
+7 .  .  .  r  .  .  .  . 
+6 .  .  .  .  .  p  .  p 
+5 .  .  b  P  p  .  p  . 
+4 .  .  .  .  .  .  P  . 
+3 .  .  .  .  .  .  B  . 
+2 P  P  P  .  .  P  P  . 
+1 .  .  K  R  .  .  .  R 
+  a  b  c  d  e  f  g  h
+
+8 .  .  .  .  k  .  .  r 
+7 .  .  .  r  .  .  .  . 
+6 .  .  .  .  .  p  .  p 
+5 .  .  b  P  p  .  p  . 
+4 .  .  .  .  .  .  P  . 
+3 .  .  .  .  .  .  B  . 
+2 P  P  P  .  .  P  P  . 
+1 .  .  K  R  .  .  .  R 
+  a  b  c  d  e  f  g  h
+
+Depth: 5*
+Evaluation: 2.27
+Branching factor: 12.10
+Best variation: a2a4 Bc5b6 c2c4 e5e4 a4a5 Rd7xd5 
+Elapsed: 0.12
+NPS: 2208711
+
+Depth: 5
+Evaluation: 2.27
+Branching factor: 14.56
+Best variation: a2a4 Bc5b6 c2c4 e5e4 a4a5 Rd7xd5 
+Elapsed: 0.32
+NPS: 2057792
+
+Depth: 6*
+Evaluation: 2.29
+Branching factor: 9.69
+Best variation: a2a4 Ke8f7 a4a5 Rd7d6 b2b4 Rd6xd5 
+Elapsed: 0.45
+NPS: 1824389
+
+Depth: 6*
+Evaluation: 2.65
+Branching factor: 14.23
+Best variation: c2c3 Rd7b7 b2b4 Bc5d6 a2a4 Rb7xb4 
+Elapsed: 6.48
+NPS: 1280683
+
+Depth: 6*
+Evaluation: 3.39
+Branching factor: 15.11
+Best variation: f2f4 Ke8f7 f4xe5 Bc5e3+ Kc1b1 f6xe5 
+Elapsed: 9.38
+NPS: 1266059
+
+Depth: 6
+Evaluation: 3.39
+Branching factor: 17.10
+Best variation: f2f4 Ke8f7 f4xe5 Bc5e3+ Kc1b1 f6xe5 
+Elapsed: 20.25
+NPS: 1234134
+
+Depth: 7*
+Evaluation: 0.31
+Branching factor: 11.73
+Best variation: f2f4 g5xf4 Bg3xf4 e5xf4 c2c4 Bc5e3+ Kc1c2 
+Elapsed: 22.64
+NPS: 1353590
+
+Depth: 7*
+Evaluation: 0.56
+Branching factor: 12.00
+Best variation: Bg3h2 Bc5xf2 Bh2g1 Bf2xg1 Rh1xg1 e5e4 c2c4 Rd7xd5 
+Elapsed: 24.92
+NPS: 1441818
+
+Depth: 7*
+Evaluation: 2.30
+Branching factor: 12.12
+Best variation: a2a3 Bc5b6 b2b4 Ke8f7 c2c4 e5e4 c4c5 Bb6xc5 
+Elapsed: 26.04
+NPS: 1476855
+
+Depth: 7*
+Evaluation: 2.51
+Branching factor: 12.24
+Best variation: a2a4 Bc5d4 c2c4 Bd4b6 b2b4 e5e4 c4c5 Rd7xd5 
+Elapsed: 27.21
+NPS: 1510564
+
+Depth: 7
+Evaluation: 2.51
+Branching factor: 12.98
+Best variation: a2a4 Bc5d4 c2c4 Bd4b6 b2b4 e5e4 c4c5 Rd7xd5 
+Elapsed: 36.27
+NPS: 1711213
+
+Depth: 8*
+Evaluation: 2.40
+Branching factor: 9.97
+Best variation: a2a4 Rd7a7 b2b3 e5e4 Rh1e1 Bc5a3+ Kc1b1 Ra7xa4 
+Elapsed: 52.26
+NPS: 1872847
+
