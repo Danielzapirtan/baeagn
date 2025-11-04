@@ -13,7 +13,8 @@ for n in $(seq 1 $COUNT); do
 		>.github/workflows/bench.yml
 	date=$(date +%Y%m%d-%H%M%S)
 	echo $date
-	sh wf 1 >~/$date.txt 2>&1 &
+	delay=$(($myltg + 60))
+	sh wf 1 $delay >~/$date.txt 2>&1 &
 	sleep 5
 done
 echo "All workflows triggered"
