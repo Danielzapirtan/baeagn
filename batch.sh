@@ -7,8 +7,8 @@ for n in $(seq 1 $COUNT); do
 	mygn=$(($n - 1))
 	cat bench.yml \
 		| sed -e "s/mygn/$mygn/g" \
-		>/tmp/bench.yml
-	cat /tmp/bench.yml \
+		>$HOME/bench.yml
+	cat $HOME/bench.yml \
 		| sed -e "s/myltg/$myltg/g" \
 		>.github/workflows/bench.yml
 	date=$(date +%Y%m%d-%H%M%S)
