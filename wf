@@ -1,13 +1,11 @@
 #! /bin/bash
 
-BN=$1
-
 set -e
 
 clear
 git add .
 git commit -m yaccg || true
 git push || true
-gh workflow run bench$BN &
+gh workflow run Chess &
 
 
