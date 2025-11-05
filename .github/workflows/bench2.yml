@@ -1,4 +1,4 @@
-name: Bench2
+name: ICCF
 
 on:
   workflow_dispatch:

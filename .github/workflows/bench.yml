@@ -1,4 +1,4 @@
-name: Bench1
+name: Chess
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   bench:
     name: Bench Job
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
