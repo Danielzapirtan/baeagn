@@ -22,7 +22,7 @@ jobs:
         run: |
           GN=0
           for n in $(seq 1 12); do
-            LTG=21000
+            LTG=300
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ulimit -t $LTG
             ./baeagn >>$GN.txt 2>&1 &
