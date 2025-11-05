@@ -21,8 +21,8 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          for n in $(seq 1 2); do
-            LTG=43200
+          for n in $(seq 1 3); do
+            LTG=1500
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ulimit -t $LTG
             ./baeagn >>$GN.txt 2>&1 &
@@ -30,7 +30,7 @@ jobs:
           done
           sleep $LTG
           GN=0
-          for n in $(seq 1 2); do
+          for n in $(seq 1 3); do
             cat $GN.txt
             GN=$(($GN + 1))
           done
