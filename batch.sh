@@ -1,7 +1,7 @@
 #! /bin/sh
 
 COUNT=$1
-myltg=$((86400 / $COUNT))
+myltg=21000
 
 for n in $(seq 1 $COUNT); do
 	mygn=$(($n - 1))
