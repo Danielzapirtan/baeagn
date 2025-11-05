@@ -23,9 +23,9 @@ jobs:
           GN=0
           for n in $(seq 1 count); do
             LTG=myltg
-            fisher=false sh dlpgn.sh $GN
+            fisher=false sh dlpgn.sh $GN >$GN.txt
             ulimit -t $LTG
-            ./baeagn >$GN.txt 2>&1 &
+            ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
           sleep $LTG
