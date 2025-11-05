@@ -1,4 +1,4 @@
-name: Chess
+name: Bench1
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 jobs:
   bench:
     name: Bench Job
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     steps:
       - name: Checkout code
@@ -22,7 +22,7 @@ jobs:
         run: |
           GN=0
           for n in $(seq 1 12); do
-            LTG=3000
+            LTG=21000
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ulimit -t $LTG
             ./baeagn >>$GN.txt 2>&1 &
