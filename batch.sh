@@ -13,7 +13,6 @@ cat $HOME/bench.yml \
 	>.github/workflows/bench.yml
 date=$(date +%Y%m%d-%H%M%S)
 echo $date
-delay=$(($myltg + 60))
 sh wf 1 >~/$date.txt 2>&1 &
 echo "All workflows triggered"
 

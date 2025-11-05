@@ -13,10 +13,9 @@ curl -s $url1 >/tmp/games1.txt
 curl -s $url >/tmp/games.txt
 fi
 
-echo 1
+echo $GN
 myurl=$(jq -c .games[$GN].url /tmp/games1.txt)
 
-echo 2
 n=0
 while true; do
 	myurlc=$(jq -c .games[$n].url /tmp/games.txt)
