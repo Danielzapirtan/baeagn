@@ -19,6 +19,7 @@ jobs:
           _NOEDIT=1 _CHESS960=0 sh build.sh
           mv baeagn iccf
           _NOEDIT=2 _CHESS960=0 sh build.sh
+          chmod 0755 baeagn iccf
       
       - name: Execution
         run: |
