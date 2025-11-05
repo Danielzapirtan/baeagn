@@ -1,7 +1,8 @@
 #! /bin/sh
 
 COUNT=$1
-myltg=21000
+SESSION_TIME=86400
+myltg=$(($SESSION_TIME / $COUNT))
 
 for n in $(seq 1 $COUNT); do
 	mygn=$(($n - 1))
