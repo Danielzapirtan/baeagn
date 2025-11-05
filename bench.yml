@@ -15,21 +15,25 @@ jobs:
       - name: Preparations
         run: |
           sudo apt update
-          sudo apt install -y git build-essential
+          sudo apt install -y git pgn-extract build-essential
+          _NOEDIT=1 _CHESS960=0 sh build.sh
+          mv baeagn iccf
           _NOEDIT=2 _CHESS960=0 sh build.sh
       
       - name: Execution
         run: |
           GN=0
+          LTG=myltg
+          ulimit -t $LTG
+          ./iccf >>iccf.txt 2>&1 &
           for n in $(seq 1 count); do
-            LTG=myltg
             fisher=false sh dlpgn.sh $GN >$GN.txt
-            ulimit -t $LTG
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
           sleep $LTG
           GN=0
+          cat iccf.txt
           for n in $(seq 1 count); do
             cat $GN.txt
             GN=$(($GN + 1))
