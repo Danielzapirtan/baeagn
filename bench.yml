@@ -1,4 +1,4 @@
-name: Bench1
+name: Chess
 
 on:
   workflow_dispatch:
