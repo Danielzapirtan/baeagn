@@ -3,6 +3,9 @@
 COUNT=$1
 SESSION_TIME=$2
 NPROCESSORS=4
+if [ $COUNT -lt 3 ]; then
+	NPROCESSORS=$((1 + $COUNT))
+fi
 myltg=$(($SESSION_TIME * $NPROCESSORS / (1 + $COUNT)))
 
 cat bench.yml \
