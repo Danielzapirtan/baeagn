@@ -2,7 +2,7 @@
 
 COUNT=$1
 SESSION_TIME=$2
-NPROCESSORS=8
+NPROCESSORS=4
 myltg=$(($SESSION_TIME * $NPROCESSORS / (1 + $COUNT)))
 
 cat bench.yml \
