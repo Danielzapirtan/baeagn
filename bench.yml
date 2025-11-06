@@ -33,6 +33,15 @@ jobs:
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
+          if [ $LTG -gt 21000 ]; then
+            sleep 21000
+            GN=0
+            cat iccf.txt
+            for n in $(seq 1 count); do
+              cat $GN.txt
+              GN=$(($GN + 1))
+            done &
+          fi
           sleep $LTG
           GN=0
           cat iccf.txt
