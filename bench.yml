@@ -25,7 +25,6 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          PRIMARY=21000
           LTG=myltg
           ulimit -t $LTG
           ./iccf >iccf.txt 2>&1 &
