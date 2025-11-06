@@ -27,7 +27,7 @@ jobs:
           GN=0
           LTG=myltg
           ulimit -t $LTG
-          ./iccf >>iccf.txt 2>&1 &
+          ./iccf >iccf.txt 2>&1 &
           for n in $(seq 1 count); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ./baeagn >>$GN.txt 2>&1 &

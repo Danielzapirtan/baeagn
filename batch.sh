@@ -6,8 +6,6 @@ myltg=$SESSION_TIME
 
 cat bench.yml \
 	| sed -e "s/mygn/$mygn/g" \
-	>$HOME/bench.yml
-cat $HOME/bench.yml \
 	| sed -e "s/myltg/$myltg/g" \
 	| sed -e "s/count/$COUNT/g" \
 	>.github/workflows/bench.yml
