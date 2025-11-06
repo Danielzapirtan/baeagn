@@ -1,8 +1,7 @@
 #! /bin/sh
 
 COUNT=$1
-# 27 hours
-SESSION_TIME=97200
+SESSION_TIME=$2
 myltg=$SESSION_TIME
 
 cat bench.yml \
