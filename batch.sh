@@ -2,7 +2,8 @@
 
 COUNT=$1
 SESSION_TIME=$2
-myltg=$SESSION_TIME
+NPROCESSORS=8
+myltg=$(($SESSION_TIME * $NPROCESSORS / (1 + $COUNT)))
 
 cat bench.yml \
 	| sed -e "s/mygn/$mygn/g" \
