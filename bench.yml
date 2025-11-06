@@ -25,6 +25,7 @@ jobs:
       - name: Execution
         run: |
           GN=0
+          PRIMARY=21000
           LTG=myltg
           ulimit -t $LTG
           ./iccf >iccf.txt 2>&1 &
@@ -33,16 +34,18 @@ jobs:
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
-          if [ $LTG -gt 21000 ]; then
-            sleep 21000
+          if [ $LTG -gt $PRIMARY ]; then
+            sleep $PRIMARY
             GN=0
             cat iccf.txt
             for n in $(seq 1 count); do
               cat $GN.txt
               GN=$(($GN + 1))
-            done &
+            done
+            sleep $(($LTG - $PRIMARY))
+          else
+            sleep $LTG
           fi
-          sleep $LTG
           GN=0
           cat iccf.txt
           for n in $(seq 1 count); do
