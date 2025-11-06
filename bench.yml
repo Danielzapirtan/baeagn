@@ -6,8 +6,8 @@ on:
 jobs:
   bench:
     name: Bench Job
-    runs-on: self-hosted
-    timeout-minutes: 28800
+    runs-on: ubuntu-latest
+    timeout-minutes: 21600
     
     steps:
       - name: Checkout code
