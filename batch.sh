@@ -3,7 +3,7 @@
 COUNT=$1
 SESSION_TIME=$2
 NPROCESSORS=8
-if false; then
+if true; then
 if [ $COUNT -lt 7 ]; then
 	NPROCESSORS=$((1 + $COUNT))
 fi
