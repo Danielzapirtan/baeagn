@@ -235,8 +235,6 @@ void analysis(void)
         fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
         fprintf(stdout, "\n");
         fflush(stdout);
-	if (delapsed >=7800.0)
-		break;
     }
     free(treea);
     free(treeb);
@@ -439,6 +437,9 @@ VALUE eval(BOARD board, LEVEL level)
     nodes++;
     if ((nodes % _SKIPFRAMES) == 0) {
         update(&elapsed);
+        double delapsed = dclock(&elapsed);
+	if (delapsed >=7800.0)
+		break;
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
