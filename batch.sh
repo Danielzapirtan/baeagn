@@ -3,8 +3,10 @@
 COUNT=$1
 SESSION_TIME=$2
 NPROCESSORS=8
+if true; then
 if [ $COUNT -lt 7 ]; then
 	NPROCESSORS=$((1 + $COUNT))
+fi
 fi
 myltg=$(($SESSION_TIME * $NPROCESSORS / 2 / (1 + $COUNT)))
 
