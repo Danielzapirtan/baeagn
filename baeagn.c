@@ -235,6 +235,8 @@ void analysis(void)
         fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
         fprintf(stdout, "\n");
         fflush(stdout);
+	if (elapsed >=7800.0)
+		break;
     }
     free(treea);
     free(treeb);
