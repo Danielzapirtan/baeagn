@@ -25,7 +25,7 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          LTG=750
+          LTG=14400
           ulimit -t $LTG
           ./iccf >iccf.txt 2>&1 &
           for n in $(seq 1 7); do
