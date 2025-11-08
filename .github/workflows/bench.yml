@@ -25,10 +25,10 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          LTG=600
+          LTG=3600
           ulimit -t $LTG
           ./iccf >iccf.txt 2>&1 &
-          for n in $(seq 1 9); do
+          for n in $(seq 1 2); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
@@ -36,7 +36,7 @@ jobs:
           wait
           GN=0
           cat iccf.txt
-          for n in $(seq 1 9); do
+          for n in $(seq 1 2); do
             cat $GN.txt
             GN=$(($GN + 1))
           done
