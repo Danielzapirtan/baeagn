@@ -6,7 +6,6 @@ clear
 git add .
 git commit -m yaccg || true
 git push || true
-sleep 10
 cat .github/workflows/bench.yml
 gh workflow run Chess &
 
