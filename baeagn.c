@@ -439,7 +439,7 @@ VALUE eval(BOARD board, LEVEL level)
         update(&elapsed);
         double delapsed = dclock(&elapsed);
 	if (delapsed >=7800.0)
-		break;
+		exit(0);
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
