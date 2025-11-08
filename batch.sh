@@ -2,9 +2,9 @@
 
 COUNT=$1
 SESSION_TIME=$2
-NPROCESSORS=8
+NPROCESSORS=4
 if true; then
-if [ $COUNT -lt 8 ]; then
+if [ $COUNT -lt 4 ]; then
 	NPROCESSORS=$COUNT
 fi
 fi
