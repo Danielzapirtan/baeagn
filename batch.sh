@@ -8,7 +8,7 @@ if [ $COUNT -lt 8 ]; then
 	NPROCESSORS=$COUNT
 fi
 fi
-myltg=$(($SESSION_TIME * $NPROCESSORS / $COUNT))
+myltg=$(($SESSION_TIME * $NPROCESSORS / 2 / $COUNT))
 
 cat bench.yml \
 	| sed -e "s/mygn/$mygn/g" \
