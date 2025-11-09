@@ -1,11 +1,14 @@
 #! /bin/sh
 
 user=antoniudanielzapirtan
+NPROCESSORS=4
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >/tmp/games1.txt
 COUNT=$(jq '.games | length' /tmp/games1.txt)
+if [ $COUNT -gt $NPROCESSORS ]; then
+	COUNT=$NPROCESSORS
+fi
 SESSION_TIME=1500
-NPROCESSORS=4
 if true; then
 if [ $COUNT -lt $NPROCESSORS ]; then
 	NPROCESSORS=$COUNT
