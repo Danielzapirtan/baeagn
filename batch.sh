@@ -4,7 +4,7 @@ user=antoniudanielzapirtan
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >/tmp/games1.txt
 COUNT=$(jq '.games | length' /tmp/games1.txt)
-SESSION_TIME=7200
+SESSION_TIME=1500
 NPROCESSORS=4
 if true; then
 if [ $COUNT -lt $NPROCESSORS ]; then
