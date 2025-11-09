@@ -6,6 +6,7 @@ on:
 jobs:
   run-batch:
     runs-on: ubuntu-latest
+    name: Batch Job
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
