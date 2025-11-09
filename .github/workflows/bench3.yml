@@ -2,11 +2,6 @@ name: Batch
 
 on:
   workflow_dispatch:
-    inputs:
-      session_time:
-        description: 'Session time in seconds'
-        required: false
-        default: '7200'
 
 jobs:
   run-batch:
@@ -17,4 +12,4 @@ jobs:
 
       - name: Execute batch script
         run: |
-          sh batch.sh ${{ github.event.inputs.session_time }}
+          sh batch.sh
