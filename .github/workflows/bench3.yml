@@ -17,4 +17,4 @@ jobs:
 
       - name: Execute batch script
         run: |
-          sh batch.sh ${{ github.event.inputs.session_time }} &
+          sh batch.sh ${{ github.event.inputs.session_time }}
