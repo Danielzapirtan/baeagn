@@ -2,8 +2,8 @@
 
 user=antoniudanielzapirtan
 url1="https://api.chess.com/pub/player/$user/games/to-move"
-curl -s $url1 >games1.txt
-COUNT=$(jq '.games | length' games1.txt)
+curl -s $url1 >/tmp/games1.txt
+COUNT=$(jq '.games | length' /tmp/games1.txt)
 SESSION_TIME=7200
 NPROCESSORS=4
 if true; then
@@ -21,5 +21,6 @@ cat bench.yml \
 date=$(date +%Y%m%d-%H%M%S)
 echo $date
 sh wf >~/$date.txt 2>&1 &
+echo "$COUNT diagrams"
 echo "All workflows triggered"
 
