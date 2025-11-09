@@ -20,7 +20,14 @@ jobs:
       
       - name: Execution
         run: |
-          ./baeagn 2>&1 &
+          mkdir -p anl
+          for gamesymbol in $(cat pgn/gamelist.txt); do
+            ln -sf pgn/$gamesymbol.pgn start.pgn
+            ./baeagn >anl/$gamesymbol.anl 2>&1 &
+          done
           wait
-
+          for gamesymbol in $(cat pgn/gamelist.txr); do
+            echo $gamesymbol
+            cat anl/$gamesymbol.anl
+          done
 
