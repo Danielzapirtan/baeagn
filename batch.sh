@@ -8,7 +8,7 @@ COUNT=$(jq '.games | length' /tmp/games1.txt)
 if [ $COUNT -gt $NPROCESSORS ]; then
 	COUNT=$NPROCESSORS
 fi
-SESSION_TIME=1500
+SESSION_TIME=21000
 if true; then
 if [ $COUNT -lt $NPROCESSORS ]; then
 	NPROCESSORS=$COUNT
