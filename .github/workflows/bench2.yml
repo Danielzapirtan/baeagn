@@ -21,7 +21,7 @@ jobs:
       - name: Execution
         run: |
           mkdir -p anl
-          ulimit -t 1500
+          ulimit -t 180
           for gamesymbol in $(cat pgn/gamelist.txt); do
             rm -rf start.pgn
             cp -a pgn/$gamesymbol.pgn start.pgn
