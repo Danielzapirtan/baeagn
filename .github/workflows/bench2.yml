@@ -24,6 +24,7 @@ jobs:
           ulimit -t 180
           for gamesymbol in $(cat pgn/gamelist.txt); do
             cp -a pgn/$gamesymbol.pgn start.pgn
+            sleep 1
             ./baeagn >anl/$gamesymbol.anl 2>&1 &
           done
           wait
