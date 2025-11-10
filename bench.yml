@@ -22,17 +22,17 @@ jobs:
       
       - name: Execution
         run: |
-          GN=0
+          GN=ecart
           LTG=myltg
           ulimit -t $LTG
-          for n in $(seq 1 count); do
+          for n in $(seq 1 4); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
           wait
-          GN=0
-          for n in $(seq 1 count); do
+          GN=ecart
+          for n in $(seq 1 4); do
             cat $GN.txt
             GN=$(($GN + 1))
           done
