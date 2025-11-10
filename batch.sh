@@ -15,7 +15,7 @@ if [ $REMAINING -lt $NPROCESSORS ]; then
 fi
 REMAINING=$(($REMAINING - $NPROCESSORS))
 COUNT=$NPROCESSORS
-myltg=$(($SESSION_TIME * $NPROCESSORS / $COUNT))
+myltg=$SESSION_TIME
 
 cat bench.yml \
 	| sed -e "s/mygn/$mygn/g" \
@@ -26,6 +26,7 @@ date=$(date +%Y%m%d-%H%M%S)
 echo $date
 sh wf >~/$date.txt 2>&1 &
 echo "$COUNT diagrams"
+sleep 5
 ECART=$(($ECART + 4))
 done
 echo "All workflows triggered"
