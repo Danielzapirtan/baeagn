@@ -22,8 +22,8 @@ jobs:
       
       - name: Execution
         run: |
-          GN=4
-          LTG=21000
+          GN=0
+          LTG=1500
           ulimit -t $LTG
           for n in $(seq 1 4); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
@@ -31,7 +31,7 @@ jobs:
             GN=$(($GN + 1))
           done
           wait
-          GN=4
+          GN=0
           for n in $(seq 1 4); do
             cat $GN.txt
             GN=$(($GN + 1))

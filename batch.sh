@@ -1,11 +1,11 @@
 #! /bin/sh
 
 user=antoniudanielzapirtan
-NPROCESSORS=4
+NPROCESSORS=2
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >/tmp/games1.txt
 COUNT=$(jq '.games | length' /tmp/games1.txt)
-SESSION_TIME=21000
+SESSION_TIME=1500
 REMAINING=$COUNT
 ECART=0
 
@@ -27,7 +27,7 @@ echo $date
 sh wf >~/$date.txt 2>&1 &
 echo "$COUNT diagrams"
 sleep 5
-ECART=$(($ECART + 4))
+ECART=$(($ECART + $NPROCESSORS))
 done
 echo "All workflows triggered"
 
