@@ -5,6 +5,7 @@ NPROCESSORS=2
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >/tmp/games1.txt
 COUNT=$(jq '.games | length' /tmp/games1.txt)
+COUNTF=$COUNT
 SESSION_TIME=21000
 REMAINING=$COUNT
 ECART=0
@@ -25,9 +26,9 @@ cat bench.yml \
 date=$(date +%Y%m%d-%H%M%S)
 echo $date
 sh wf >~/$date.txt 2>&1 &
-echo "$COUNT diagrams"
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
 done
+echo "$COUNTF diagrams"
 echo "All workflows triggered"
 
