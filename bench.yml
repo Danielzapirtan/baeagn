@@ -24,15 +24,16 @@ jobs:
         run: |
           GN=ecart
           LTG=myltg
+          PROCESSORS=4
           ulimit -t $LTG
-          for n in $(seq 1 2); do
+          for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
             ./baeagn >>$GN.txt 2>&1 &
             GN=$(($GN + 1))
           done
           wait
           GN=ecart
-          for n in $(seq 1 2); do
+          for n in $(seq 1 $PROCESSORS); do
             cat $GN.txt
             GN=$(($GN + 1))
           done

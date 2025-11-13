@@ -1,7 +1,7 @@
 #! /bin/sh
 
 user=antoniudanielzapirtan
-NPROCESSORS=2
+NPROCESSORS=4
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >/tmp/games1.txt
 COUNT=$(jq '.games | length' /tmp/games1.txt)
