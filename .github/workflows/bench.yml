@@ -22,7 +22,7 @@ jobs:
       
       - name: Execution
         run: |
-          GN=8
+          GN=12
           LTG=21000
           PROCESSORS=4
           ulimit -t $LTG
@@ -32,7 +32,7 @@ jobs:
             GN=$(($GN + 1))
           done
           wait
-          GN=8
+          GN=12
           for n in $(seq 1 $PROCESSORS); do
             cat $GN.txt
             GN=$(($GN + 1))
