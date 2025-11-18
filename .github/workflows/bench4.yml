@@ -1,47 +1,61 @@
-name: ZX Basic with z88dk
-on: [push, pull_request]
+# .github/workflows/test-spectrum.yml
+name: Test ZX Spectrum BASIC
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  run-basic:
+  test:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Install z88dk and fuse
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y z88dk fuse-emulator-gtk spectrum-roms
-          
-      - name: Create and compile Basic program
-        run: |
-          # Create Basic program
-          cat > chess.bas << 'EOF'
-          10 REM Chess Engine
-          20 PRINT "Engine v1.0"
-          30 PRINT "Position loaded"
-          40 FOR i=1 TO 500: NEXT i
-          50 PRINT "Best: e4"
-          60 PRINT "Score: +0.2"
-          70 STOP
-          EOF
-          
-          # Convert using z88dk's bas2tap equivalent
-          zxbas -a chess.bas chess.tap
-          # If zxbas isn't available, use this alternative:
-          if ! command -v zxbas &> /dev/null; then
-            echo "Using manual tape creation..."
-            # Create a simple loader that types the program in
-            cat > loader.bas << 'LOADER'
-          10 CLEAR 29999
-          20 LOAD "" CODE
-          30 PRINT "Running..."
-          40 RANDOMIZE USR 30000
-          LOADER
-            appmake +zx --bin --org 30000 -o chess.bin chess.bas
-          fi
-          
-      - name: Run program
-        run: |
-          echo "=== Output ==="
-          timeout 10s fuse --tape chess.tap --machine 48 --auto-load --interface none 2>&1 | grep -v "^Fuse:" | tee output.log
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3 python3-pip
+        # Install Fuse (Free Unix Spectrum Emulator)
+        sudo apt-get install -y fuse-emulator-sdl
+        # Install bas2tap for BASIC to TAP conversion
+        pip3 install bas2tap
+    
+    - name: Convert BASIC to TAP
+      run: |
+        # Convert your BASIC text file to TAP format
+        bas2tap -a 10 -s "Program" program.bas program.tap
+        # -a 10: autostart at line 10
+        # -s "Program": program name
+    
+    - name: Run in emulator
+      run: |
+        # Run the program in headless mode and capture output
+        # This creates a screenshot after execution
+        fuse --no-sound --tape program.tap \
+             --auto-load \
+             --screenshot screenshot.png \
+             --graphics-filter none \
+             2>&1 | tee output.log
+    
+    - name: Verify output
+      run: |
+        # Check if the program ran successfully
+        # You can add custom validation here
+        if grep -q "ERROR" output.log; then
+          echo "Program encountered an error"
+          exit 1
+        fi
+        echo "Program executed successfully"
+    
+    - name: Upload artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          screenshot.png
+          output.log
+          program.tap
