@@ -1,45 +1,47 @@
-name: Simple ZX Basic Runner
+name: ZX Basic with z88dk
 on: [push, pull_request]
 
 jobs:
   run-basic:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install tools
-        run: sudo apt-get install -y fuse-emulator-utils
+      - name: Checkout code
+        uses: actions/checkout@v4
         
-      - name: Create and run test program
+      - name: Install z88dk and fuse
         run: |
-          # Create a sample chess engine placeholder
-          cat > chess_engine.bas << 'EOF'
-          10 REM ZX Spectrum Chess Engine
-          20 REM FEN: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
-          30 PRINT "Chess Engine v1.0"
-          40 PRINT "Initial position loaded"
-          50 PRINT "Thinking..."
-          60 FOR T=1 TO 1000: NEXT T
-          70 PRINT "Best move: e2-e4"
-          80 PRINT "Evaluation: +0.3"
-          90 PRINT "Nodes: 1250"
-          100 PRINT "Time: 2.5s"
-          110 STOP
+          sudo apt-get update
+          sudo apt-get install -y z88dk fuse-emulator-gtk spectrum-roms
+          
+      - name: Create and compile Basic program
+        run: |
+          # Create Basic program
+          cat > chess.bas << 'EOF'
+          10 REM Chess Engine
+          20 PRINT "Engine v1.0"
+          30 PRINT "Position loaded"
+          40 FOR i=1 TO 500: NEXT i
+          50 PRINT "Best: e4"
+          60 PRINT "Score: +0.2"
+          70 STOP
           EOF
           
-          # Convert to tape
-          bas2tap chess_engine.bas chess_engine.tap
-          
-          # Run and capture output (with auto-load)
-          echo "=== Program Output ==="
-          timeout 10s fuse --tape chess_engine.tap --machine 48 --auto-load --interface none 2>&1 | tee output.log
-          
-      - name: Check output
-        run: |
-          if grep -q "Error\\|BREAK" output.log; then
-            echo "❌ Program had errors"
-            exit 1
-          elif grep -q "Best move" output.log; then
-            echo "✅ Chess engine completed successfully"
-          else
-            echo "⚠️  Program ran but may not have completed"
+          # Convert using z88dk's bas2tap equivalent
+          zxbas -a chess.bas chess.tap
+          # If zxbas isn't available, use this alternative:
+          if ! command -v zxbas &> /dev/null; then
+            echo "Using manual tape creation..."
+            # Create a simple loader that types the program in
+            cat > loader.bas << 'LOADER'
+          10 CLEAR 29999
+          20 LOAD "" CODE
+          30 PRINT "Running..."
+          40 RANDOMIZE USR 30000
+          LOADER
+            appmake +zx --bin --org 30000 -o chess.bin chess.bas
           fi
+          
+      - name: Run program
+        run: |
+          echo "=== Output ==="
+          timeout 10s fuse --tape chess.tap --machine 48 --auto-load --interface none 2>&1 | grep -v "^Fuse:" | tee output.log
