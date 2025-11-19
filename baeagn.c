@@ -1096,10 +1096,10 @@ void show_move(MOVE move, BOARD board, u5 stm, char *buf)
     char *p;
     p = buf;
     switch (board[(u5) move[0]][(u5) move[1]]) {
-    case 2: p += sprintf(p, "N"); break;
-    case 3: p += sprintf(p, "B"); break;
-    case 4: p += sprintf(p, "R"); break;
-    case 5: p += sprintf(p, "Q"); break;
+    case 2: p += sprintf(p, "♘"); break;
+    case 3: p += sprintf(p, "♗"); break;
+    case 4: p += sprintf(p, "♖"); break;
+    case 5: p += sprintf(p, "♕"); break;
     case 6: if ((move[1] == 4) && ((move[3] == 6) || (move[3] == 2))) {
         switch (move[3]) {
         case 6: p += sprintf(p, "O-O"); break;
@@ -1107,7 +1107,7 @@ void show_move(MOVE move, BOARD board, u5 stm, char *buf)
         default:;
         }
         return;
-    } else p += sprintf(p, "K"); break;
+    } else p += sprintf(p, "♔"); break;
     default:;
     }
     p += sprintf(p, "%c", 97 + move[1]);
