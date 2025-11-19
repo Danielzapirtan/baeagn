@@ -6,12 +6,14 @@ url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
-SESSION_TIME=21000
+SESSION_TIME=1500
 REMAINING=$COUNT
 ECART=0
 
 while true; do
 if [ $REMAINING -lt $NPROCESSORS ]; then
+	echo "$COUNTF diagrams"
+	echo "All workflows triggered"
 	exit
 fi
 REMAINING=$(($REMAINING - $NPROCESSORS))
@@ -29,6 +31,4 @@ sh wf >~/$date.txt 2>&1 &
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
 done
-echo "$COUNTF diagrams"
-echo "All workflows triggered"
 
