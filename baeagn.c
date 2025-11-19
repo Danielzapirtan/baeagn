@@ -314,9 +314,9 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
                 double delapsed = dclock(&elapsed);
                 copy_board(treea->curr_board, aux);
                 fprintf(stdout, "Depth: %u*\n", treea->depth - _OVERDEPTH);
-                fprintf(stdout, "Evaluation: %.2lf\n", \
-                    ((double) treea->best / (double) _PAWNUNIT));
-                fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
+                fprintf(stdout, "Evaluation: ");
+showCI(treea->best);
+                fprintf(stdout, "\nBranching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
                 fprintf(stdout, "Best variation: ");
                 for (i = 0; i < treea->bl_len; i++) {
                     show_move(treea->best_line[i], aux, (i + stm) % 2, buf);
@@ -623,6 +623,52 @@ skippvs:
     }
 #endif
     return max_index;
+}
+#include <stdlib.h>
+
+typedef int VALUE;
+
+extern void showCI(VALUE value) {
+    // Handle zero and near-zero evaluations as equal
+    if (value >= -29 && value <= 29) {
+        // U+2261 ≡ IDENTICAL TO (equal position)
+        printf("\u2261");
+    }
+    // White advantage ranges
+    else if (value >= 30 && value <= 69) {
+        // U+2A72 ⩲ PLUS ABOVE EQUALS SIGN (slight advantage for White)
+        printf("\u2A72");
+    }
+    else if (value >= 70 && value <= 149) {
+        // U+00B1 ± PLUS-MINUS SIGN (clear advantage for White)
+        printf("\u00B1");
+    }
+    else if (value >= 150 && value <= 20000) {
+        // +- (winning advantage for White) - not a single Unicode character
+        printf("+-");
+    }
+    // Black advantage ranges (mirror of white, but with negative values)
+    else if (value <= -30 && value >= -69) {
+        // U+2A71 ⩱ MINUS ABOVE EQUALS SIGN (slight advantage for Black)
+        printf("\u2A71");
+    }
+    else if (value <= -70 && value >= -149) {
+        // U+2213 ∓ MINUS-OR-PLUS SIGN (clear advantage for Black)
+        printf("\u2213");
+    }
+    else if (value <= -150 && value >= -20000) {
+        // -+ (winning advantage for Black) - not a single Unicode character
+        printf("-+");
+    }
+    // Handle values outside the expected range
+    else if (value > 20000) {
+        // Mate in favor of white or extremely large advantage
+        printf("+-");
+    }
+    else if (value < -20000) {
+        // Mate in favor of black or extremely large advantage
+        printf("-+");
+    }
 }
 
 void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist)
