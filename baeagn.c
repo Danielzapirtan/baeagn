@@ -143,6 +143,7 @@ extern void nonslider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_ind
 extern void show_move(MOVE move, BOARD board, u5 stm, char *buf);
 extern void slider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void show_board(BOARD board, FILE *f);
+extern void showCI(VALUE value);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
@@ -218,9 +219,9 @@ void analysis(void)
         double delapsed = dclock(&elapsed);
         copy_board(start, aux);
         fprintf(stdout, "Depth: %u\n", depth);
-        fprintf(stdout, "Evaluation: %.2lf\n", \
-            ((double) (tree->best) / (double) _PAWNUNIT));
-        fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
+        fprintf(stdout, "Evaluation: ");
+showCI(tree->best);
+        fprintf(stdout, "\nBranching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
         fprintf(stdout, "Best variation: ");
         for (i = 0; i < tree->bl_len; i++) {
             show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
