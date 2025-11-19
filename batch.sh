@@ -6,7 +6,7 @@ url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
-SESSION_TIME=1500
+SESSION_TIME=3300
 REMAINING=$COUNT
 ECART=0
 
