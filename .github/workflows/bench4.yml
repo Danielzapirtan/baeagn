@@ -1,7 +1,7 @@
 name: Test ZX Spectrum BASIC
 
 on:
-	workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   test:
