@@ -342,7 +342,7 @@ showCI(treea->best);
     return (tree->best);
 }
 
-int pcsq[6][8][8] = {
+/*int pcsq[6][8][8] = {
     // Pawn piece-square table
     {
         // Rank 8 (black perspective)
@@ -422,7 +422,7 @@ int pcsq[6][8][8] = {
         {  20,  20,   0,   0,   0,   0,  20,  20 },
         {  20,  30,  10,   0,   0,  10,  30,  20 }
     }
-};
+};*/
 
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
@@ -444,10 +444,10 @@ VALUE eval(BOARD board, LEVEL level)
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
-        if (board[y][x] > 0)
+        /*if (board[y][x] > 0)
             ivalue += pcsq[board[y][x] - 1][y][x];
         if (board[y][x] < 0)
-            ivalue -= pcsq[-board[y][x] - 1][7 - y][x];
+            ivalue -= pcsq[-board[y][x] - 1][7 - y][x];*/
         switch (board[y][x]) {
         case _WP:
             switch (y) {
