@@ -1,6 +1,7 @@
 #! /bin/sh
 
-user=antoniudanielzapirtan
+. ./.env.local
+user=$USERNAME
 NPROCESSORS=4
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >$HOME/games1.txt
@@ -12,6 +13,8 @@ ECART=0
 
 while true; do
 if [ $REMAINING -lt $NPROCESSORS ]; then
+	echo "$COUNTF diagrams"
+	echo "All workflows triggered"
 	exit
 fi
 REMAINING=$(($REMAINING - $NPROCESSORS))
@@ -29,6 +32,4 @@ sh wf >~/$date.txt 2>&1 &
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
 done
-echo "$COUNTF diagrams"
-echo "All workflows triggered"
 
