@@ -523,7 +523,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 4;
+        newmax_index = 6;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
