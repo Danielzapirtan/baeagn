@@ -1,12 +1,13 @@
 #! /bin/bash
 
 PGNFILE=base/sea.pgn
+var="$1"
 
 movelist=$(cat $PGNFILE \
-  | grep -o "^6\.Be3 e5 [^ ]\+ " \
-  | sort -u | awk '{print $3}')
+  | grep -o "$var [^ ]\+ " \
+  | sort -u | awk '{print $NF}')
 
 for move in $movelist; do
   echo -n "$move "
-  cat $PGNFILE | grep "^6\.Be3 e5 $move "|wc -l
+  cat $PGNFILE | grep "$var $move "|wc -l
 done|sort -nk 2
