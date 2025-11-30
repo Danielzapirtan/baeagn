@@ -27,8 +27,20 @@ class PGNParser:
     @staticmethod
     def parse_file(filepath: str) -> List[Game]:
         """Parse a PGN file and return list of games"""
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content = f.read()
+        # Try multiple encodings
+        encodings = ['utf-8', 'latin-1', 'windows-1252', 'iso-8859-1']
+        content = None
+        
+        for encoding in encodings:
+            try:
+                with open(filepath, 'r', encoding=encoding) as f:
+                    content = f.read()
+                break
+            except UnicodeDecodeError:
+                continue
+        
+        if content is None:
+            raise ValueError(f"Could not decode file {filepath} with any common encoding")
         
         games = []
         # Split by empty lines between games
