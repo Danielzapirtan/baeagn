@@ -14,6 +14,7 @@ gcc -o baeagn \
     -march=native \
     -w \
     -D$gamesymbol=1 \
+    -D_ICCF=$_ICCF \
     -D_CHESS960=$_CHESS960 \
     -D_NOEDIT=$_NOEDIT || exit 3
 
