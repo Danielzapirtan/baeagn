@@ -17,14 +17,14 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git build-essential
-          _NOEDIT=2 _CHESS960=0 sh build.sh
+          _ICCF=0 _NOEDIT=2 _CHESS960=0 sh build.sh
           chmod 0755 baeagn
       
       - name: Execution
         run: |
           GN=0
           LTG=1500
-          PROCESSORS=1
+          PROCESSORS=3
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
