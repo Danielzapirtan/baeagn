@@ -290,15 +290,8 @@ if __name__ == '__main__':
     print("-" * 40)
     
     searcher = PGNSearcher('.')
-    pgn_files = searcher.search_files()
-    print(f"Found {len(pgn_files)} PGN files")
-    
-    if pgn_files:
-        all_games = searcher.load_all_games(pgn_files[:1])  # Load first file as example
-        print(f"Total games loaded: {len(all_games)}")
-        
-        if all_games:
-            print("\nFirst game headers:")
-            for key, value in all_games[0].headers.items():
-                print(f"  {key}: {value}")
-            print(f"\nMoves preview: {all_games[0].moves[:100]}...")
+    all_games = searcher.load_all_games(['sea.pgn'])  # Load first file as example
+    print(f"Total games loaded: {len(all_games)}")
+    filter_obj = PGNFilter(all_games)
+    results = filter_obj.filter_by_moves("1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 6.Be3 e5")
+    print(len(results))
