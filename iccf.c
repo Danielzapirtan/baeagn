@@ -143,10 +143,10 @@ extern void nonslider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_ind
 extern void show_move(MOVE move, BOARD board, u5 stm, char *buf);
 extern void slider(BOARD board, s5 y, s5 x, s3 dy, s3 dx, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void show_board(BOARD board, FILE *f);
+extern void showCI(VALUE value);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
-extern void parse_pgn(void);
 extern void save(BOARD board);
 
 const VALUE _ALPHA_DFL    = (-20000);
@@ -204,7 +204,7 @@ void analysis(void)
     init(&elapsed);
     nodes = 0LL;
     pvsready = 0;
-    for (depth = _S_DEPTH + 1; depth < 7; depth++) {
+    for (depth = _S_DEPTH + 1; depth < _MAXLEVEL; depth++) {
         tree = &treea[0];
         copy_board(start, tree->curr_board);
         tree->level = 0;
@@ -214,15 +214,14 @@ void analysis(void)
         tree->beta = _BETA;
         newpv = 0;
         tree->best = search(treea, 0, 1);
-        VALUE mybest = tree->best;
         pvsready = 1;
         update(&elapsed);
         double delapsed = dclock(&elapsed);
         copy_board(start, aux);
         fprintf(stdout, "Depth: %u\n", depth);
-        fprintf(stdout, "Evaluation: %.2lf\n", \
-            ((double) (tree->best) / (double) _PAWNUNIT));
-        fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
+        fprintf(stdout, "Evaluation: ");
+showCI(tree->best);
+        fprintf(stdout, "\nBranching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
         fprintf(stdout, "Best variation: ");
         for (i = 0; i < tree->bl_len; i++) {
             show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
@@ -237,12 +236,9 @@ void analysis(void)
         fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
         fprintf(stdout, "\n");
         fflush(stdout);
-        if (depth == 6)
-          exit(100 + mybest / 10);
     }
     free(treea);
     free(treeb);
-
 }
 
 VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
@@ -319,9 +315,9 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
                 double delapsed = dclock(&elapsed);
                 copy_board(treea->curr_board, aux);
                 fprintf(stdout, "Depth: %u*\n", treea->depth - _OVERDEPTH);
-                fprintf(stdout, "Evaluation: %.2lf\n", \
-                    ((double) treea->best / (double) _PAWNUNIT));
-                fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
+                fprintf(stdout, "Evaluation: ");
+showCI(treea->best);
+                fprintf(stdout, "\nBranching factor: %.2lf\n", pow((double) nodes, (double) 1 / (treea->depth - _OVERDEPTH)));
                 fprintf(stdout, "Best variation: ");
                 for (i = 0; i < treea->bl_len; i++) {
                     show_move(treea->best_line[i], aux, (i + stm) % 2, buf);
@@ -346,88 +342,6 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
     return (tree->best);
 }
 
-int pcsq[6][8][8] = {
-    // Pawn piece-square table
-    {
-        // Rank 8 (black perspective)
-        {   0,   0,   0,   0,   0,   0,   0,   0 },
-        // Rank 7
-        {  10,  10,  10,  10,  10,  10,  10,  10 },
-        // Rank 6
-        {  25,  25,  25,  25,  25,  25,  25,  25 },
-        // Rank 5
-        {  35,  35,  35,  40,  40,  35,  35,  35 },
-        // Rank 4
-        {  45,  45,  45,  50,  50,  45,  45,  45 },
-        // Rank 3
-        {  60,  60,  60,  65,  65,  60,  60,  60 },
-        // Rank 2
-        {  80,  80,  80,  85,  85,  80,  80,  80 },
-        // Rank 1 (white perspective)
-        {   0,   0,   0,   0,   0,   0,   0,   0 }
-    },
-    
-    // Knight piece-square table
-    {
-        { -50, -40, -30, -30, -30, -30, -40, -50 },
-        { -40, -20,   0,   5,   5,   0, -20, -40 },
-        { -30,   0,  10,  15,  15,  10,   0, -30 },
-        { -30,   5,  15,  20,  20,  15,   5, -30 },
-        { -30,   0,  15,  20,  20,  15,   0, -30 },
-        { -30,   5,  10,  15,  15,  10,   5, -30 },
-        { -40, -20,   0,   0,   0,   0, -20, -40 },
-        { -50, -40, -30, -30, -30, -30, -40, -50 }
-    },
-    
-    // Bishop piece-square table
-    {
-        { -20, -10, -10, -10, -10, -10, -10, -20 },
-        { -10,   0,   0,   0,   0,   0,   0, -10 },
-        { -10,   0,  10,  10,  10,  10,   0, -10 },
-        { -10,   5,   5,  10,  10,   5,   5, -10 },
-        { -10,   0,  10,  10,  10,  10,   0, -10 },
-        { -10,  10,  10,  10,  10,  10,  10, -10 },
-        { -10,   5,   0,   0,   0,   0,   5, -10 },
-        { -20, -10, -10, -10, -10, -10, -10, -20 }
-    },
-    
-    // Rook piece-square table
-    {
-        {   0,   0,   0,   5,   5,   0,   0,   0 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {  -5,   0,   0,   0,   0,   0,   0,  -5 },
-        {   5,  10,  10,  10,  10,  10,  10,   5 },
-        {   0,   0,   0,   0,   0,   0,   0,   0 }
-    },
-    
-    // Queen piece-square table
-    {
-        { -20, -10, -10,  -5,  -5, -10, -10, -20 },
-        { -10,   0,   0,   0,   0,   0,   0, -10 },
-        { -10,   0,   5,   5,   5,   5,   0, -10 },
-        {  -5,   0,   5,   5,   5,   5,   0,  -5 },
-        {   0,   0,   5,   5,   5,   5,   0,  -5 },
-        { -10,   5,   5,   5,   5,   5,   0, -10 },
-        { -10,   0,   5,   0,   0,   0,   0, -10 },
-        { -20, -10, -10,  -5,  -5, -10, -10, -20 }
-    },
-    
-    // King piece-square table (middlegame)
-    {
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -30, -40, -40, -50, -50, -40, -40, -30 },
-        { -20, -30, -30, -40, -40, -30, -30, -20 },
-        { -10, -20, -20, -20, -20, -20, -20, -10 },
-        {  20,  20,   0,   0,   0,   0,  20,  20 },
-        {  20,  30,  10,   0,   0,  10,  30,  20 }
-    }
-};
-
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 VALUE eval(BOARD board, LEVEL level)
@@ -448,10 +362,6 @@ VALUE eval(BOARD board, LEVEL level)
     }
     for (y = 0; y < 8; y++)
     for (x = 0; x < 8; x++) {
-        if (board[y][x] > 0)
-            ivalue += pcsq[board[y][x] - 1][y][x];
-        if (board[y][x] < 0)
-            ivalue -= pcsq[-board[y][x] - 1][7 - y][x];
         switch (board[y][x]) {
         case _WP:
             switch (y) {
@@ -613,7 +523,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 4;
+        newmax_index = 6;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
@@ -628,6 +538,52 @@ skippvs:
     }
 #endif
     return max_index;
+}
+#include <stdlib.h>
+
+typedef int VALUE;
+
+extern void showCI(VALUE value) {
+    // Handle zero and near-zero evaluations as equal
+    if (value >= -29 && value <= 29) {
+        // U+2261 ≡ IDENTICAL TO (equal position)
+        printf("\u2261");
+    }
+    // White advantage ranges
+    else if (value >= 30 && value <= 69) {
+        // U+2A72 ⩲ PLUS ABOVE EQUALS SIGN (slight advantage for White)
+        printf("\u2A72");
+    }
+    else if (value >= 70 && value <= 149) {
+        // U+00B1 ± PLUS-MINUS SIGN (clear advantage for White)
+        printf("\u00B1");
+    }
+    else if (value >= 150 && value <= 20000) {
+        // +- (winning advantage for White) - not a single Unicode character
+        printf("+-");
+    }
+    // Black advantage ranges (mirror of white, but with negative values)
+    else if (value <= -30 && value >= -69) {
+        // U+2A71 ⩱ MINUS ABOVE EQUALS SIGN (slight advantage for Black)
+        printf("\u2A71");
+    }
+    else if (value <= -70 && value >= -149) {
+        // U+2213 ∓ MINUS-OR-PLUS SIGN (clear advantage for Black)
+        printf("\u2213");
+    }
+    else if (value <= -150 && value >= -20000) {
+        // -+ (winning advantage for Black) - not a single Unicode character
+        printf("-+");
+    }
+    // Handle values outside the expected range
+    else if (value > 20000) {
+        // Mate in favor of white or extremely large advantage
+        printf("+-");
+    }
+    else if (value < -20000) {
+        // Mate in favor of black or extremely large advantage
+        printf("-+");
+    }
 }
 
 void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist)
@@ -1101,10 +1057,10 @@ void show_move(MOVE move, BOARD board, u5 stm, char *buf)
     char *p;
     p = buf;
     switch (board[(u5) move[0]][(u5) move[1]]) {
-    case 2: p += sprintf(p, "N"); break;
-    case 3: p += sprintf(p, "B"); break;
-    case 4: p += sprintf(p, "R"); break;
-    case 5: p += sprintf(p, "Q"); break;
+    case 2: p += sprintf(p, "♘"); break;
+    case 3: p += sprintf(p, "♗"); break;
+    case 4: p += sprintf(p, "♖"); break;
+    case 5: p += sprintf(p, "♕"); break;
     case 6: if ((move[1] == 4) && ((move[3] == 6) || (move[3] == 2))) {
         switch (move[3]) {
         case 6: p += sprintf(p, "O-O"); break;
@@ -1112,7 +1068,7 @@ void show_move(MOVE move, BOARD board, u5 stm, char *buf)
         default:;
         }
         return;
-    } else p += sprintf(p, "K"); break;
+    } else p += sprintf(p, "♔"); break;
     default:;
     }
     p += sprintf(p, "%c", 97 + move[1]);
