@@ -147,6 +147,7 @@ extern void showCI(VALUE value);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
+extern void parse_pgn(void);
 extern void save(BOARD board);
 
 const VALUE _ALPHA_DFL    = (-20000);

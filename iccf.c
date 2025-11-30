@@ -17,15 +17,15 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (32)
+#define _MAXLEVEL (40)
 #define _FRAMESPERSEC (32)
 #define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-20000) // Adjusted as needed
-#define _BETA (20000)
+#define _ALPHA (-50) // Adjusted as needed
+#define _BETA (50)
 #define _OVERDEPTH (1)
 #define _S_DEPTH (4)
 #define _SORT
@@ -34,7 +34,7 @@
 #define _CAND7
 #undef _CAND250
 #define _CANDCUT (200)
-#undef _Q0BLK // For opening phase, block Queen's moves at node root
+#define _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
@@ -147,6 +147,7 @@ extern void showCI(VALUE value);
 extern void transpose(BOARD board);
 extern void setup_board(BOARD board);
 extern void parse_fen(BOARD board);
+extern void parse_pgn(void);
 extern void save(BOARD board);
 
 const VALUE _ALPHA_DFL    = (-20000);

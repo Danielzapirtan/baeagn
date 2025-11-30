@@ -16,12 +16,12 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git pgn-extract build-essential
-          _NOEDIT=1 _CHESS960=0 sh build.sh
+          _ICCF=1 _NOEDIT=1 _CHESS960=0 sh build.sh
       
       - name: Execution
         run: |
           mkdir -p anl
-          ulimit -t 21000
+          ulimit -t 210
           for gamesymbol in $(cat pgn/gamelist.txt); do
             cp -a pgn/$gamesymbol.pgn start.pgn
             sleep 5
