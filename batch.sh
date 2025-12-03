@@ -1,5 +1,7 @@
 #! /bin/sh
 
+cd $HOME/*/baeagn
+
 user=antoniudanielzapirtan
 NPROCESSORS=3
 url1="https://api.chess.com/pub/player/$user/games/to-move"
