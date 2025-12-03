@@ -13,10 +13,11 @@ REMAINING=$COUNT
 ECART=0
 
 while true; do
+while true; do
 if [ $REMAINING -lt 1 ]; then
 	echo "$COUNTF diagrams"
 	echo "All workflows triggered"
-	exit
+	break
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
   NPROCESSORS=$REMAINING
@@ -37,4 +38,5 @@ sh wf >~/$date.txt 2>&1 &
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
 done
-
+sleep 21600
+done &
