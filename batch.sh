@@ -16,7 +16,7 @@ while true; do
 if [ $REMAINING -lt 1 ]; then
 	echo "$COUNTF diagrams"
 	echo "All workflows triggered"
-	break
+  exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
   NPROCESSORS=$REMAINING
