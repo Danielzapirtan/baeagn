@@ -14,8 +14,8 @@ ECART=0
 
 while true; do
 if [ $REMAINING -lt 1 ]; then
-	echo "$COUNTF diagrams"
-	echo "All workflows triggered"
+  echo "$COUNTF diagrams"
+  echo "All workflows triggered"
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
