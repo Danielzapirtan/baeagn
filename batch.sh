@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-cd $HOME/*/baeagn
+cd $HOME/git-client/baeagn
 
 user=antoniudanielzapirtan
 NPROCESSORS=3
