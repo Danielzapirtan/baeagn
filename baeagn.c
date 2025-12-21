@@ -1239,7 +1239,7 @@ void setup_board(BOARD board)
 
 void load_values(void)
 {
-	FILE *vf = fopen("start.bpf", "r");
+	/*FILE *vf = fopen("start.bpf", "r");
 	if (!vf)
 		exit(1);
 	for (int i = 1; i < 6; i++) {
@@ -1250,7 +1250,13 @@ void load_values(void)
 		fscanf(vf, "%d", &_VALUES[i]);
 	}
 	_VALUES[0] = 0;
-	fclose(vf);
+	fclose(vf);*/
+    _VALUES[0] = 0;
+    _VALUES[1] = 100;
+    _VALUES[2] = 315;
+    _VALUES[3] = 325;
+    _VALUES[4] = 500;
+    _VALUES[5] = 980;
 }
 
 int main(int argc, char *argv[])
