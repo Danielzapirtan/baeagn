@@ -311,7 +311,8 @@ VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
             for (bl_lev = 0; bl_lev < ntree->bl_len; bl_lev++)
                 copy_move(ntree->best_line[bl_lev], \
                     tree->best_line[bl_lev + 1]);
-            if (level == 0 && depth == 1 && gmode == 4) {
+	    if (0) {
+            //if (level == 0 && depth == 1 && gmode == 4) {
                 update(&elapsed);
                 double delapsed = dclock(&elapsed);
                 copy_board(treea->curr_board, aux);
