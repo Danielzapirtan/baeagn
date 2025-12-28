@@ -31,7 +31,7 @@
 #define _SORT
 #define _PVSEARCH
 #define _SVP
-#define _CAND7
+#undef _CAND7
 #undef _CAND250
 #define _CANDCUT (200)
 #undef _Q0BLK // For opening phase, block Queen's moves at node root
