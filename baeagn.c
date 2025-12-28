@@ -31,7 +31,7 @@
 #define _SORT
 #define _PVSEARCH
 #define _SVP
-#undef _CAND7
+#define _CAND7
 #undef _CAND250
 #define _CANDCUT (200)
 #undef _Q0BLK // For opening phase, block Queen's moves at node root
@@ -524,7 +524,7 @@ skippvs:
 #ifdef _CAND7
     LEVEL newmax_index = max_index;
     if (glevel)
-        newmax_index = 6;
+        newmax_index = 10;
     if (max_index > newmax_index)
         max_index = newmax_index;
 #endif
