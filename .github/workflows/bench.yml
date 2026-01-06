@@ -22,9 +22,9 @@ jobs:
       
       - name: Execution
         run: |
-          GN=9
-          LTG=180
-          PROCESSORS=1
+          GN=0
+          LTG=1500
+          PROCESSORS=3
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
@@ -32,7 +32,7 @@ jobs:
             GN=$(($GN + 1))
           done
           wait
-          GN=9
+          GN=0
           for n in $(seq 1 $PROCESSORS); do
             cat $GN.txt
             GN=$(($GN + 1))
