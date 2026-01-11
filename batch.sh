@@ -3,7 +3,7 @@
 cd $HOME/git-client/baeagn
 
 user=antoniudanielzapirtan
-NPROCESSORS=3
+NPROCESSORS=10
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
