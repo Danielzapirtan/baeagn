@@ -15,8 +15,8 @@ jobs:
       
       - name: Preparations
         run: |
-          sudo apt update
-          sudo apt install -y git build-essential
+          #sudo apt update
+          #sudo apt install -y git build-essential
           _ICCF=0 _NOEDIT=2 _CHESS960=0 sh build.sh
           chmod 0755 baeagn
       
