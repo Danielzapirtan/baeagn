@@ -453,20 +453,22 @@ VALUE eval(BOARD board, LEVEL level)
         return (value);
         }
     }
-    MOVELIST lgl_mvs;
-    MOVEINDEX count = gen(board, lgl_mvs, 0);
-    nodes += count;
-    MOVEINDEX i;
-    u4 maxcap = 0;
-    for (i = 0; i < count; i++) {
-	MOVE lgl_mv;
-	copy_move(lgl_mvs[i], lgl_mv);
-	u4 take = -board[lgl_mv[2]][lgl_mv[3]];
-	if (take > maxcap)
-	    maxcap = take;
+    if (value <= -50) {
+        MOVELIST lgl_mvs;
+        MOVEINDEX count = gen(board, lgl_mvs, 0);
+        nodes += count;
+        MOVEINDEX i;
+        u4 maxcap = 0;
+        for (i = 0; i < count; i++) {
+    	MOVE lgl_mv;
+    	copy_move(lgl_mvs[i], lgl_mv);
+    	u4 take = -board[lgl_mv[2]][lgl_mv[3]];
+    	if (take > maxcap)
+    	    maxcap = take;
+        }
+        if (maxcap < 6)
+    	    value += _VALUES[maxcap];
     }
-    if (maxcap < 6)
-        value += _VALUES[maxcap];
 #endif
     value += ((rand() % 7) - 3);
     if (level > 1)
