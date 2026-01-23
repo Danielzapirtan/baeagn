@@ -10,7 +10,7 @@ fi
 gcc -o baeagn \
     $SOURCE \
     -lm \
-    -Os \
+    -O3 \
     -march=native \
     -w \
     -D$gamesymbol=1 \
