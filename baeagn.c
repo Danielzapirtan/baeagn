@@ -345,6 +345,7 @@ showCI(treea->best);
 
 #define abs(x) ((x > 0) ? (x) : ((-x)))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
+__attribute__((optimize("O3", "unroll-loops", "fast-math")))
 VALUE eval(BOARD board, LEVEL level)
 {
     BOARD aux;
@@ -454,7 +455,6 @@ VALUE eval(BOARD board, LEVEL level)
         }
     }
     if (value <= -50) {
-__attribute__((optimize("O3", "unroll-loops", "fast-math")))
         MOVELIST lgl_mvs;
         MOVEINDEX count = gen(board, lgl_mvs, 0);
         nodes += count;
