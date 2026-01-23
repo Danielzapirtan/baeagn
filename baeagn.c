@@ -131,6 +131,7 @@ extern void genB(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST moveli
 extern void genR(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void genQ(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEVEL depth);
+extern int genFast(BOARD board);
 extern MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth);
 extern MOVEINDEX gen(BOARD board, MOVELIST movelist, LEVEL level);
 extern BOARD *get_init(void);
@@ -453,6 +454,13 @@ VALUE eval(BOARD board, LEVEL level)
         return (value);
         }
     }
+#if _OPTIMIZE
+    if (value <= -50) {
+      int maxcap = genFast(board);
+      if (maxcap < 6)
+        value += _VALUES[maxcap];
+    }
+#else
     if (value <= -50) {
         MOVELIST lgl_mvs;
         MOVEINDEX count = gen(board, lgl_mvs, 0);
@@ -469,6 +477,7 @@ VALUE eval(BOARD board, LEVEL level)
         if (maxcap < 6)
     	    value += _VALUES[maxcap];
     }
+#endif
 #endif
     value += ((rand() % 7) - 3);
     if (level > 1)
@@ -555,52 +564,6 @@ skippvs:
     }
 #endif
     return max_index;
-}
-#include <stdlib.h>
-
-typedef int VALUE;
-
-extern void showCI(VALUE value) {
-    // Handle zero and near-zero evaluations as equal
-    if (value >= -29 && value <= 29) {
-        // U+2261 ≡ IDENTICAL TO (equal position)
-        printf("\u2261");
-    }
-    // White advantage ranges
-    else if (value >= 30 && value <= 69) {
-        // U+2A72 ⩲ PLUS ABOVE EQUALS SIGN (slight advantage for White)
-        printf("\u2A72");
-    }
-    else if (value >= 70 && value <= 149) {
-        // U+00B1 ± PLUS-MINUS SIGN (clear advantage for White)
-        printf("\u00B1");
-    }
-    else if (value >= 150 && value <= 20000) {
-        // +- (winning advantage for White) - not a single Unicode character
-        printf("+-");
-    }
-    // Black advantage ranges (mirror of white, but with negative values)
-    else if (value <= -30 && value >= -69) {
-        // U+2A71 ⩱ MINUS ABOVE EQUALS SIGN (slight advantage for Black)
-        printf("\u2A71");
-    }
-    else if (value <= -70 && value >= -149) {
-        // U+2213 ∓ MINUS-OR-PLUS SIGN (clear advantage for Black)
-        printf("\u2213");
-    }
-    else if (value <= -150 && value >= -20000) {
-        // -+ (winning advantage for Black) - not a single Unicode character
-        printf("-+");
-    }
-    // Handle values outside the expected range
-    else if (value > 20000) {
-        // Mate in favor of white or extremely large advantage
-        printf("+-");
-    }
-    else if (value < -20000) {
-        // Mate in favor of black or extremely large advantage
-        printf("-+");
-    }
 }
 
 void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist)
@@ -819,6 +782,102 @@ void genK(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist, LEV
     if (depth == 1)
         castle(board, y, x, curr_index, movelist);
 #endif
+}
+
+inline void scanm(int taken, int *maxcap) {
+  if (taken > *maxcap) {
+    *maxcap = taken;
+  }
+}
+
+inline void fastNonslider(BOARD board, s5 y, s5 x, s5 dy, s5 dx, int *maxcap)
+{
+  if (! (((y + dy) | (x + dx)) & (~7)))
+    scanm(-board[y + dy][x + dx], maxcap);
+}
+
+inline void fastSlider(BOARD board, s5 y, s5 x, s5 dy, s5 dx, int *maxcap)
+{
+  int y1 = y + dy;
+  int x1 = x + dx;
+  while (! ((y1 | x1) & (~7))) {
+    int pc = -board[y1][x1];
+    if (pc < 0) return;
+    if (pc > 0) {
+      scanm(pc, maxcap);
+      return;
+    }
+    y1 += dy;
+    x1 += dx;
+  }
+}
+
+void genFastP(BOARD board, s5 y, s5 x, int *maxcap)
+{
+    fastNonslider(board, y, x, 1, -1, maxcap);
+    fastNonslider(board, y, x, 1,  1, maxcap);
+}
+
+void genFastN(BOARD board, s5 y, s5 x, int *maxcap)
+{
+    fastNonslider(board, y, x, -2, -1, maxcap);
+    fastNonslider(board, y, x, -2,  1, maxcap);
+    fastNonslider(board, y, x, -1, -2, maxcap);
+    fastNonslider(board, y, x, -1,  2, maxcap);
+    fastNonslider(board, y, x,  1, -2, maxcap);
+    fastNonslider(board, y, x,  1,  2, maxcap);
+    fastNonslider(board, y, x,  2, -1, maxcap);
+    fastNonslider(board, y, x,  2,  1, maxcap);
+}
+
+void genFastB(BOARD board, s5 y, s5 x, int *maxcap)
+{
+    fastSlider(board, y, x, -1, -1, maxcap);
+    fastSlider(board, y, x, -1,  1, maxcap);
+    fastSlider(board, y, x,  1, -1, maxcap);
+    fastSlider(board, y, x,  1,  1, maxcap);
+}
+
+void genFastR(BOARD board, s5 y, s5 x, int *maxcap)
+{
+    fastSlider(board, y, x, -1,  0, maxcap);
+    fastSlider(board, y, x,  0, -1, maxcap);
+    fastSlider(board, y, x,  0,  1, maxcap);
+    fastSlider(board, y, x,  1,  0, maxcap);
+}
+
+void genFastK(BOARD board, s5 y, s5 x, int *maxcap)
+{
+    fastNonslider(board, y, x, -1, -1, maxcap);
+    fastNonslider(board, y, x, -1,  0, maxcap);
+    fastNonslider(board, y, x, -1,  1, maxcap);
+    fastNonslider(board, y, x,  0, -1, maxcap);
+    fastNonslider(board, y, x,  0,  1, maxcap);
+    fastNonslider(board, y, x,  1, -1, maxcap);
+    fastNonslider(board, y, x,  1,  0, maxcap);
+    fastNonslider(board, y, x,  1,  1, maxcap);
+}
+
+int genFast(BOARD board)
+{
+    int maxcap = 0;
+    s5 x;
+    s5 y;
+    for (y = 7; y >= 0; y--)
+    for (x = 0; x < 8; x++) {
+        switch(board[y][x]) {
+        case _WP: genFastP(board, y, x, &maxcap); break;
+        case _WN: genFastN(board, y, x, &maxcap); break;
+        case _WB: genFastB(board, y, x, &maxcap); break;
+        case _WR: genFastR(board, y, x, &maxcap); break;
+        case _WQ:
+                  genFastR(board, y, x, &maxcap);
+                  genFastB(board, y, x, &maxcap); break;
+        case _WK: genFastK(board, y, x, &maxcap); break;
+        default:;
+        }
+    }
+    return maxcap;
 }
 
 MOVEINDEX gendeep(BOARD board, MOVELIST movelist, LEVEL depth)
