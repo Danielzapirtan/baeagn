@@ -23,7 +23,7 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          LTG=5760
+          LTG=14400
           PROCESSORS=5
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
