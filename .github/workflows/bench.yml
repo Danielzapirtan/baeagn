@@ -23,8 +23,8 @@ jobs:
       - name: Execution
         run: |
           GN=0
-          LTG=3600
-          PROCESSORS=8
+          LTG=3200
+          PROCESSORS=9
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
