@@ -3,12 +3,12 @@
 cd $HOME/git-client/baeagn
 
 user=antoniudanielzapirtan
-NPROCESSORS=10
+NPROCESSORS=15
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
-SESSION_TIME=$((18000*4/$COUNTF))
+SESSION_TIME=$((1500*4/$COUNTF))
 REMAINING=$COUNT
 ECART=0
 
