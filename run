@@ -1,1 +1,2 @@
-(./baeagn >anl/start.anl &)
+mkdir -p anl
+(./iccf >anl/start.anl &)

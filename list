@@ -1,5 +1,5 @@
 while true; do
 	cat anl/start.anl
-	top -bn1|grep baeagn
+	top -bn1|grep iccf
 	sleep 15
 done
