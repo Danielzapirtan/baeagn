@@ -290,13 +290,11 @@ if __name__ == '__main__':
     print("-" * 40)
     
     searcher = PGNSearcher('.')
-    all_games = searcher.load_all_games(['base/harw_11_0.pgn'])  # Load first file as example
+    all_games = searcher.load_all_games(['base/sea.pgn'])  # Load first file as example
     print(f"Total games loaded: {len(all_games)}")
     filter_obj = PGNFilter(all_games)
     #str = input('Introduceți primele mutări: ')
-    str='6.Be3 e5'
+    str='6.Be3 e5 7.Nb3 Be6 8.f3 h5'
     results = filter_obj.filter_by_moves(str)
-    filter_obj = PGNFilter(results)
-    results = filter_obj.filter_by_player('Hariman', 'white')
-    PGNExporter.export_games(results, 'base/harw_12_0.pgn')
+    PGNExporter.export_games(results, 'base/best_16_0.pgn')
     print(len(results))

@@ -1,10 +1,10 @@
 #! /bin/bash
 
-PGNFILE=base/sea.pgn
+PGNFILE=base/best_16_0.pgn
 var="$1"
 
 movelist=$(cat $PGNFILE \
-  | grep -o "$var [^ ]\+ " \
+  | grep -o "$var [^ ]\+" \
   | sort -u | awk '{print $NF}')
 
 for move in $movelist; do
