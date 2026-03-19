@@ -293,5 +293,5 @@ if __name__ == '__main__':
     all_games = searcher.load_all_games(['sea.pgn'])  # Load first file as example
     print(f"Total games loaded: {len(all_games)}")
     filter_obj = PGNFilter(all_games)
-    results = filter_obj.filter_by_moves("1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 6.Be3 e5")
+    results = filter_obj.filter_by_moves("1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6 6.Be3 e5 7.Nf5")
     print(len(results))
