@@ -24,14 +24,14 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-50) // Adjusted as needed
-#define _BETA (50)
+#define _ALPHA (-20000) // Adjusted as needed
+#define _BETA (20000)
 #define _OVERDEPTH (1)
 #define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
-#define _CAND7
+#undef _CAND7
 #undef _CAND250
 #define _CANDCUT (200)
 #define _Q0BLK // For opening phase, block Queen's moves at node root
