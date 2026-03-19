@@ -1,0 +1,15 @@
+#! /bin/bash
+
+_CHESS960=0 _ICCF=1 _NOEDIT=1 sh build.sh
+cp baeagn iccf
+strip iccf
+for gs in $(cat pgn/gamelist.txt); do
+  rm start.pgn
+  ln -sf pgn/$gs.pgn start.pgn
+  ln iccf $gs.so
+  ./$gs.so &> anl/$gs.anl &
+  echo "Game $gs started"
+  sleep 5
+done
+
+echo "Done"
