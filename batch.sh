@@ -9,7 +9,7 @@ curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 PAR=4
-if [ $COUNTF -lt $PAR]; then
+if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
 SESSION_TIME=$((1500*$PAR/$COUNTF))
