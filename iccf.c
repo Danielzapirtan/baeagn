@@ -429,6 +429,12 @@ VALUE eval(BOARD board, LEVEL level)
         else if (board[y][x] > 0)
             pvalue += (1 + min(x1, y1));
     }
+#if 1
+    if (board[5][3] == -1)
+        value += 211;
+    if (board[2][3] == +1)
+	value -= 211;    
+#endif
     if (kings) {
     if (kings > 0)
         return ( _MAXVALUE - level);
