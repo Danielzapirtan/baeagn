@@ -1,6 +1,6 @@
 #! /bin/bash
 
-PGNFILE=base/best_16_0.pgn
+PGNFILE=base/sea.pgn
 var="$1"
 
 movelist=$(cat $PGNFILE \
