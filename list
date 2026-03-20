@@ -1,5 +1,5 @@
 while true; do
-	cat anl/start.anl
-	top -bn1|grep iccf
+	cat anl/$1.anl
+	top -bn1|grep $1.so
 	sleep 15
 done
