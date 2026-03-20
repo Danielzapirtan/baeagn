@@ -33,6 +33,7 @@ jobs:
           wait
           for gamesymbol in $(cat pgn/gamelist.txt); do
             echo $gamesymbol
+            cat pgn/$gamesymbol.pgn
             cat anl/$gamesymbol.anl
           done
 
