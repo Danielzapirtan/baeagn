@@ -431,9 +431,9 @@ VALUE eval(BOARD board, LEVEL level)
     }
 #if 1
     if (board[5][3] == -1)
-        value += 211;
+        pvalue += 211;
     if (board[2][3] == +1)
-	value -= 211;    
+	pvalue -= 211;    
 #endif
     if (kings) {
     if (kings > 0)
