@@ -22,6 +22,7 @@ jobs:
           mkdir -p anl
           ulimit -t 18000
           for gamesymbol in $(cat pgn/gamelist.txt); do
+            rm -rf start.pgn
             cp -a pgn/$gamesymbol.pgn start.pgn
             export gamesymbol
             _ICCF=1 _NOEDIT=1 _CHESS960=0 sh build.sh
