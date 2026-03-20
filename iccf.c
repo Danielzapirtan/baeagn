@@ -24,17 +24,17 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-20000) // Adjusted as needed
-#define _BETA (20000)
+#define _ALPHA (-150) // Adjusted as needed
+#define _BETA (150)
 #define _OVERDEPTH (1)
 #define _S_DEPTH (4)
 #define _SORT
 #define _PVSEARCH
 #define _SVP
-#undef _CAND7
+#define _CAND7
 #undef _CAND250
 #define _CANDCUT (200)
-#define _Q0BLK // For opening phase, block Queen's moves at node root
+#undef _Q0BLK // For opening phase, block Queen's moves at node root
 
 #ifndef _PIECE_CODES
 #define _PIECE_CODES (1)
@@ -429,12 +429,6 @@ VALUE eval(BOARD board, LEVEL level)
         else if (board[y][x] > 0)
             pvalue += (1 + min(x1, y1));
     }
-#if 1
-    if (board[5][3] == -1)
-        pvalue += 33;
-    if (board[2][3] == +1)
-	pvalue -= 33;    
-#endif
     if (kings) {
     if (kings > 0)
         return ( _MAXVALUE - level);
