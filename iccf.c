@@ -220,8 +220,8 @@ void analysis(void)
         double delapsed = dclock(&elapsed);
         copy_board(start, aux);
         fprintf(stdout, "Depth: %u\n", depth);
-        fprintf(stdout, "Evaluation: ");
-showCI(tree->best);
+        fprintf(stdout, "Evaluation: %.2lf", (double) tree->best * 0.01);
+	//showCI(tree->best);
         fprintf(stdout, "\nBranching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
         fprintf(stdout, "Best variation: ");
         for (i = 0; i < tree->bl_len; i++) {
