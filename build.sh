@@ -4,7 +4,7 @@ SOURCE=baeagn.c
 : ${gamesymbol:=ini}
 
 if [ x"$_ICCF" = x1 ]; then
-  SOURCE=iccf.c
+  SOURCE=baeagn.c
 fi
 
 gcc -o baeagn \
