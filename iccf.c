@@ -24,7 +24,7 @@
 #define _BRDFILE "start.brd"
 #define _FENFILE "start.fen"
 
-#define _ALPHA (-150) // Adjusted as needed
+#define _ALPHA (-150) // Adjust as needed
 #define _BETA (150)
 #define _OVERDEPTH (1)
 #define _S_DEPTH (4)
@@ -548,7 +548,7 @@ extern void showCI(VALUE value) {
     // Handle zero and near-zero evaluations as equal
     if (value >= -29 && value <= 29) {
         // U+2261 ≡ IDENTICAL TO (equal position)
-        printf("\u2261");
+        printf("=");
     }
     // White advantage ranges
     else if (value >= 30 && value <= 69) {
