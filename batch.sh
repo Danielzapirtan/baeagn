@@ -2,6 +2,7 @@
 
 cd $HOME/git-client/baeagn
 
+export TZ=Europe/Bucharest
 user=antoniudanielzapirtan
 NPROCESSORS=15
 url1="https://api.chess.com/pub/player/$user/games/to-move"
