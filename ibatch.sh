@@ -1,5 +1,6 @@
 #! /bin/bash
 
+export TZ=Europe/Bucharest
 git add .
 git commit -miccf
 git push
