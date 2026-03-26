@@ -24,7 +24,7 @@ if [ $REMAINING -lt 1 ]; then
   echo "$SESSION_TIME"
   echo "All workflows triggered"
   export ST
-  ( sleep $ST; /data/data/com.termux/files/usr/bin/termux-notification --title 'Baeagn/Chess' --content "Analysis ready ar "$(date +%H:%M) ) &
+  ( sleep $ST; /data/data/com.termux/files/usr/bin/termux-notification --title 'Baeagn/Chess' --content "Analysis ready ar $(date +%H:%M)" & ) &
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
