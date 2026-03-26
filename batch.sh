@@ -9,10 +9,11 @@ curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 PAR=4
+ST=1500
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
-SESSION_TIME=$((1500*$PAR/$COUNTF))
+SESSION_TIME=$(($ST*$PAR/$COUNTF))
 REMAINING=$COUNT
 ECART=0
 
@@ -21,6 +22,8 @@ if [ $REMAINING -lt 1 ]; then
   echo "$COUNTF diagrams"
   echo "$SESSION_TIME"
   echo "All workflows triggered"
+  export ST
+  ( sleep $ST; termux-notification --title 'Baeagn/Chess' --content 'Analysis ready' ) &
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
