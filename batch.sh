@@ -10,7 +10,7 @@ curl -s $url1 >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 PAR=4
-ST=18000
+ST=1500
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
@@ -24,13 +24,14 @@ if [ $REMAINING -lt 1 ]; then
   echo "$SESSION_TIME"
   echo "All workflows triggered"
   STM=$(($ST/60))
-  export STM
-  ( for n in $(seq 1 $STM); do
-      sleep 60
-    done
-    termux-notification \
-      --title "Baeagn on Chess" \
-      --content "Analysis ready at $(date +%H:%M)" ) &
+  HOUR=$(date -d "+$STM minutes" +%H)
+  MINUTES=$(date -d "+$STM minutes" +%M)
+  DOM=$(date -d "+$STM minutes" +%d)
+  TITLE="Baeagn on Chess"
+  CONTENT="Analysis completed at $HOURS:$MINUTES"
+  NEW_RECORD="$MINUTES $HOUR $DOM * * termux-notification --title \"$TITLE\" --content \"$CONTENT\""
+  (crontab -l 2>/dev/null; echo "$NEW_RECORD") | crontab -
+  echo "Added $NEW_RECORD to crontab"
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
