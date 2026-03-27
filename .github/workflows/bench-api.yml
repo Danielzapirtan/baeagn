@@ -1,4 +1,4 @@
-name: Chess-api
+name: Chess
 
 on:
   workflow_dispatch:
@@ -22,9 +22,9 @@ jobs:
       
       - name: Execution
         run: |
-          GN=ecart
-          LTG=myltg
-          PROCESSORS=count
+          GN=0
+          LTG=5538
+          PROCESSORS=13
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
@@ -32,9 +32,9 @@ jobs:
             GN=$(($GN + 1))
           done
           wait
-          GN=ecart
+          GN=0
           for n in $(seq 1 $PROCESSORS); do
-            cat $GN.txt
+            cat $GN.txt | tail -n 1
             GN=$(($GN + 1))
           done
 
