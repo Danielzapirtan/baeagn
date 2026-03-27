@@ -1,6 +1,9 @@
 #! /bin/bash
 
-: ${MESSAGE:="$COMMON $1"}
+COMMON=$(cat message)
+DATE=$(date +%y%m%d-%H%M)
+
+: ${MESSAGE:="$DATE $COMMON $1"}
 
 git add .
 git commit -m "$MESSAGE"
