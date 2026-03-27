@@ -29,6 +29,6 @@ done
 
 termux-notification \
 	--title "Baeagn on ICCF" \
-	--content "$GAME $DATE"
+	--content "$PLAYER $DATE"
 
 done &
