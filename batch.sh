@@ -6,7 +6,7 @@ export TZ=Europe/Bucharest
 user=antoniudanielzapirtan
 NPROCESSORS=15
 url1="https://api.chess.com/pub/player/$user/games/to-move"
-curl -s $url1 >$HOME/games1.txt
+curl -s "$url1" >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 PAR=4
