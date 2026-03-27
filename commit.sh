@@ -1,6 +1,6 @@
 #! /bin/bash
 
-: ${MESSAGE:="$1"}
+: ${MESSAGE:="$COMMON $1"}
 
 git add .
 git commit -m "$MESSAGE"

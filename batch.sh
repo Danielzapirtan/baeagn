@@ -25,14 +25,12 @@ if [ $REMAINING -lt 1 ]; then
   echo "All workflows triggered"
   STM=$(($ST/60))
   export STM
-  (for i in a; do
-	  for n in $(seq 1 $STM); do
-	    sleep 60
-	  done
-	  termux-notification \
-		  --title "Baeagn on Chess" \
-		  --content "Analysis ready at $(date +%H:%M)"
-  done) &
+  ( for n in $(seq 1 $STM); do
+      sleep 60
+    done
+    termux-notification \
+      --title "Baeagn on Chess" \
+      --content "Analysis ready at $(date +%H:%M)" ) &
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
