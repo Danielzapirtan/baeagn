@@ -1,4 +1,4 @@
-name: Chess
+name: Chess-API
 
 on:
   workflow_dispatch:
