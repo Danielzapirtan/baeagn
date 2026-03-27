@@ -25,12 +25,14 @@ if [ $REMAINING -lt 1 ]; then
   echo "All workflows triggered"
   STM=$(($ST/60))
   export STM
-  for n in $(seq 1 $STM); do
-    sleep 60
-  done
-  termux-notification \
-	  --title "Baeagn on Chess" \
-	  --content "Analysis ready at $(date +%H:%M)"
+  (for i in a; do
+	  for n in $(seq 1 $STM); do
+	    sleep 60
+	  done
+	  termux-notification \
+		  --title "Baeagn on Chess" \
+		  --content "Analysis ready at $(date +%H:%M)"
+  done) &
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
@@ -51,4 +53,4 @@ echo $date
 sh wf >~/$date.txt 2>&1 &
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
-done &
+done
