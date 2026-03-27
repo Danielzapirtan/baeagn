@@ -256,6 +256,10 @@ int analysis(void)
 		fflush(stdout);
 	} else if (gmode == GO) {
 		show_move(best_move, start, stm % 2, buf);
+		s5 best = tree->best;
+		if (best <= -19994) {
+		    sprintf(buf, "RESIGN");
+		}
 		printf("%s\n", buf);
 		fflush(stdout);
 	}
