@@ -17,7 +17,9 @@
 #ifndef _MAXINDEX
 #define _MAXINDEX (200)
 #endif
-#define _MAXLEVEL (32)
+#define _MAXLEVEL (11)
+#define _MAXLEVEL_GO (9)
+#define _MAXLEVEL_EVAL (7)
 #define _FRAMESPERSEC (32)
 #define _NPS (3 << 20)
 #define _SKIPFRAMES (_NPS / _FRAMESPERSEC)
@@ -109,7 +111,6 @@ extern MOVE best_move;
 extern NODES nodes;
 extern int newpv;
 extern int pvsready;
-extern s4 gmode;
 extern s4 stm;
 
 extern void init(ELAPSED *elapsed);
@@ -117,7 +118,7 @@ extern void update(ELAPSED *elapsed);
 extern double dclock(ELAPSED *elapsed);
 extern void addm(s5 y, s5 x, s5 y1, s5 x1, MOVEINDEX *curr_index, MOVELIST movelist);
 extern void addprom(s5 y, s5 x, s5 y1, s5 x1, s5 to, MOVEINDEX *curr_index, MOVELIST movelist);
-extern void analysis(void);
+extern int analysis(void);
 extern VALUE search(TREE *tree_, LEVEL level, LEVEL depth);
 extern int board_cmp(BOARD src, BOARD dest);
 extern void copy_board(BOARD src, BOARD dest);
@@ -167,10 +168,19 @@ TREE *treea;
 TREE *treeb;
 int newpv;
 int pvsready;
-s4 gmode;
 s4 stm;
 
-void analysis(void)
+typedef enum {
+    NONE,
+    ANALYSIS,
+    EVAL,
+    GO,
+} MODES;
+
+MODES gmode = NONE;
+s5 exit_code = 0;
+
+int analysis(void)
 {
     BOARD aux;
     BOARD aux2;
@@ -195,7 +205,8 @@ void analysis(void)
 //    copy_board(*get_init(), start);
 //    save(start);
 #endif
-    show_board(start, stdout);
+    if (gmode == ANALYSIS)
+        show_board(start, stdout);
     treea = (TREE *) malloc (_MAXLEVEL * sizeof(TREE));
     if (!treea) {
         warn("Out of memory!");
@@ -206,7 +217,12 @@ void analysis(void)
     init(&elapsed);
     nodes = 0LL;
     pvsready = 0;
-    for (depth = _S_DEPTH + 1; depth < _MAXLEVEL; depth++) {
+    s5 maxlevel = _MAXLEVEL;
+    if (gmode == GO)
+	    maxlevel = _MAXLEVEL_GO;
+    if (gmode == EVAL)
+	    maxlevel = _MAXLEVEL_EVAL;
+    for (depth = _S_DEPTH + 1; depth < maxlevel; depth++) {
         tree = &treea[0];
         copy_board(start, tree->curr_board);
         tree->level = 0;
@@ -220,26 +236,44 @@ void analysis(void)
         update(&elapsed);
         double delapsed = dclock(&elapsed);
         copy_board(start, aux);
-        fprintf(stdout, "Depth: %u\n", depth);
-        fprintf(stdout, "Evaluation: %.2lf\n", 0.01 * (double) tree->best);
-        fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
-        fprintf(stdout, "Best variation: ");
-        for (i = 0; i < tree->bl_len; i++) {
-            show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
-            makemove(aux, tree->best_line[i], aux2);
-            copy_board(aux2, aux);
-            fprintf(stdout, "%s ", buf);
-        }
-        fprintf(stdout, "\n");
-        if (tree->bl_len & 1)
-            transpose(aux);
-        fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
-        fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
-        fprintf(stdout, "\n");
-        fflush(stdout);
+	if (gmode == ANALYSIS) {
+		fprintf(stdout, "Depth: %u\n", depth);
+		fprintf(stdout, "Evaluation: %.2lf\n", 0.01 * (double) tree->best);
+		fprintf(stdout, "Branching factor: %.2lf\n", pow((double) nodes, (double) 1 / (depth)));
+		fprintf(stdout, "Best variation: ");
+		for (i = 0; i < tree->bl_len; i++) {
+		    show_move(tree->best_line[i], aux, (i + stm) % 2, buf);
+		    makemove(aux, tree->best_line[i], aux2);
+		    copy_board(aux2, aux);
+		    fprintf(stdout, "%s ", buf);
+		}
+		fprintf(stdout, "\n");
+		if (tree->bl_len & 1)
+		    transpose(aux);
+		fprintf(stdout, "Elapsed: %.2lf\n", delapsed);
+		fprintf(stdout, "NPS: %u\n", (unsigned int) ((double) nodes / delapsed));
+		fprintf(stdout, "\n");
+		fflush(stdout);
+	} else if (gmode == GO) {
+		show_move(best_move, start, stm % 2, buf);
+		printf("%s\n", buf);
+		fflush(stdout);
+	}
+	copy_move(tree->best_line[0], best_move);
+    }
+    if (gmode == ANALYSIS) {
+        exit_code = 0;
+    } else if (gmode == GO) {
+        show_move(best_move, start, stm % 2, buf);
+	printf("%s\n", buf);
+	exit_code = 0;
+    } else if (gmode == EVAL) {
+        s5 best = tree->best;
+	exit_code = best;
     }
     free(treea);
     free(treeb);
+    return exit_code;
 }
 
 VALUE search(TREE *tree_, LEVEL level, LEVEL depth)
@@ -1334,13 +1368,29 @@ void load_values(void)
     _VALUES[5] = 980;
 }
 
-int main(int argc, char *argv[])
-{
-    gmode = 4;
+int main_ANALYSIS(void) {
     srand(time(NULL));
     load_values();
-    analysis();
-    return (0);
+    return analysis();
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        gmode = ANALYSIS;
+    } else if (argc == 2) {
+        if (!strcmp(argv[1], "analyze")) {
+            gmode = ANALYSIS;
+	} else if (!strcmp(argv[1], "go")) {
+            gmode = GO;
+	} else if (!strcmp(argv[1], "eval")) {
+            gmode = EVAL;
+        } else {
+            gmode = NONE;
+	}
+    } else {
+        gmode = NONE;
+    }
+    return main_ANALYSIS();
 }
 
 void warn(const char *msg)
