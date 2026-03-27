@@ -28,13 +28,14 @@ jobs:
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
-            ./baeagn-api go >>$GN.txt 2>&1 &
+            ./baeagn-api go >$GN.2.txt 2>&1 &
             GN=$(($GN + 1))
           done
           wait
           GN=0
           for n in $(seq 1 $PROCESSORS); do
-            cat $GN.txt | tail -n 1
+            cat $GN.txt
+            cat $GN.2.txt | tail -n 1
             GN=$(($GN + 1))
           done
 
