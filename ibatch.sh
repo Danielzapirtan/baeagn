@@ -6,7 +6,6 @@ export GLIST=pgn/gamelist.txt
 export STM=300
 
 date
-if false; then
 : > $GLIST
 for c in w b; do
 	GAME=$PLAYER$c
@@ -14,7 +13,6 @@ for c in w b; do
 	cat - > pgn/$GAME.pgn
 	echo $GAME >> $GLIST
 done
-fi
 
 git add .
 git commit -miccf
