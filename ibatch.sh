@@ -3,7 +3,7 @@
 export TZ=Europe/Bucharest
 export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
-export STM=25
+export STM=300
 
 date
 if false; then
@@ -12,7 +12,7 @@ for c in w b; do
 	GAME=$PLAYER$c
 	echo $GAME
 	cat - > pgn/$GAME.pgn
-	echo $GAME > $GLIST
+	echo $GAME >> $GLIST
 done
 fi
 
