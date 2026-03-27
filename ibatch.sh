@@ -21,14 +21,14 @@ gh workflow run iccf
 
 echo "Workflow triggered ok"
 
-for n in a; do
+HOUR=$(date -d "+$STM minutes" +%H)
+MINUTES=$(date -d "+$STM minutes" +%M)
+DOM=$(date -d "+$STM minutes" +%d)
 
-for n in $(seq 1 $STM); do
-	sleep 60
-done
+TITLE="Baeagn on ICCF $PLAYER"
+CONTENT="Analysis completed at $HOUR:$MINUTES"
+COMMAND="termux-notification --title \"$TITLE\" --content \"$CONTENT\""
+NEW_RECORD="$MINUTES $HOUR $DOM * * $COMMAND"
+(crontab -l 2>/dev/null; echo "$NEW_RECORD") | crontab -
+echo "Added $NEW_RECORD to crontab"
 
-termux-notification \
-	--title "Baeagn on ICCF" \
-	--content "$PLAYER $DATE"
-
-done &
