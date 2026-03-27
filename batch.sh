@@ -28,7 +28,7 @@ if [ $REMAINING -lt 1 ]; then
   MINUTES=$(date -d "+$STM minutes" +%M)
   DOM=$(date -d "+$STM minutes" +%d)
   TITLE="Baeagn on Chess"
-  CONTENT="Analysis completed at $HOURS:$MINUTES"
+  CONTENT="Analysis completed at $HOUR:$MINUTES"
   NEW_RECORD="$MINUTES $HOUR $DOM * * termux-notification --title \"$TITLE\" --content \"$CONTENT\""
   (crontab -l 2>/dev/null; echo "$NEW_RECORD") | crontab -
   echo "Added $NEW_RECORD to crontab"
