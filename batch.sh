@@ -23,8 +23,14 @@ if [ $REMAINING -lt 1 ]; then
   echo "$COUNTF diagrams"
   echo "$SESSION_TIME"
   echo "All workflows triggered"
-  export ST
-  ( sleep $ST; termux-notification --title 'Baeagn/Chess' --content "Analysis ready at $(date +%H:%M)" ) &
+  STM=$(($ST/60))
+  export STM
+  for n in $(seq 1 $STM); do
+    sleep 60
+  done
+  termux-notification \
+	  --title "Baeagn on Chess" \
+	  --content "Analysis ready at $(date +%H:%M)"
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
@@ -45,4 +51,4 @@ echo $date
 sh wf >~/$date.txt 2>&1 &
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
-done
+done &

@@ -3,6 +3,9 @@
 export TZ=Europe/Bucharest
 export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
+export STM=300
+
+if true; then
 
 date
 : > $GLIST
@@ -17,5 +20,15 @@ git add .
 git commit -miccf
 git push
 gh workflow run iccf
+
 echo "Workflow triggered ok"
 
+for n in $(seq 1 $STM); do
+	sleep 60
+done
+
+termux-notification \
+	--title "Baeagn on ICCF" \
+	--content "$GAME $DATE"
+
+fi &
