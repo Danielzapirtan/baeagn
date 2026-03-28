@@ -5,7 +5,7 @@ export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
 export STM=300
 
-if false; then
+if true; then
 date
 : > $GLIST
 for c in w b; do
