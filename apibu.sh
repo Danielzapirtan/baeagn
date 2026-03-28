@@ -1,8 +1,6 @@
 #! /usr/bin/bash
 
-_NOEDIT=2
 _CHESS960=0
-_ICCF=0
 SOURCE=api.c
 : ${gamesymbol:=ini}
 
