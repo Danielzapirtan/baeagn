@@ -1,11 +1,11 @@
 #! /bin/bash
 
 export TZ=Europe/Bucharest
-#export PLAYER="$1"
+export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
 export STM=25
 
-if false; then
+if true; then
 date
 : > $GLIST
 for c in w b; do
