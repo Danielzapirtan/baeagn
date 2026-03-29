@@ -8,7 +8,7 @@ export STM=300
 if true; then
 date
 : > $GLIST
-for c in w; do
+for c in w b; do
 	GAME=$PLAYER$c
 	echo $GAME
 	cat - > pgn/$GAME.pgn
