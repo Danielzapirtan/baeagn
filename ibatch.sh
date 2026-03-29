@@ -3,7 +3,7 @@
 export TZ=Europe/Bucharest
 export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
-export STM=25
+export STM=300
 
 if true; then
 date
