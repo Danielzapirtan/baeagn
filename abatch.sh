@@ -10,7 +10,7 @@ curl -s "$url1" >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 PAR=4
-ST=18000
+ST=1500
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
