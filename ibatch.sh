@@ -27,7 +27,7 @@ HOUR=$(date -d "+$STM minutes" +%H)
 MINUTES=$(date -d "+$STM minutes" +%M)
 DOM=$(date -d "+$STM minutes" +%d)
 
-TITLE="Baeagn on ICCF $PLAYER"
+TITLE="Baeagn on ICCF $PLAYER ($COLORS)"
 CONTENT="Analysis completed at $HOUR:$MINUTES"
 COMMAND="termux-notification --title \"$TITLE\" --content \"$CONTENT\""
 NEW_RECORD="$MINUTES $HOUR $DOM * * $COMMAND"
