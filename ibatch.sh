@@ -4,7 +4,6 @@ export TZ=Europe/Bucharest
 export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
 export STM=300
-export COLORS="w b"
 
 if true; then
 date
