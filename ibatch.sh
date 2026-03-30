@@ -4,11 +4,12 @@ export TZ=Europe/Bucharest
 export PLAYER="$1"
 export GLIST=pgn/gamelist.txt
 export STM=300
+export COLORS="w b"
 
 if true; then
 date
 : > $GLIST
-for c in w b; do
+for c in $COLORS; do
 	GAME=$PLAYER$c
 	echo $GAME
 	cat - > pgn/$GAME.pgn
