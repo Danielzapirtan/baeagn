@@ -4,14 +4,14 @@ cd $HOME/git-client/baeagn
 
 export TZ=Europe/Bucharest
 user=antoniudanielzapirtan
-NPROCESSORS=15
+NPROCESSORS=4
 url1="https://api.chess.com/pub/player/$user/games/to-move"
 curl -s "$url1" >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT
 [ $COUNTF -gt 0 ] || exit 0
 PAR=4
-ST=2400
+ST=21540
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
