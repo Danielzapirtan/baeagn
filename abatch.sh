@@ -24,15 +24,6 @@ if [ $REMAINING -lt 1 ]; then
   echo "$COUNTF diagrams"
   echo "$SESSION_TIME"
   echo "All workflows triggered"
-  STM=$(($ST/60))
-  HOUR=$(date -d "+$STM minutes" +%H)
-  MINUTES=$(date -d "+$STM minutes" +%M)
-  DOM=$(date -d "+$STM minutes" +%d)
-  TITLE="Baeagn-API on Chess"
-  CONTENT="Analysis completed at $HOUR:$MINUTES"
-  NEW_RECORD="$MINUTES $HOUR $DOM * * termux-notification --title \"$TITLE\" --content \"$CONTENT\""
-  (crontab -l 2>/dev/null; echo "$NEW_RECORD") | crontab -
-  echo "Added $NEW_RECORD to crontab"
   exit
 fi
 if [ $REMAINING -lt $NPROCESSORS ]; then
