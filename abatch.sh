@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-cd $HOME/git-client/baeagn
+cd $HOME/git-client/adzchess
 
 export TZ=Europe/Bucharest
 user=antoniudanielzapirtan
