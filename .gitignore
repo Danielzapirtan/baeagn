@@ -34,3 +34,4 @@ build/
 Thumbs.db
 .env.local
 .env
+diary.log
