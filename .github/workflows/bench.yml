@@ -17,24 +17,25 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git build-essential
-          _ICCF=0 _NOEDIT=2 _CHESS960=0 sh build.sh
-          chmod 0755 baeagn
+          _ICCF=0 _NOEDIT=2 _CHESS960=0 sh apibu.sh
+          chmod 0755 baeagn-api
       
       - name: Execution
         run: |
-          GN=0
-          LTG=9000
-          PROCESSORS=8
+          GN=8
+          LTG=18000
+          PROCESSORS=1
           ulimit -t $LTG
           for n in $(seq 1 $PROCESSORS); do
             fisher=false sh dlpgn.sh $GN >$GN.txt
-            ./baeagn >>$GN.txt 2>&1 &
+            ./baeagn-api go >$GN.2.txt 2>&1 &
             GN=$(($GN + 1))
           done
           wait
-          GN=0
+          GN=8
           for n in $(seq 1 $PROCESSORS); do
             cat $GN.txt
+            cat $GN.2.txt | tail -n 1
             GN=$(($GN + 1))
           done
 

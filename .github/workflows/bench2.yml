@@ -25,7 +25,7 @@ jobs:
             rm -rf start.pgn
             cp -a pgn/$gamesymbol.pgn start.pgn
             export gamesymbol
-            _ICCF=1 _NOEDIT=1 _CHESS960=0 sh apibu.sh
+            _ICCF=1 _NOEDIT=1 _CHESS960=0 sh build.sh
             sleep 5
             ./adzchess go >anl/$gamesymbol.anl 2>&1 &
             sleep 5

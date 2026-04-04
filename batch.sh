@@ -33,12 +33,12 @@ REMAINING=$(($REMAINING - $NPROCESSORS))
 COUNT=$NPROCESSORS
 myltg=$SESSION_TIME
 
-cat bench-api.yml \
+cat bench.yml \
   | sed -e "s/count/$COUNT/g" \
 	| sed -e "s/mygn/$mygn/g" \
 	| sed -e "s/myltg/$myltg/g" \
 	| sed -e "s/ecart/$ECART/g" \
-	>.github/workflows/bench-api.yml
+	>.github/workflows/bench.yml
 date=$(date +%Y%m%d-%H%M%S)
 echo $date
 sh wf >~/$date.txt 2>&1 &
