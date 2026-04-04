@@ -1,11 +1,11 @@
 #! /usr/bin/bash
 
 _CHESS960=0
-SOURCE=api.c
+SOURCE=adzchess.c
 : ${gamesymbol:=ini}
 
 if [ x"$_ICCF" = x1 ]; then
-  SOURCE=api.c
+  SOURCE=adzchess.c
 fi
 
 gcc -o baeagn-api \
