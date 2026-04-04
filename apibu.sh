@@ -8,7 +8,7 @@ if [ x"$_ICCF" = x1 ]; then
   SOURCE=adzchess.c
 fi
 
-gcc -o baeagn-api \
+gcc -o adzchess \
     $SOURCE \
     -lm \
     -O3 \

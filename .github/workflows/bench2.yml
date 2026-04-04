@@ -27,7 +27,7 @@ jobs:
             export gamesymbol
             _ICCF=1 _NOEDIT=1 _CHESS960=0 sh apibu.sh
             sleep 5
-            ./baeagn-api go >anl/$gamesymbol.anl 2>&1 &
+            ./adzchess go >anl/$gamesymbol.anl 2>&1 &
             sleep 5
           done
           wait

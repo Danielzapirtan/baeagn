@@ -18,7 +18,7 @@ jobs:
           sudo apt update
           sudo apt install -y git build-essential
           _ICCF=0 _NOEDIT=2 _CHESS960=0 sh apibu.sh
-          chmod 0755 baeagn-api
+          chmod 0755 adzchess
       
       - name: Execution
         run: |
