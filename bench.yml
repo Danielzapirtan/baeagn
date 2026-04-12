@@ -23,6 +23,7 @@ jobs:
       - name: Execution
         run: |
           GN=ecart
+          USERNAME=${{ env.USERNAME }}
           LTG=myltg
           PROCESSORS=count
           ulimit -t $LTG
