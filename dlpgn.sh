@@ -1,6 +1,5 @@
 #! /bin/bash
 
-. ./.env.local
 GN=$1
 
 url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
