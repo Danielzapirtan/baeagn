@@ -36,6 +36,7 @@ myltg=$SESSION_TIME
 
 cat bench.yml \
   | sed -e "s/count/$COUNT/g" \
+  | sed -e "s/username/$USERNAME/g" \
 	| sed -e "s/mygn/$mygn/g" \
 	| sed -e "s/myltg/$myltg/g" \
 	| sed -e "s/ecart/$ECART/g" \

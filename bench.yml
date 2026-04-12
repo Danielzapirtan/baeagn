@@ -3,8 +3,6 @@ name: Chess
 on:
   workflow_dispatch:
 
-env:
-  USERNAME: ${{ vars.USERNAME }}
 jobs:
   bench:
     name: Bench Job
@@ -25,7 +23,7 @@ jobs:
       - name: Execution
         run: |
           GN=ecart
-          USERNAME=${{ env.USERNAME }}
+          USERNAME=username
           LTG=myltg
           PROCESSORS=count
           ulimit -t $LTG
