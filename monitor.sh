@@ -1,5 +1,5 @@
 #! /bin/bash
 
-PLATFORM=$1
-
-gh run list --workflow $PLATFORM --status in_progress 
+for PLATFORM in iccf chess; do
+    gh run list --workflow $PLATFORM --status in_progress | cat
+done
