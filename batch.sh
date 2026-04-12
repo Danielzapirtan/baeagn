@@ -3,9 +3,9 @@
 cd $HOME/git-client/adzchess
 
 export TZ=Europe/Bucharest
-user=antoniudanielzapirtan
+. ./.env.local
 NPROCESSORS=4
-url1="https://api.chess.com/pub/player/$user/games/to-move"
+url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
 curl -s "$url1" >$HOME/games1.txt
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 COUNTF=$COUNT

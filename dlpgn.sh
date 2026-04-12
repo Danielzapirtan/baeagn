@@ -1,10 +1,10 @@
 #! /bin/bash
 
-user=antoniudanielzapirtan
+. ./.env.local
 GN=$1
 
-url1="https://api.chess.com/pub/player/$user/games/to-move"
-url="https://api.chess.com/pub/player/$user/games"
+url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
+url="https://api.chess.com/pub/player/$USERNAME/games"
 
 set -e
 
