@@ -2,6 +2,7 @@
 
 GN=$1
 
+USERNAME=antoniudanielzapirtan
 url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
 url="https://api.chess.com/pub/player/$USERNAME/games"
 
