@@ -1,7 +1,7 @@
 #! /bin/bash
 
 export TZ=Europe/Bucharest
-export PLAYER="$1"
+export PLAYER=qui
 export GLIST=pgn/gamelist.txt
 export STM=360
 
