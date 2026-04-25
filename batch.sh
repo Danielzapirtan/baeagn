@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-cd $HOME/git-client/adzchess
+cd .
 
 export TZ=Europe/Bucharest
 . ./.env.local
