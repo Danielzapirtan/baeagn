@@ -22,7 +22,7 @@ jobs:
       
       - name: Execution
         run: |
-          GN=0
+          GN=4
           USERNAME=antoniudanielzapirtan
           LTG=1500
           PROCESSORS=2
@@ -33,7 +33,7 @@ jobs:
             GN=$(($GN + 1))
           done
           wait
-          GN=0
+          GN=4
           for n in $(seq 1 $PROCESSORS); do
             cat $GN.txt
             cat $GN.2.txt | tail -n 1
