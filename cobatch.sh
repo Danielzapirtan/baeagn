@@ -11,6 +11,7 @@ NPROCESSORS=4
 #ping -c 1 8.8.8.8 &>/dev/null
 #[ $? -eq 2 ] && exit 0
 rm -rf [0-9]*.txt
+pkill -15 baeagn
 url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
 curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
 	-A 'baeagn/1.0 (+https://github.com/Danielzapirtan/baeagn)' \
