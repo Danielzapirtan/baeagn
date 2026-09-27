@@ -53,7 +53,7 @@ cat bin/cowf \
 	>bin/cowg
 date=$(date +%Y%m%d-%H%M%S)
 echo $date
-sh bin/cowg >/dev/null 2>&1 &
+sh bin/cowg
 sleep 5
 ECART=$(($ECART + $NPROCESSORS))
 done

@@ -1,26 +1,26 @@
 #! /bin/bash
 
 
-     sudo apt update
-     sudo apt install gcc jq
-     _ICCF=0 _NOEDIT=2 _CHESS960=0 sh bin/build.sh
-     chmod 0755 baeagn
- 
-     GN=4
-     USERNAME=antoniudanielzapirtan
-     LTG=17280000
-     PROCESSORS=4
-     ulimit -t $LTG
-     for n in $(seq 1 $PROCESSORS); do
-       fisher=false sh bin/dlpgn.sh $GN >$GN.txt
-       ./baeagn go >$GN.2.txt 2>&1 &
-       GN=$(($GN + 1))
-     done
-     wait
-     GN=4
-     for n in $(seq 1 $PROCESSORS); do
-       cat $GN.txt
-       cat $GN.2.txt | tail -n 5
-       GN=$(($GN + 1))
-     done
+sudo apt update
+sudo apt install gcc jq
+_ICCF=0 _NOEDIT=2 _CHESS960=0 sh bin/build.sh
+chmod 0755 baeagn
+
+GN=0
+USERNAME=antoniudanielzapirtan
+LTG=17280000
+PROCESSORS=4
+ulimit -t $LTG
+for n in $(seq 1 $PROCESSORS); do
+  fisher=false sh bin/dlpgn.sh $GN >$GN.txt
+  ./baeagn analyze >$GN.2.txt 2>&1 &
+  GN=$(($GN + 1))
+done
+wait
+GN=0
+for n in $(seq 1 $PROCESSORS); do
+  cat $GN.txt
+  cat $GN.2.txt | tail -n 5
+  GN=$(($GN + 1))
+done
 
