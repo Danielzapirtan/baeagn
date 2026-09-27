@@ -2,7 +2,7 @@
 
 set -e
 
-cd $HOME/code/*/adzchess
+cd $HOME/code/*/baeagn
 
 export TZ=Europe/Bucharest
 export USERNAME=antoniudanielzapirtan
@@ -12,7 +12,7 @@ NPROCESSORS=4
 #[ $? -eq 2 ] && exit 0
 url1="https://api.chess.com/pub/player/$USERNAME/games/to-move"
 curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
-	-A 'adzchess/1.0 (+https://github.com/Danielzapirtan/adzchess)' \
+	-A 'baeagn/1.0 (+https://github.com/Danielzapirtan/baeagn)' \
 	-H 'Accept: application/json' "$url1" >"$HOME/games1.txt"
 COUNT=$(jq '.games | length' $HOME/games1.txt)
 [ "x$COUNT" = "x" ] && exit 0

@@ -10,10 +10,10 @@ set -e
 
 if true; then
 curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
-	-A 'adzchess/1.0 (+https://github.com/Danielzapirtan/adzchess)' \
+	-A 'baeagn/1.0 (+https://github.com/Danielzapirtan/baeagn)' \
 	-H 'Accept: application/json' "$url1" >/tmp/games1.txt
 curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
-	-A 'adzchess/1.0 (+https://github.com/Danielzapirtan/adzchess)' \
+	-A 'baeagn/1.0 (+https://github.com/Danielzapirtan/baeagn)' \
 	-H 'Accept: application/json' "$url" >/tmp/games.txt
 fi
 

@@ -1,14 +1,14 @@
 #! /usr/bin/bash
 
 _CHESS960=0
-SOURCE=adzchess.c
+SOURCE=baeagn.c
 : ${gamesymbol:=ini}
 
 if [ x"$_ICCF" = x1 ]; then
   SOURCE=ctpk.c
 fi
 
-gcc -o adzchess \
+gcc -o baeagn \
     $SOURCE \
     -lm \
     -O3 \

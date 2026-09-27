@@ -11,6 +11,6 @@ done
 tail -n 5 $R.2.txt
 cat $R.txt
 
-top -bn1|grep adzchess
+top -bn1|grep baeagn
 date
 

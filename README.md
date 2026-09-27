@@ -1,6 +1,6 @@
-# ADZ Chess
+# Baeagn
 
-ADZ Chess is a C chess engine by Antoniu-Daniel Zăpîrțan. It can analyze positions, evaluate a position, and play a game from a FEN position. The repository also contains scripts and GitHub Actions workflows for running engine benchmarks and processing PGN data.
+Baeagn is a C chess engine by Antoniu-Daniel Zăpîrțan. It can analyze positions, evaluate a position, and play a game from a FEN position. The repository also contains scripts and GitHub Actions workflows for running engine benchmarks and processing PGN data.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ Build the standard chess engine:
 _ICCF=0 _NOEDIT=1 _CHESS960=0 sh bin/build.sh
 ```
 
-This creates the `adzchess` executable in the repository root. The build uses GCC optimizations including `-O3` and `-march=native`.
+This creates the `baeagn` executable in the repository root. The build uses GCC optimizations including `-O3` and `-march=native`.
 
 Build the ICCF variant instead:
 
@@ -28,7 +28,7 @@ Build the ICCF variant instead:
 _ICCF=1 _NOEDIT=1 _CHESS960=0 sh bin/build.sh
 ```
 
-When `_ICCF=1`, the build selects `ctpk.c`; otherwise it selects `adzchess.c`. `_CHESS960` and `_NOEDIT` are compile-time configuration flags used by the engine and editor.
+When `_ICCF=1`, the build selects `ctpk.c`; otherwise it selects `baeagn.c`. `_CHESS960` and `_NOEDIT` are compile-time configuration flags used by the engine and editor.
 
 ## Running the engine
 
@@ -36,23 +36,23 @@ The engine reads its initial position from `start.fen`.
 
 ```sh
 # Start the default analysis mode
-./adzchess
+./baeagn
 
 # Explicitly analyze the position
-./adzchess analyze
+./baeagn analyze
 
 # Search for a move
-./adzchess go
+./baeagn go
 
 # Evaluate the position
-./adzchess eval
+./baeagn eval
 ```
 
 The repository includes a sample `start.fen`. Replace that file with another valid FEN position before starting the engine. Analysis output can be redirected to a file:
 
 ```sh
 mkdir -p anl
-./adzchess analyze > anl/analysis.txt 2>&1
+./baeagn analyze > anl/analysis.txt 2>&1
 ```
 
 The interactive editor can also use `start.pgn`; PGN parsing requires the `pgn-extract` command to be installed.
@@ -61,7 +61,7 @@ The interactive editor can also use `start.pgn`; PGN parsing requires the `pgn-e
 
 | Path | Purpose |
 | --- | --- |
-| `adzchess.c` | Standard chess engine and interactive analysis implementation |
+| `baeagn.c` | Standard chess engine and interactive analysis implementation |
 | `ctpk.c` | ICCF-oriented engine variant |
 | `bin/build.sh` | Compiles the selected engine variant |
 | `bin/run` | Starts the ICCF executable and writes output to `anl/start.anl` |
