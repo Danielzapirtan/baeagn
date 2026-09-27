@@ -2,7 +2,7 @@
 
 set -e
 
-#cd /content/baeagn
+cd $HOME/code/*/baeagn
 
 export TZ=Europe/Bucharest
 export USERNAME=antoniudanielzapirtan
