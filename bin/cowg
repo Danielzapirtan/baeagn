@@ -9,7 +9,7 @@ chmod 0755 baeagn
 GN=0
 USERNAME=antoniudanielzapirtan
 LTG=17280000
-PROCESSORS=1
+PROCESSORS=2
 ulimit -t $LTG
 for n in $(seq 1 $PROCESSORS); do
   fisher=false sh bin/dlpgn.sh $GN >$GN.txt
