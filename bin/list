@@ -1,6 +1,6 @@
 #! /bin/bash
 
-COUNT=2
+COUNT=7
 while true; do
   R=$(($RANDOM % $COUNT))
   if true || echo $R | grep -qv "0\|1\|3"; then
@@ -12,5 +12,5 @@ tail -n 7 $R.2.txt
 cat $R.txt
 
 top -bn1|grep baeagn
-date
+bat.sh
 
