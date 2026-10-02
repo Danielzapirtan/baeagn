@@ -24,7 +24,7 @@ if [ $COUNT -gt 8 ]; then
 fi
 COUNTF=$COUNT
 PAR=4
-ST=17280000
+ST=180
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
