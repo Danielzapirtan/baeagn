@@ -1,0 +1,3 @@
+/home/demo/code/Danielzapirtan/baeagn/app/.cxx/Debug/y4y3es11/armeabi-v7a/CMakeFiles/baeagn.dir
+/home/demo/code/Danielzapirtan/baeagn/app/.cxx/Debug/y4y3es11/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/demo/code/Danielzapirtan/baeagn/app/.cxx/Debug/y4y3es11/armeabi-v7a/CMakeFiles/rebuild_cache.dir

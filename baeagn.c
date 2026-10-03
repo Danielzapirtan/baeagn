@@ -745,6 +745,14 @@ void genP(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
                 addprom(y, x, y + 1, x + 1, to, curr_index, movelist);
         }
     }
+#if defined(_BAEAGN_ANDROID)
+    if (y == 4 && board[8][4] >= 0 && board[8][4] < 8) {
+        s5 ep_file = board[8][4];
+        if ((x > 0 && ep_file == x - 1) || (x < 7 && ep_file == x + 1))
+        if (board[y][ep_file] == _BP && board[y + 1][ep_file] == 0)
+            addm(y, x, y + 1, ep_file, curr_index, movelist);
+    }
+#endif
 }
 
 void genN(BOARD board, s5 y, s5 x, MOVEINDEX *curr_index, MOVELIST movelist)
@@ -1085,6 +1093,15 @@ s4 in_check(BOARD board)
 void makemove(BOARD src, MOVE move, BOARD dest)
 {
     copy_board(src, dest);
+#if defined(_BAEAGN_ANDROID)
+    s3 moving_piece = dest[(u5) move[0]][(u5) move[1]];
+    s3 captured_piece = dest[(u5) move[2]][(u5) move[3]];
+    dest[8][4] = -1;
+    if (captured_piece == _BR && move[2] == 7) {
+        if (move[3] == 0) dest[8][2] = 0;
+        if (move[3] == 7) dest[8][3] = 0;
+    }
+#endif
     if (dest[(u5) move[0]][(u5) move[1]] == _WK) {
         if (move[0] == 0)
         if (move[2] == 0)
@@ -1122,6 +1139,10 @@ void makemove(BOARD src, MOVE move, BOARD dest)
         dest[(u5) move[0]][(u5) move[3]] = 0;
     dest[(u5) move[2]][(u5) move[3]] = dest[(u5) move[0]][(u5) move[1]];
     dest[(u5) move[0]][(u5) move[1]] = 0;
+#if defined(_BAEAGN_ANDROID)
+    if (moving_piece == _WP && move[0] == 1 && move[2] == 3 && move[1] == move[3])
+        dest[8][4] = move[1];
+#endif
     transpose(dest);
 end:    ;
 }

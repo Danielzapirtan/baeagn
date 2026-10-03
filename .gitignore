@@ -18,6 +18,8 @@ ENV/
 *.egg-info/
 dist/
 build/
+.gradle/
+local.properties
 
 # C
 *.o

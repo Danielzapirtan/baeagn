@@ -57,11 +57,22 @@ mkdir -p anl
 
 The interactive editor can also use `start.pgn`; PGN parsing requires the `pgn-extract` command to be installed.
 
+## Android app
+
+The repository also contains an Android Studio project in `app/`. Open the repository root in Android Studio with the Android SDK and NDK installed, then build or run the `app` configuration. From a configured command line:
+
+```sh
+./gradlew :app:assembleDebug
+```
+
+The app is named **baeagn**. It provides a touch chessboard, legal move entry, promotion, move undo/redo, board flip, position setup by FEN, PGN import/export, and computer-player selection for White and Black independently. Analysis mode asks the bundled native baeagn engine for a suggested move without playing it. The C engine is compiled into the Android app through JNI; the existing desktop build and command-line behavior are unchanged.
+
 ## Repository layout
 
 | Path | Purpose |
 | --- | --- |
 | `baeagn.c` | Standard chess engine and interactive analysis implementation |
+| `app/` | Native Android frontend and JNI integration for `baeagn.c` |
 | `ctpk.c` | ICCF-oriented engine variant |
 | `bin/build.sh` | Compiles the selected engine variant |
 | `bin/run` | Starts the ICCF executable and writes output to `anl/start.anl` |

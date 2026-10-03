@@ -1,0 +1,5 @@
+# ninja log v5
+0	301	1791064236724110169	CMakeFiles/baeagn.dir/engine_jni.c.o	affad2260ac6f2df
+301	312	1791064236736110170	/home/demo/code/Danielzapirtan/baeagn/app/build/intermediates/cxx/Debug/y4y3es11/obj/armeabi-v7a/libbaeagn.so	52b3512d61e88fd1
+0	271	1791064498171117550	CMakeFiles/baeagn.dir/engine_jni.c.o	affad2260ac6f2df
+272	282	1791064498182117550	/home/demo/code/Danielzapirtan/baeagn/app/build/intermediates/cxx/Debug/y4y3es11/obj/armeabi-v7a/libbaeagn.so	52b3512d61e88fd1

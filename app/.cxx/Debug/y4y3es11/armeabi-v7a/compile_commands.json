@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/demo/code/Danielzapirtan/baeagn/app/.cxx/Debug/y4y3es11/armeabi-v7a",
+  "command": "/home/demo/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=armv7-none-linux-androideabi24 --sysroot=/home/demo/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot -Dbaeagn_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security -std=c11 -fno-limit-debug-info  -fPIC -O2 -o CMakeFiles/baeagn.dir/engine_jni.c.o -c /home/demo/code/Danielzapirtan/baeagn/app/src/main/cpp/engine_jni.c",
+  "file": "/home/demo/code/Danielzapirtan/baeagn/app/src/main/cpp/engine_jni.c"
+}
+]
