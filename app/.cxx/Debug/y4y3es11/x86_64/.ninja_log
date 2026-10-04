@@ -1,5 +1,3 @@
 # ninja log v5
-0	292	1791064237622110195	CMakeFiles/baeagn.dir/engine_jni.c.o	9b4c4873c7e25193
-292	303	1791064237634110195	/home/demo/code/Danielzapirtan/baeagn/app/build/intermediates/cxx/Debug/y4y3es11/obj/x86_64/libbaeagn.so	cf3dacd6f4c3922c
-0	261	1791064498737117566	CMakeFiles/baeagn.dir/engine_jni.c.o	9b4c4873c7e25193
-261	271	1791064498748117566	/home/demo/code/Danielzapirtan/baeagn/app/build/intermediates/cxx/Debug/y4y3es11/obj/x86_64/libbaeagn.so	cf3dacd6f4c3922c
+0	371	1791094738958017698	CMakeFiles/baeagn.dir/engine_jni.c.o	9b4c4873c7e25193
+371	387	1791094738976017698	/home/demo/code/Danielzapirtan/baeagn/app/build/intermediates/cxx/Debug/y4y3es11/obj/x86_64/libbaeagn.so	cf3dacd6f4c3922c
