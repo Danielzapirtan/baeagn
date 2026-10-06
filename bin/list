@@ -1,6 +1,6 @@
 #! /bin/bash
 
-COUNT=7
+COUNT=8
 while true; do
   R=$(($RANDOM % $COUNT))
   if true || echo $R | grep -qv "0\|1\|3"; then

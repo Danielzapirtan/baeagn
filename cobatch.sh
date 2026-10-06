@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-set -e
+#set -e
 
 cd $HOME/code/*/baeagn
 
@@ -24,7 +24,7 @@ if [ $COUNT -gt 8 ]; then
 fi
 COUNTF=$COUNT
 PAR=4
-ST=180
+ST=17280000
 if [ $COUNTF -lt $PAR ]; then
 	PAR=$COUNTF
 fi
