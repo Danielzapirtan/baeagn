@@ -1,6 +1,8 @@
 #! /usr/bin/bash
 
 _CHESS960=0
+_ICCF=0
+_NOEDIT=0
 SOURCE=baeagn.c
 : ${gamesymbol:=ini}
 
